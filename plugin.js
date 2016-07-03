@@ -1,20 +1,23 @@
 'use strict';
+const Joi = require('joi');
 
 const myPlugin = {
     register: function (server, options, next) {
         server.route({
-            method: ['GET', 'POST'],
+            method: ['POST'],
             path: '/register',
             handler: function (request, reply) {
                 var post = request.payload;
 
-                var user = post.user;
-                if (user !== 'max') {
-                    next();
-                    return;
-                }
+                reply(request.query);
 
-                reply('Ok man!');
+            },
+            config: {
+                validate: {
+                    payload: {
+                        name: Joi.string().min(3).max(10)
+                    }
+                }
             }
         });
     }

@@ -2,6 +2,9 @@
 
 const Hapi = require('hapi');
 const myPlugin = require('./plugin');
+const Inert = require('inert');
+const Vision = require('vision');
+const HapiSwagger = require('hapi-swagger');
 
 const server = new Hapi.Server();
 server.connection({port: 6789});
@@ -16,11 +19,25 @@ server.start((err) => {
     console.log('Server running at:', server.info.uri);
 });
 
+const options = {
+    info: {
+        'title': 'Test API Documentation',
+        'version': '1.0.0'
+    }
+};
 
 function __server_start() {
-    server.register({
-        register: myPlugin
-    }, (err) => {
+    server.register([
+        {
+            register: myPlugin
+        },
+        Inert,
+        Vision,
+        {
+            register: HapiSwagger,
+            options: options
+        }
+    ], (err) => {
         if (err) {
             console.log('Fail to load plugin.');
         }

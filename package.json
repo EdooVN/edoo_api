@@ -10,6 +10,10 @@
   "license": "ISC",
   "dependencies": {
     "hapi": "latest",
-    "joi": "^8.4.2"
+    "hapi-swagger": "latest",
+    "inert": "latest",
+    "joi": "latest",
+    "lodash": "^4.13.1",
+    "vision": "latest"
   }
 }

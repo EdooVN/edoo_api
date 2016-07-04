@@ -22,8 +22,12 @@ server.start((err) => {
         console.error(err);
     }
 
+
+
     console.log('Server running at:', server.info.uri);
 });
+
+server_started();
 
 /**
  * Register plugins
@@ -37,6 +41,18 @@ function _register_plugins() {
     }
 
     server.register(plugins, (err) => {
+        if (err) {
+            console.log('Fail to load plugins.');
+            console.error(err);
+        }
+    });
+}
+
+function server_started() {
+    var auth = require('./auth');
+    var route = require('./route');
+
+    server.register([route], (err) => {
         if (err) {
             console.log('Fail to load plugins.');
             console.error(err);

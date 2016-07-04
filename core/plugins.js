@@ -1,6 +1,10 @@
+'use strict';
+
 const Inert = require('inert');
 const Vision = require('vision');
 const HapiSwagger = require('hapi-swagger');
+const FAuth = require('./auth');
+const Route = require('./route');
 
 module.exports = [
     Inert,
@@ -13,5 +17,7 @@ module.exports = [
                 'version': '1.0.0'
             }
         }
-    }
+    },
+    Route
+    // FAuth
 ];

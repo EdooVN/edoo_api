@@ -6,9 +6,11 @@
 
 const Hapi = require('hapi');
 const _ = require('lodash');
+var config = require('./../config/server');
+console.log(config);
 
 const server = new Hapi.Server();
-server.connection({port: 6789});
+server.connection({port: config.port});
 
 _register_plugins();
 

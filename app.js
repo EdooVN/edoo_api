@@ -1,5 +1,8 @@
 'use strict';
 
+const server = require('./core/main');
+
+/*
 const Hapi = require('hapi');
 const myPlugin = require('./plugin');
 const Inert = require('inert');
@@ -68,3 +71,4 @@ server.auth.scheme('custom', scheme);
 server.auth.strategy('default', 'custom');
 
 console.log(server.auth.api.default.settings.x);    // 5
+    */

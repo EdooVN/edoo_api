@@ -5,9 +5,12 @@
 'use strict';
 
 const Hapi = require('hapi');
+const _ = require('lodash');
 
 const server = new Hapi.Server();
 server.connection({port: 6789});
+
+_register_plugins();
 
 /**
  * Start server
@@ -17,8 +20,6 @@ server.start((err) => {
         console.error(err);
     }
 
-    _server_started();
-
     console.log('Server running at:', server.info.uri);
 });
 
@@ -26,6 +27,17 @@ server.start((err) => {
  * Register plugins
  * @private
  */
-function _server_started() {
+function _register_plugins() {
+    var plugins = require('./plugins');
 
+    if (!_.isArray(plugins)) {
+        return;
+    }
+
+    server.register(plugins, (err) => {
+        if (err) {
+            console.log('Fail to load plugins.');
+            console.error(err);
+        }
+    });
 }

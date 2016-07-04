@@ -63,19 +63,15 @@ const scheme_fries = function (server, options) {
         authenticate: function (request, reply) {
             const post = request.payload;
             var username = _.get(post, 'username', 'abd');
-            
-            console.log(request);
-            // if (username !== 'max') {
-            //     return reply(Boom.unauthorized(null, 'Custom'));
-            // }
+            console.log(post);
 
-            return reply.continue({ credentials: { user: 'john' } });
+            return reply.continue({credentials: {user: 'john'}});
         }
     };
 };
 
 server.auth.scheme('fries', scheme_fries);
-server.auth.strategy('default', 'fries');
+server.auth.strategy('fries', 'fries');
 
 server.register([
     {

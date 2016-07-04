@@ -1,27 +1,20 @@
 'use strict';
 const Joi = require('joi');
 const _ = require('lodash');
+const Boom = require('boom');
 
 const myPlugin = {
     register: function (server, options, next) {
         server.route({
             method: ['POST'],
             path: '/register',
-            handler: function (request, reply) {
-                var post = request.payload;
-
-                var username = _.get(post, 'username', '');
-
-                if (username == 'max') {
-                    reply(username);
-                    return;
-                }
-
-                reply(request.query);
-
-            },
             config: {
-                auth: 'default',
+                auth: 'fries',
+                handler: function (request, reply) {
+                    console.log(request.auth.credentials.user);
+
+                    reply(Boom.notFound('missing'));
+                },
                 validate: {
                     payload: {
                         username: Joi.string().min(3).max(10)

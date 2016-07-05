@@ -1,7 +1,3 @@
-/**
- * Created by max on 04/7/2016.
- */
-
 'use strict';
 
 const Hapi = require('hapi');
@@ -21,9 +17,7 @@ server.start((err) => {
     if (err) {
         console.error(err);
     }
-
-
-
+    
     console.log('Server running at:', server.info.uri);
 });
 

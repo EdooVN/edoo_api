@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports.register = function register(server, options, next) {
     const scheme = function (server, options) {
         return {

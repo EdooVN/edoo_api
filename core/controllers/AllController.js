@@ -1,5 +1,6 @@
 'use strict';
 
 module.exports = {
-    user: require('./UserController')
+    user: require('./UserController'),
+    token: require('./TokenController')
 };

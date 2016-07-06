@@ -45,8 +45,7 @@ server.register(require('hapi-auth-jwt2'), function (err) {
         {
             key: key,
             validateFunc: validate,
-            verifyOptions: {algorithms: ['HS256']},
-            mode: 'optional'
+            verifyOptions: {algorithms: ['HS256']}
         });
 
     server.auth.default('jwt');

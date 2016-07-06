@@ -1,13 +1,13 @@
 'use strict';
 
 let config = global.config;
-let key = config.key;
+let key = config.secret;
 
 module.exports.getToken = {
     handler: function (request, reply) {
         var jwt = require('jsonwebtoken');
         var token = jwt.sign({}, key);
-        reply({token: token});
+        reply({secret: token});
     },
     auth: false,
     description: 'Get Token',

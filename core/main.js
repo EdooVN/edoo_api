@@ -2,8 +2,7 @@
 
 const Hapi = require('hapi');
 const _ = require('lodash');
-var config = require('./../config/server');
-console.log(config);
+var config = global.config;
 
 const server = new Hapi.Server();
 server.connection({
@@ -46,7 +45,7 @@ function _register_plugins() {
 }
 
 function server_started() {
-    var route = require('./routes');
+    let route = require('./routes');
 
     server.register([route], (err) => {
         if (err) {

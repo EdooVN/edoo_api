@@ -2,7 +2,7 @@
 
 module.exports.register = function register(server, options, next) {
     let config = global.config;
-    let key = config.key;
+    let key = config.secret;
 
     let validate = function (decoded, request, callback) {
         return callback(null, true);

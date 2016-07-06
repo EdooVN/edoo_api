@@ -46,7 +46,6 @@ function _register_plugins() {
 }
 
 function server_started() {
-    var auth = require('./auth');
     var route = require('./routes');
 
     server.register([route], (err) => {

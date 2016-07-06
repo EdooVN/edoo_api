@@ -8,7 +8,6 @@ const Auth = require('./auth');
 module.exports = [
     Inert,
     Vision,
-    // Auth,
     {
         register: HapiSwagger,
         options: {
@@ -17,5 +16,6 @@ module.exports = [
                 'version': '1.0.0'
             }
         }
-    }
+    },
+    Auth
 ];

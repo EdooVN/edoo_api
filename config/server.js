@@ -2,5 +2,6 @@
 
 module.exports = {
     host: 'localhost',
-    port: 6789
+    port: 6789,
+    key: 'com.uet.fries'
 };

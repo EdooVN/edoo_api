@@ -13,6 +13,8 @@ module.exports.register = function register(server, options, next) {
 
     server.auth.scheme('custom', scheme);
     server.auth.strategy('okman', 'custom');
+
+    next();
 };
 
 module.exports.register.attributes = {

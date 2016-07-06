@@ -6,7 +6,10 @@ var config = require('./../config/server');
 console.log(config);
 
 const server = new Hapi.Server();
-server.connection({port: config.port});
+server.connection({
+    port: config.port,
+    host: config.host
+});
 
 _register_plugins();
 
@@ -17,7 +20,7 @@ server.start((err) => {
     if (err) {
         console.error(err);
     }
-    
+
     console.log('Server running at:', server.info.uri);
 });
 
@@ -44,7 +47,7 @@ function _register_plugins() {
 
 function server_started() {
     var auth = require('./auth');
-    var route = require('./route');
+    var route = require('./routes');
 
     server.register([route], (err) => {
         if (err) {

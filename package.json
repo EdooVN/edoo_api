@@ -10,11 +10,14 @@
   "license": "ISC",
   "dependencies": {
     "boom": "^3.2.2",
+    "crypto": "0.0.3",
     "hapi": "latest",
+    "hapi-auth-jwt": "^4.0.0",
     "hapi-auth-jwt2": "^7.0.1",
     "hapi-swagger": "latest",
     "inert": "latest",
     "joi": "latest",
+    "jsonwebtoken": "^7.0.1",
     "lodash": "^4.13.1",
     "vision": "latest"
   }

@@ -1,5 +1,4 @@
 'use strict';
-// https://www.youtube.com/watch?v=SFmf3pInKiU
 
 module.exports.register = (plugin, options, next) => {
     let controller = require('./controllers/AllController');
@@ -14,6 +13,11 @@ module.exports.register = (plugin, options, next) => {
             method: ['GET'],
             path: '/getToken',
             config: controller.token.getToken
+        },
+        {
+            method: ['GET'],
+            path: '/',
+            config: controller.user.register
         }
     ]);
 };

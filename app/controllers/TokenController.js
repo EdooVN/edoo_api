@@ -6,7 +6,11 @@ let key = config.secret;
 module.exports.getToken = {
     handler: function (request, reply) {
         var jwt = require('jsonwebtoken');
-        var token = jwt.sign({}, key);
+        var token = jwt.sign({
+            id: 1,
+            username: 'tutv95',
+            session: 'sjdfkljsdlkfjsddjfklsdfj'
+        }, key);
         reply({secret: token});
     },
     auth: false,

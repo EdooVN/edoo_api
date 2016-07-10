@@ -23,5 +23,6 @@ module.exports.register = (server, options, next) => {
 };
 
 module.exports.register.attributes = {
-    name: 'api'
+    name: 'Fries Router',
+    version: '1.0.0'
 };

@@ -11,8 +11,8 @@ const bcrypt = require('bcrypt');
 module.exports.loginPost = {
     handler: function (request, reply) {
         const post = request.payload;
-        let email = post.email;
-        let password = post.password;
+        let email = _.get(post, 'email', '');
+        let password = _.get(post, 'password', '');
 
         new Model.User({
             email: email
@@ -49,7 +49,33 @@ module.exports.loginPost = {
  */
 module.exports.registerPost = {
     handler: function (request, reply) {
-        return reply({result: 'Register!'});
+        const post = request.payload;
+        let email = _.get(post, 'email', '');
+        let password = _.get(post, 'password', '');
+        let code = _.get(post, 'code', '');
+
+        // Tìm xem có thằng nào đăng ký email này chưa?
+        new Model.User({
+            email: email
+        }).fetch().then(function (user) {
+            if (!_.isEmpty(user)) {// Email này có rồi!
+                return reply(Boom.conflict('Email already exists!'));
+            }
+
+            //Đăng ký thôi
+            bcrypt.hash(password, 10, function (err, hash) {
+                new Model.User({
+                    email: email,
+                    password: hash,
+                    code: code
+                }).save().then(function (user) {
+                    return reply({
+                        error: false,
+                        msg: 'Register success!'
+                    });
+                });
+            });
+        });
     },
     auth: false,
     description: 'Register',

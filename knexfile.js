@@ -3,10 +3,10 @@ module.exports = {
     development: {
         client: 'mysql',
         connection: {
-            host: '127.0.0.1',
-            user: 'root',
-            password: '1234',
-            database: 'edoo_1',
+            host: 'localhost',
+            user: 'edoo_dev',
+            password: 'CEx0AwHMjKWJTc2',
+            database: 'edoo_dev',
             charset: 'utf8'
         },
         seeds: {

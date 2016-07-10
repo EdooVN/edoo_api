@@ -1,10 +1,10 @@
 var knex = require('knex')({
     client: 'mysql',
     connection: {
-        host: '127.0.0.1',
-        user: 'root',
-        password: '',
-        database: 'edoo',
+        host: 'localhost',
+        user: 'edoo_dev',
+        password: 'CEx0AwHMjKWJTc2',
+        database: 'edoo_dev',
         charset: 'utf8'
     }
 });

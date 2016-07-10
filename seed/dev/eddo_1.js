@@ -10,7 +10,7 @@ exports.seed = function (knex, Promise) {
                         code: '13020355',
                         birthday: '1995-11-07',
                         username: 'quytm_58',
-                        password: '123456',
+                        password: '$2a$10$dtaAZp55vPJgE4C759fkFOd.ISEcU2AvdL49yXGgBWSmiEuWfHfQi',
                         email: 'quytm_58@vnu.edu.vn',
                         capability: 'student'
                     }),
@@ -20,7 +20,7 @@ exports.seed = function (knex, Promise) {
                         code: '13020499',
                         birthday: '1995-11-07',
                         username: 'tutv95',
-                        password: '123456',
+                        password: '$2a$10$dtaAZp55vPJgE4C759fkFOd.ISEcU2AvdL49yXGgBWSmiEuWfHfQi',
                         email: 'tutv_58@vnu.edu.vn',
                         capability: 'student'
                     }),
@@ -30,7 +30,7 @@ exports.seed = function (knex, Promise) {
                         code: '13020285',
                         birthday: '1995-11-07',
                         username: 'minhnt',
-                        password: '123456',
+                        password: '$2a$10$dtaAZp55vPJgE4C759fkFOd.ISEcU2AvdL49yXGgBWSmiEuWfHfQi',
                         email: 'minhnt_58@vnu.edu.vn',
                         capability: 'student'
                     })

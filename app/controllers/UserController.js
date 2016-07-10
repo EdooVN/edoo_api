@@ -69,6 +69,10 @@ module.exports.registerPost = {
                     password: hash,
                     code: code
                 }).save().then(function (user) {
+                    if (_.isEmpty(user)) {
+                        return reply(Boom.serverUnavailable('Service Unavailable'));
+                    }
+
                     return reply({
                         error: false,
                         msg: 'Register success!'

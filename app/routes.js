@@ -10,16 +10,10 @@ module.exports.register = (plugin, options, next) => {
             config: controller.user.loginPost
         },
         {
-            method: ['GET'],
-            path: '/getToken',
-            config: controller.token.getToken
+            method: ['POST'],
+            path: '/register',
+            config: controller.user.registerPost
         },
-        {
-            method: ['GET'],
-            path: '/token',
-            config: controller.user.register
-        },
-
         {
             method: ['GET'],
             path: '/logout',

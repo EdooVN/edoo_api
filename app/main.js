@@ -1,5 +1,7 @@
 'use strict';
 
+global.helpers = require('./helpers/helpers');
+
 const Hapi = require('hapi');
 const _ = require('lodash');
 const config = global.config;
@@ -26,7 +28,6 @@ server.start((err) => {
 });
 
 
-
 /**
  * Register plugins
  */
@@ -49,7 +50,7 @@ function _register_plugins() {
  * Server started
  */
 function server_started() {
-    let route = require('./routes');
+    let route = require('./plugins/routes');
 
     server.register([route], (err) => {
         if (err) {

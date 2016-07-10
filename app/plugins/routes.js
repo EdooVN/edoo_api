@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports.register = (server, options, next) => {
-    let controller = require('./controllers/AllController');
+    let controller = require('./../controllers/AllController');
 
     server.route([
         {

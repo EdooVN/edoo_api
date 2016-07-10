@@ -3,8 +3,7 @@
 const Inert = require('inert');
 const Vision = require('vision');
 const HapiSwagger = require('hapi-swagger');
-const Auth = require('./auth');
-// const route = require('./routes');
+const Auth = require('./plugins/auth');
 
 module.exports = [
     Inert,

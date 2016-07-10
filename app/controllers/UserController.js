@@ -5,6 +5,7 @@ const Boom = require('boom');
 const Model = global.Model;
 const bcrypt = require('bcrypt');
 const Joi = require('joi');
+const ResponseJSON = global.helpers.ResponseJSON;
 
 /***
  * Login POST
@@ -29,11 +30,9 @@ module.exports.loginPost = {
 
                 // Password valid
                 user.generateSession().then(function (user_changed) {
-                    reply({
-                        error: false,
-                        msg: 'Login success!',
+                    reply(ResponseJSON('Login success', {
                         token: user_changed.getToken()
-                    });
+                    }));
                 });
             });
         });
@@ -79,10 +78,7 @@ module.exports.registerPost = {
                         return reply(Boom.serverUnavailable('Service Unavailable'));
                     }
 
-                    return reply({
-                        error: false,
-                        msg: 'Register success!'
-                    });
+                    return reply(ResponseJSON('Register success!'));
                 });
             });
         });
@@ -117,10 +113,7 @@ module.exports.logout = {
 
             user.destroyToken().then(function (user_changed) {
 
-                return reply({
-                    error: false,
-                    msg: 'Logout success!'
-                });
+                return reply(ResponseJSON('Logout success!'));
             });
         });
     },

@@ -1,29 +1,30 @@
 {
-	"name": "Happi",
-	"version": "1.0.0",
-	"description": "",
-	"main": "app.js",
-	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1",
-		"start": "node app.js",
-		"ki": "npm i -g knex"
-	},
-	"author": "",
-	"license": "ISC",
-	"dependencies": {
-		"bookshelf": "^0.10.0",
-		"boom": "^3.2.2",
-		"crypto": "0.0.3",
-		"hapi": "latest",
-		"hapi-auth-jwt": "^4.0.0",
-		"hapi-auth-jwt2": "^7.0.1",
-		"hapi-swagger": "latest",
-		"inert": "latest",
-		"joi": "latest",
-		"jsonwebtoken": "^7.0.1",
-		"knex": "^0.11.7",
-		"lodash": "latest",
-		"mysql": "^2.11.1",
-		"vision": "latest"
-	}
+  "name": "Happi",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js",
+    "ki": "npm i -g knex"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bookshelf": "^0.10.0",
+    "boom": "^3.2.2",
+    "crypto": "0.0.3",
+    "hapi": "latest",
+    "hapi-auth-jwt": "^4.0.0",
+    "hapi-auth-jwt2": "^7.0.1",
+    "hapi-swagger": "latest",
+    "inert": "latest",
+    "joi": "latest",
+    "jsonwebtoken": "^7.0.1",
+    "knex": "^0.11.7",
+    "lodash": "latest",
+    "mysql": "^2.11.1",
+    "randomstring": "^1.1.5",
+    "vision": "latest"
+  }
 }

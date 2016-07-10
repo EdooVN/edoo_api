@@ -5,7 +5,7 @@ module.exports.register = (plugin, options, next) => {
 
     plugin.route([
         {
-            method: ['GET', 'POST'],
+            method: ['POST'],
             path: '/login',
             config: controller.user.loginPost
         },
@@ -16,7 +16,7 @@ module.exports.register = (plugin, options, next) => {
         },
         {
             method: ['GET'],
-            path: '/',
+            path: '/token',
             config: controller.user.register
         }
     ]);

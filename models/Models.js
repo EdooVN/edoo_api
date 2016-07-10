@@ -1,8 +1,10 @@
-/**
- * Created by tmq on 10/07/2016.
- */
+'use strict';
 
-var bookshelf = require('../config/db').bookshelf;
+const bookshelf = require('../config/db').bookshelf;
+const rdstring = require('randomstring');
+const jwt = require('jsonwebtoken');
+let config = global.config;
+let key = config.secret;
 
 var User = module.exports.User = bookshelf.Model.extend({
     tableName: 'users',
@@ -11,6 +13,18 @@ var User = module.exports.User = bookshelf.Model.extend({
     },
     subject_classes: function () {
         return this.belongsToMany(SubjectClass, 'users_subject_classes', 'user_id', 'subject_class_id');
+    },
+    generateSession: function () {
+        let session_str = rdstring.generate(50);
+
+        return this.save({
+            session: session_str
+        });
+    },
+    getToken: function () {
+        let user = this.toJSON();
+
+        return jwt.sign(user, key);
     }
 });
 

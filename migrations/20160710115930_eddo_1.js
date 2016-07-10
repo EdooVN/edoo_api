@@ -4,7 +4,7 @@ exports.up = function (knex, Promise) {
             table.increments('id').unsigned();
             table.varchar('name', 100);
             table.varchar('code', 15);
-            table.date('birth');
+            table.date('birthday');
             table.varchar('username', 100).notNullable();
             table.varchar('password', 100).notNullable();
             table.varchar('email', 100).notNullable().unique();

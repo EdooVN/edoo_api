@@ -5,7 +5,7 @@ module.exports.register = function register(server, options, next) {
     let key = config.secret;
 
     let validate = function (decoded, request, callback) {
-        console.log(decoded);
+        request.auth.credentials = decoded;
 
         return callback(null, true);
     };

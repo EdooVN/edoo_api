@@ -18,6 +18,12 @@ module.exports.register = (plugin, options, next) => {
             method: ['GET'],
             path: '/token',
             config: controller.user.register
+        },
+
+        {
+            method: ['GET'],
+            path: '/logout',
+            config: controller.user.logout
         }
     ]);
 };

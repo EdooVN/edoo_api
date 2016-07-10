@@ -21,10 +21,20 @@ var User = module.exports.User = bookshelf.Model.extend({
             session: session_str
         });
     },
+    /**
+     * Get token
+     * @returns {*}
+     */
     getToken: function () {
         let user = this.toJSON();
 
         return jwt.sign(user, key);
+    },
+
+    destroyToken: function () {
+        return this.save({
+            session: ''
+        });
     }
 });
 

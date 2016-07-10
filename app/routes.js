@@ -1,9 +1,9 @@
 'use strict';
 
-module.exports.register = (plugin, options, next) => {
+module.exports.register = (server, options, next) => {
     let controller = require('./controllers/AllController');
 
-    plugin.route([
+    server.route([
         {
             method: ['POST'],
             path: '/login',

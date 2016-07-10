@@ -4,6 +4,7 @@ const _ = require('lodash');
 const Boom = require('boom');
 const Model = global.Model;
 const bcrypt = require('bcrypt');
+const Joi = require('joi');
 
 /***
  * Login POST
@@ -23,7 +24,6 @@ module.exports.loginPost = {
 
             bcrypt.compare(password, user.get('password'), function (err, res) {
                 if (!res) {//Password invalid
-                    console.log(err);
                     return reply(Boom.unauthorized('Invalid password!'));
                 }
 
@@ -37,6 +37,12 @@ module.exports.loginPost = {
                 });
             });
         });
+    },
+    validate: {
+        payload: {
+            email: Joi.string().email(),
+            password: Joi.string()
+        }
     },
     auth: false,
     description: 'Login',
@@ -81,9 +87,15 @@ module.exports.registerPost = {
             });
         });
     },
+    validate: {
+        payload: {
+            email: Joi.string().email(),
+            password: Joi.string()
+        }
+    },
     auth: false,
     description: 'Register',
-    notes: 'Returns a todo item by the id passed in the path',
+    notes: 'Post register',
     tags: ['api', 'register']
 };
 

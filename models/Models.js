@@ -1,7 +1,6 @@
 'use strict';
 
 const bookshelf = require('../config/db').bookshelf;
-const rdstring = require('randomstring');
 const jwt = require('jsonwebtoken');
 let key = global.config.secret;
 
@@ -20,7 +19,8 @@ var User = module.exports.User = bookshelf.Model.extend({
 
 
     generateSession: function () {
-        let session_str = rdstring.generate(50);
+        const rd = require('randomstring');
+        let session_str = rd.generate(50);
 
         return this.save({
             session: session_str
@@ -60,7 +60,7 @@ var RegularClass = module.exports.RegularClass = bookshelf.Model.extend({
 var SubjectClass = module.exports.SubjectClass = bookshelf.Model.extend({
     tableName: 'subject_classes',
 
-    
+
     users: function () {
         return this.belongsToMany(User, 'users_subject_classes', 'subject_class_id', 'user_id');
     }

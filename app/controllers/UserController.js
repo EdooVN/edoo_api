@@ -85,8 +85,8 @@ module.exports.registerPost = {
     },
     validate: {
         payload: {
-            email: Joi.string().email().min(5),
-            password: Joi.string().min(6)
+            email: Joi.string().email().min(5).required(),
+            password: Joi.string().min(6).required()
         }
     },
     auth: false,

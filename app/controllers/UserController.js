@@ -39,8 +39,8 @@ module.exports.loginPost = {
     },
     validate: {
         payload: {
-            email: Joi.string().email(),
-            password: Joi.string()
+            email: Joi.string().email().required(),
+            password: Joi.string().required()
         }
     },
     auth: false,

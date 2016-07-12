@@ -4,9 +4,9 @@ module.exports = {
         client: 'mysql',
         connection: {
             host: 'localhost',
-            user: 'edoo_dev',
-            password: 'CEx0AwHMjKWJTc2',
-            database: 'edoo_dev',
+            user: 'api_uetf_me',
+            password: 'e71V9IPwhLzK2ou',
+            database: 'api_uetf_me',
             charset: 'utf8'
         },
         seeds: {

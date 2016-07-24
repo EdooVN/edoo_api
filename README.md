@@ -16,3 +16,7 @@ DB_NAME=edoo
 DB_PASSWORD=
 DB_CHARSET=utf8
 ```
+
+# Use Snyk
+
+npm install -g snyk

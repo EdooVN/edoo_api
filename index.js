@@ -10,7 +10,7 @@ require('dotenv').config({
 /**
  * Helper functions.
  */
-global.helpers = require('./helpers/helpers');
+global.helpers = require('./app/helpers/helpers');
 
 /**
  * Models.

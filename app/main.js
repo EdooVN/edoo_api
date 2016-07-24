@@ -1,21 +1,23 @@
 'use strict';
 
-global.helpers = require('./helpers/helpers');
-
 const Hapi = require('hapi');
 const _ = require('lodash');
-const config = global.config;
+const helpers = global.helpers;
+const config = helpers.config;
 
+/**
+ * Create server.
+ */
 const server = new Hapi.Server();
 server.connection({
-    port: config.port,
-    host: config.host
+    port: config('SERVER_PORT', 6789),
+    host: config('SERVER_ADDRESS', 'localhost')
 });
 
 _register_plugins();
 
 /**
- * Start server
+ * Start server.
  */
 server.start((err) => {
     if (err) {
@@ -29,7 +31,7 @@ server.start((err) => {
 
 
 /**
- * Register plugins
+ * Register plugins.
  */
 function _register_plugins() {
     var plugins = require('./plugins');
@@ -47,7 +49,7 @@ function _register_plugins() {
 }
 
 /**
- * Server started
+ * Server started.
  */
 function server_started() {
     let route = require('./plugins/routes');

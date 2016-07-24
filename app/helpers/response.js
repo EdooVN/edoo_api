@@ -9,7 +9,7 @@ class Response {
     }
 }
 
-module.exports = function (message, data, error, code) {
+module.exports = function response(message, data, error, code) {
     data = data || null;
     error = error || false;
     code = code || 200;

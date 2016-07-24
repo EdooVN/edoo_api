@@ -3,8 +3,8 @@
 const _ = require('lodash');
 
 module.exports.register = function register(server, options, next) {
-    let config = global.config;
-    let key = config.secret;
+    let config = global.helpers.config;
+    let key = config('SERVER_KEY', '');
 
     let validate = function (decoded, request, callback) {
         if (!_.has(decoded, 'id')) {

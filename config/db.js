@@ -1,11 +1,13 @@
+const config = global.helpers.config;
+
 var knex = require('knex')({
     client: 'mysql',
     connection: {
-        host: 'localhost',
-        user: 'api_uetf_me',
-        password: 'e71V9IPwhLzK2ou',
-        database: 'api_uetf_me',
-        charset: 'utf8'
+        host: config('DB_HOST', 'localhost'),
+        user: config('DB_USER', 'root'),
+        password: config('DB_PASSWORD', ''),
+        database: config('DB_NAME', 'edoo'),
+        charset: config('DB_CHARSET', 'utf8')
     }
 });
 

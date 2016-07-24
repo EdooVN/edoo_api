@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports = function getEnv(key, defaultValue) {
     const _ = require('lodash');
 

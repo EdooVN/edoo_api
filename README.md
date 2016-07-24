@@ -1,4 +1,5 @@
 # API for Edoo Social
+[![Known Vulnerabilities](https://snyk.io/test/github/tutv95/hapi/badge.svg)](https://snyk.io/test/github/tutv95/hapi)
 
 # Config
 

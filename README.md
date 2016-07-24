@@ -1,0 +1,17 @@
+# API for Edoo Social
+
+# Config
+
+Tạo file .env ở thư mục gốc. Ví dụ:
+
+```
+SERVER_ADDRESS=localhost
+SERVER_PORT=2344
+SERVER_KEY=com.fries
+
+DB_HOST=localhost
+DB_USER=root
+DB_NAME=edoo
+DB_PASSWORD=
+DB_CHARSET=utf8
+```

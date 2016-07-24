@@ -1,7 +1,6 @@
 'use strict';
 
-var ResponseJSON = require('./response');
-
 module.exports = {
-    ResponseJSON: ResponseJSON
+    ResponseJSON: require('./response'),
+    config: require('./config')
 };

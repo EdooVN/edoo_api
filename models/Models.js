@@ -2,7 +2,9 @@
 
 const bookshelf = require('../config/db').bookshelf;
 const jwt = require('jsonwebtoken');
-let key = global.config.secret;
+
+let config = global.helpers.config;
+let key = config('SERVER_KEY', '');
 
 var User = module.exports.User = bookshelf.Model.extend({
     tableName: 'users',

@@ -20,3 +20,7 @@ DB_CHARSET=utf8
 # Use Snyk
 
 npm install -g snyk
+
+## Note
+Nếu cài bcrypt bị lỗi thì xem link này nhé:
+https://github.com/nodejs/node-gyp

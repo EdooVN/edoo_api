@@ -14,7 +14,9 @@ module.exports = [
             info: {
                 'title': 'API Documentation',
                 'version': '1.0.0'
-            }
+            },
+            jsonPath: '/docs.json',
+            documentationPath: '/docs'
         }
     },
     Auth

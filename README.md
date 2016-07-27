@@ -17,6 +17,10 @@ DB_PASSWORD=
 DB_CHARSET=utf8
 ```
 
+# Documentation API
+
+Xem tại route /docs (UI) hoặc /docs.json (json)
+
 # Use Snyk
 
 npm install -g snyk

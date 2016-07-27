@@ -15,17 +15,17 @@
     "bookshelf": "^0.10.0",
     "boom": "^3.2.2",
     "dotenv": "^2.0.0",
-    "hapi": "latest",
+    "hapi": "^13.5.0",
     "hapi-auth-jwt": "^4.0.0",
     "hapi-auth-jwt2": "^7.0.1",
-    "hapi-swagger": "latest",
-    "inert": "latest",
-    "joi": "latest",
+    "hapi-swagger": "^6.2.0",
+    "inert": "^4.0.1",
+    "joi": "^9.0.4",
     "jsonwebtoken": "^7.0.1",
     "knex": "^0.11.7",
-    "lodash": "latest",
+    "lodash": "^4.14.0",
     "mysql": "^2.11.1",
     "randomstring": "^1.1.5",
-    "vision": "latest"
+    "vision": "^4.1.0"
   }
 }

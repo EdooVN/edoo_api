@@ -4,6 +4,9 @@ module.exports.register = (server, options, next) => {
     let controller = require('./../controllers/AllController');
 
     server.route([
+        /**
+         * User
+         */
         {
             method: ['POST'],
             path: '/login',

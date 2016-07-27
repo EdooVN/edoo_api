@@ -1,8 +1,8 @@
 'use strict';
 
-module.exports = function getEnv(key, defaultValue) {
-    const _ = require('lodash');
+const _ = require('lodash');
+let env = process.env;
 
-    let env = process.env;
+module.exports = function getEnv(key, defaultValue) {
     return _.get(env, key, defaultValue);
 };

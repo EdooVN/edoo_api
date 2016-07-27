@@ -2,7 +2,7 @@
 
 const _ = require('lodash');
 const Boom = require('boom');
-const Model = global.Model;
+const Models = global.Models;
 const bcrypt = require('bcrypt');
 const Joi = require('joi');
 const ResponseJSON = global.helpers.ResponseJSON;
@@ -16,7 +16,7 @@ module.exports.loginPost = {
         let email = _.get(post, 'email', '');
         let password = _.get(post, 'password', '');
 
-        new Model.User({
+        new Models.User({
             email: email
         }).fetch().then(function (user) {
             if (_.isEmpty(user)) {//Email doesn't exist
@@ -60,7 +60,7 @@ module.exports.registerPost = {
         let code = _.get(post, 'code', '');
 
         // Tìm xem có thằng nào đăng ký email này chưa?
-        new Model.User({
+        new Models.User({
             email: email
         }).fetch().then(function (user) {
             if (!_.isEmpty(user)) {// Email này có rồi!
@@ -69,7 +69,7 @@ module.exports.registerPost = {
 
             //Đăng ký thôi
             bcrypt.hash(password, 10, function (err, hash) {
-                new Model.User({
+                new Models.User({
                     email: email,
                     password: hash,
                     code: code
@@ -104,7 +104,7 @@ module.exports.logout = {
         let _id = _.get(user_data, 'id', '');
         let _session = _.get(user_data, 'session', '');
 
-        new Model.User({
+        new Models.User({
             id: _id
         }).fetch().then(function (user) {
             if (_session != user.get('session')) {

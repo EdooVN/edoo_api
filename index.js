@@ -15,7 +15,7 @@ global.helpers = require('./app/helpers/helpers');
 /**
  * Models.
  */
-global.Model = require('./models/Models');
+global.Models = require('./models/Models');
 
 /**
  * Main app.

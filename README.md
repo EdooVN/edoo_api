@@ -21,10 +21,6 @@ DB_CHARSET=utf8
 
 Xem tại route /docs (UI) hoặc /docs.json (json)
 
-# Use Snyk
-
-npm install -g snyk
-
 ## Note
 Nếu cài bcrypt bị lỗi thì xem link này nhé:
 https://github.com/nodejs/node-gyp

@@ -1,6 +1,6 @@
 'use strict';
 
-const bookshelf = require('../config/db').bookshelf;
+const bookshelf = require('../config/bookshelft');
 const jwt = require('jsonwebtoken');
 
 let config = global.helpers.config;

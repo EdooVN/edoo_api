@@ -11,4 +11,4 @@ var knex = require('knex')({
     }
 });
 
-module.exports.bookshelf = require('bookshelf')(knex);
+module.exports = require('bookshelf')(knex);

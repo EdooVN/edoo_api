@@ -1,16 +1,9 @@
 'use strict';
 
 /**
- * Environment variables.
+ * Auto load.
  */
-require('dotenv').config({
-    path: '.env'
-});
-
-/**
- * Helper functions.
- */
-global.helpers = require('./app/helpers/helpers');
+require('./autoload');
 
 /**
  * Models.

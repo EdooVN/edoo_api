@@ -19,10 +19,14 @@ var User = module.exports.User = bookshelf.Model.extend({
         return this.belongsToMany(SubjectClass, 'users_subject_classes', 'user_id', 'subject_class_id');
     },
 
-
+    /**
+     * Generate session by random string.
+     *
+     * @returns Promise
+     */
     generateSession: function () {
         const rd = require('randomstring');
-        let session_str = rd.generate(50);
+        let session_str = rd.generate(20);
 
         return this.save({
             session: session_str

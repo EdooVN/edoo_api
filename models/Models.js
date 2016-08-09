@@ -92,6 +92,9 @@ var Comment = module.exports.Comment = bookshelf.Model.extend({
     },
     user: function () {
         return this.belongsTo(User);
+    },
+    repComments: function () {
+        return this.hasMany(RepComment);
     }
 });
 
@@ -103,6 +106,17 @@ var Vote = module.exports.Vote = bookshelf.Model.extend({
     },
     post: function () {
         return this.belongsTo(Post);
+    },
+    comment: function () {
+        return this.belongsTo(Comment);
+    }
+});
+
+var RepComment = module.exports.RepComment = bookshelf.Model.extend({
+   tableName : 'rep_comments',
+
+    user: function () {
+        return this.belongsTo(User);
     },
     comment: function () {
         return this.belongsTo(Comment);

@@ -35,6 +35,7 @@ exports.seed = function (knex, Promise) {
                         capability: 'student'
                     }),
                     knex('users').insert({
+                        id : 4,
                         name: 'Tô Văn Khánh',
                         code: '1234',
                         birthday: '1995-11-07',
@@ -143,6 +144,24 @@ exports.seed = function (knex, Promise) {
                         post_id: 1,
                         content: 'Day la 1 cai comment 3 tu te!',
                         is_solve: 0
+                    })
+                ])
+            }),
+
+        knex('rep_comments').del()
+            .then(function () {
+                return Promise.all([
+                    knex('rep_comments').insert({
+                        id : 1,
+                        user_id: 1,
+                        comment_id : 4,
+                        content : 'ok men rep cmt sdflkjsdlfjsdlkfjskldfjklsdjf'
+                    }),
+                    knex('rep_comments').insert({
+                        id : 2,
+                        user_id: 1,
+                        comment_id : 4,
+                        content : 'ok men rep comment'
                     })
                 ])
             }),

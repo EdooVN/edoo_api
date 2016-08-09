@@ -90,6 +90,11 @@ module.exports.register = (server, options, next) => {
             config: controller.post.postCmt
         },
         {
+            method : ['GET'],
+            path : '/repcmt/{comment_id}',
+            config : controller.post.repComments
+        },
+        {
             method : ['POST'],
             path: '/solve',
             config: controller.post.postSolve

@@ -368,6 +368,35 @@ module.exports.postCmt = {
     tags: ['api', 'post', 'vote']
 };
 
+module.exports.repComments = {
+    handler : function (req, rep) {
+        let cmtId = encodeURIComponent(req.params.comment_id);
+
+        new Models.Comment({
+            id : cmtId
+        }).fetch({withRelated : 'repComments.user'}).then(function (cmt) {
+            cmt = cmt.toJSON();
+            let repCmts = cmt.repComments;
+            for (var i=0; i<repCmts.length; i++){
+                let repCmt = repCmts[i];
+                repCmt.author = repCmt.user;
+                delete repCmt.author.password;
+                delete repCmt.author.token_id;
+            }
+            rep(ResponseJSON('', repCmts));
+        }).catch(function () {
+            rep(Boom.badData('Something went wrong!'));
+        });
+    },
+    auth: {
+        mode: 'required',
+        strategies: ['jwt']
+    },
+    description: 'get rep comments',
+    notes: 'get rep comments',
+    tags: ['api', 'post', 'rep cmt']
+};
+
 /**
  * Post owner tick solved to cmt
  */
@@ -498,3 +527,4 @@ module.exports.uploadImage = {
     notes: 'post a image',
     tags: ['api', 'post']
 };
+

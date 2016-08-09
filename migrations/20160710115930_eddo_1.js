@@ -52,6 +52,13 @@ exports.up = function (knex, Promise) {
             table.boolean('is_solve');
         }),
 
+        knex.schema.createTable('rep_comments', function (table) {
+            table.increments('id').unsigned();
+            table.integer('comment_id').unsigned();
+            table.integer('user_id').unsigned();
+            table.text('content');
+        }),
+
         knex.schema.createTable('votes', function (table) {
             table.increments('id').unsigned();
             table.integer('user_id').unsigned();

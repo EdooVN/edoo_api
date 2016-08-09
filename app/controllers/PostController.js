@@ -519,9 +519,9 @@ module.exports.postRepCmt = {
             is_incognito : Joi.boolean().optional()
         }
     },
-    description: 'get rep comments',
-    notes: 'get rep comments',
-    tags: ['api', 'post', 'rep cmt']
+    description: 'post rep comments',
+    notes: 'post rep comments',
+    tags: ['api', 'post', 'post cmt']
 };
 
 /**

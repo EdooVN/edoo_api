@@ -14,7 +14,6 @@ const commons = global.helpers.commons;
 module.exports.loginPost = {
     handler: function (request, reply) {
 
-        console.log('handler');
         const post = request.payload;
         let email = _.get(post, 'email', '');
         let password = _.get(post, 'password', '');

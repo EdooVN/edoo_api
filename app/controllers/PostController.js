@@ -368,35 +368,6 @@ module.exports.postCmt = {
     tags: ['api', 'post', 'vote']
 };
 
-module.exports.repComments = {
-    handler : function (req, rep) {
-        let cmtId = encodeURIComponent(req.params.comment_id);
-
-        new Models.Comment({
-            id : cmtId
-        }).fetch({withRelated : 'repComments.user'}).then(function (cmt) {
-            cmt = cmt.toJSON();
-            let repCmts = cmt.repComments;
-            for (var i=0; i<repCmts.length; i++){
-                let repCmt = repCmts[i];
-                repCmt.author = repCmt.user;
-                delete repCmt.author.password;
-                delete repCmt.author.token_id;
-            }
-            rep(ResponseJSON('', repCmts));
-        }).catch(function () {
-            rep(Boom.badData('Something went wrong!'));
-        });
-    },
-    auth: {
-        mode: 'required',
-        strategies: ['jwt']
-    },
-    description: 'get rep comments',
-    notes: 'get rep comments',
-    tags: ['api', 'post', 'rep cmt']
-};
-
 /**
  * Post owner tick solved to cmt
  */
@@ -472,6 +443,86 @@ module.exports.postSolve = {
     tags: ['api', 'post', 'solve']
 };
 
+/**
+ * get all rep comment
+ * method : GET
+ * param: comment_id
+ */
+module.exports.repComments = {
+    handler : function (req, rep) {
+        let cmtId = encodeURIComponent(req.params.comment_id);
+
+        new Models.Comment({
+            id : cmtId
+        }).fetch({withRelated : 'repComments.user'}).then(function (cmt) {
+            cmt = cmt.toJSON();
+            let repCmts = cmt.repComments;
+            for (var i=0; i<repCmts.length; i++){
+                let repCmt = repCmts[i];
+                repCmt.author = repCmt.user;
+                delete repCmt.user;
+                delete repCmt.author.password;
+                delete repCmt.author.token_id;
+                if (repCmt.is_incognito == true){
+                    delete repCmt.author;
+                    delete repCmt.user_id;
+                }
+            }
+            rep(ResponseJSON('', repCmts));
+        }).catch(function () {
+            rep(Boom.badData('Something went wrong!'));
+        });
+    },
+    auth: {
+        mode: 'required',
+        strategies: ['jwt']
+    },
+    description: 'get rep comments',
+    notes: 'get rep comments',
+    tags: ['api', 'post', 'rep cmt']
+};
+
+/**
+ * API to post a rep_cmt
+ * params: comment_id, user_id, content, is_incognito
+ * method: POST
+ */
+module.exports.postRepCmt = {
+    handler : function (req, rep) {
+        let user_data = req.auth.credentials;
+        let post = req.payload;
+        let userId = _.get(user_data, 'id', '');
+        let commentId = _.get(post, 'comment_id', '');
+        let content = _.get(post, 'content', '');
+        let isIncognito = _.get(post , 'is_incognito', false);
+
+        new Models.RepComment({
+            comment_id : commentId,
+            user_id : userId,
+            content : content,
+            is_incognito : isIncognito
+        }).save().then(function (cmt) {
+            rep(ResponseJSON('Rep cmt success!', cmt));
+        }).catch(function (err) {
+            console.log(err);
+            rep(Boom.badData('Something went wrong!'));
+        });
+    },
+    auth: {
+        mode: 'required',
+        strategies: ['jwt']
+    },
+    validate : {
+        payload: {
+            comment_id : Joi.number().integer().required(),
+            content : Joi.string().required(),
+            is_incognito : Joi.boolean().optional()
+        }
+    },
+    description: 'get rep comments',
+    notes: 'get rep comments',
+    tags: ['api', 'post', 'rep cmt']
+};
 
 /**
  * Post/attack a image

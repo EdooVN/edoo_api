@@ -48,7 +48,7 @@ exports.up = function (knex, Promise) {
             table.increments('id').unsigned();
             table.integer('post_id').unsigned();
             table.integer('user_id').unsigned();
-            table.text('content');
+            table.text('content').notNullable();
             table.boolean('is_solve');
         }),
 
@@ -56,7 +56,8 @@ exports.up = function (knex, Promise) {
             table.increments('id').unsigned();
             table.integer('comment_id').unsigned();
             table.integer('user_id').unsigned();
-            table.text('content');
+            table.text('content').notNullable();
+            table.boolean('is_incognito');
         }),
 
         knex.schema.createTable('votes', function (table) {

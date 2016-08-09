@@ -155,13 +155,15 @@ exports.seed = function (knex, Promise) {
                         id : 1,
                         user_id: 1,
                         comment_id : 4,
-                        content : 'ok men rep cmt sdflkjsdlfjsdlkfjskldfjklsdjf'
+                        content : 'ok men rep cmt sdflkjsdlfjsdlkfjskldfjklsdjf',
+                        is_incognito: false
                     }),
                     knex('rep_comments').insert({
                         id : 2,
                         user_id: 1,
                         comment_id : 4,
-                        content : 'ok men rep comment'
+                        content : 'incognito ok men rep comment',
+                        is_incognito: true
                     })
                 ])
             }),

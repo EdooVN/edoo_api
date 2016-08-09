@@ -96,6 +96,11 @@ module.exports.register = (server, options, next) => {
         },
         {
             method : ['POST'],
+            path : '/repcmt',
+            config : controller.post.postRepCmt
+        },
+        {
+            method : ['POST'],
             path: '/solve',
             config: controller.post.postSolve
         },

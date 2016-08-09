@@ -14,6 +14,22 @@ server.connection({
     host: config('SERVER_ADDRESS', 'localhost')
 });
 
+/**
+ * set header for each reply
+ */
+
+server.ext('onPreResponse', function (request, reply) {
+    if (!request.response.isBoom) {
+        request.response.header('Access-Control-Allow-Origin', '*');
+        request.response.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    } else {
+        request.response.output.headers['Access-Control-Allow-Origin'] = '*';
+        request.response.output.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization';
+    }
+
+    reply.continue();
+});
+
 _register_plugins();
 
 /**

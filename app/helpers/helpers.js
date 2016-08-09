@@ -5,5 +5,6 @@
  */
 module.exports = {
     ResponseJSON: require('./response'),
-    config: require('./config')
+    config: require('./config'),
+    commons: require('./commonVLs')
 };

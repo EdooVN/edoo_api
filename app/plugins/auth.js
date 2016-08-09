@@ -1,6 +1,7 @@
 'use strict';
 
 const _ = require('lodash');
+const Models = global.Models;
 
 module.exports.register = function register(server, options, next) {
     let config = global.helpers.config;
@@ -13,7 +14,19 @@ module.exports.register = function register(server, options, next) {
 
         request.auth.credentials = decoded;
 
-        return callback(null, true);
+        let tokenId = _.get(decoded, 'token_id', '');
+        new Models.Token({
+            id : tokenId
+        }).fetch().then(function (token) {
+            let timeExpire = token.toJSON().time_expire;
+            if (Date.now() > timeExpire){
+                callback(null, false);
+            } else {
+                return callback(null, true);
+            }
+        }).catch(function () {
+            callback(null, false);
+        });
     };
 
     server.register(require('hapi-auth-jwt2'), function (err) {

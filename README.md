@@ -23,5 +23,6 @@ PATH_IMG_UPLOAD = /home/
 Xem tại route /docs (UI) hoặc /docs.json (json)
 
 ## Note
+
 Nếu cài bcrypt bị lỗi thì xem link này nhé:
 https://github.com/nodejs/node-gyp

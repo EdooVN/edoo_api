@@ -87,7 +87,7 @@ module.exports.register = (server, options, next) => {
         {
             method : ['POST'],
             path: '/votecomment',
-            config: controller.post.postCmt
+            config: controller.post.postVoteCmt
         },
         {
             method : ['GET'],

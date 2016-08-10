@@ -157,17 +157,20 @@ module.exports.postCmt = {
         let user_id = _.get(user_data, 'id', '');
         let post_id = _.get(post, 'post_id', '');
         let content = _.get(post, 'content', '');
+        let isIncognito = _.get(post, 'is_incognito', false);
 
         new Models.Comment({
             user_id: user_id,
             post_id: post_id,
             content: content,
-            is_solve: false
+            is_solve: false,
+            is_incognito : isIncognito
         }).save().then(function (result) {
             if (result) {
-                rep(ResponseJSON('Comment success!'));
+                rep(ResponseJSON('Comment success!', result));
             }
-        }).catch(function () {
+        }).catch(function (err) {
+            console.log(err);
             rep(Boom.badData('Something went wrong!'));
         });
     },
@@ -178,7 +181,8 @@ module.exports.postCmt = {
     validate: {
         payload: {
             post_id: Joi.string().alphanum().required(),
-            content: Joi.string().required()
+            content: Joi.string().required(),
+            is_incognito: Joi.boolean().optional()
         }
     },
     description: 'post cmt',
@@ -281,7 +285,7 @@ module.exports.postVote = {
  * vote/devote the cmt
  */
 
-module.exports.postCmt = {
+module.exports.postVoteCmt = {
     handler : function (req, rep) {
         let user_data = req.auth.credentials;
         let post = req.payload;

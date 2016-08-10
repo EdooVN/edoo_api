@@ -36,6 +36,7 @@ module.exports.loginPost = {
 
                 // save token
                 new Models.Token({
+                    user_id : user.id,
                     time_expire: (Date.now() + commons.timeExtension)
                 }).save().then(function (token) {
                     token = token.toJSON();
@@ -47,7 +48,8 @@ module.exports.loginPost = {
                         .then(function (res_user) {
                             // bo pass, token_expired
                             let userToken = res_user.getToken();
-
+                            res_user = res_user.toJSON();
+                            user.token_id = res_user.token_id;
                             reply(ResponseJSON('Login success', {
                                 token: userToken,
                                 user: user
@@ -124,20 +126,19 @@ module.exports.loginPost = {
 module.exports.logout = {
     handler: function (request, reply) {
         let user_data = request.auth.credentials;
-        let _id = _.get(user_data, 'id', '');
-        let _session = _.get(user_data, 'session', '');
+        // let _id = _.get(user_data, 'id', '');
+        let tokenId = _.get(user_data, 'token_id', '');
 
-        new Models.User({
-            id: _id
-        }).fetch().then(function (user) {
-            if (_session != user.get('session')) {
+        new Models.Token({
+            id: tokenId
+        }).destroy().then(function (token) {
+            if (_.isEmpty(token)) {
                 return reply(Boom.badRequest('Some thing went wrong!'));
             }
 
-            user.destroyToken().then(function (user_changed) {
-
-                return reply(ResponseJSON('Logout success!'));
-            });
+            return reply(ResponseJSON('Logout success!'));
+        }).catch(function () {
+            return reply(Boom.badRequest('Some thing went wrong!'));
         });
     },
     auth: {

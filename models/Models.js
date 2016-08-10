@@ -9,8 +9,8 @@ let key = config('SERVER_KEY', '');
 var User = module.exports.User = bookshelf.Model.extend({
     tableName: 'users',
 
-    token : function () {
-        return this.hasOne(Token);
+    tokens : function () {
+        return this.hasMany(Token);
     },
 
     classes: function () {
@@ -33,16 +33,6 @@ var User = module.exports.User = bookshelf.Model.extend({
         let user = this.toJSON();
 
         return jwt.sign(user, key);
-    },
-
-    /**
-     * Destroy token
-     * @return Promise
-     */
-    destroyToken: function () {
-        return this.save({
-            session: ''
-        });
     }
 });
 

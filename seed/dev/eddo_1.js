@@ -129,21 +129,24 @@ exports.seed = function (knex, Promise) {
                         user_id: 1,
                         post_id: 1,
                         content: 'Day la 1 cai cmt tu te!',
-                        is_solve: 0
+                        is_solve: 0,
+                        is_incognito : false
                     }),
                     knex('comments').insert({
                         id: 3,
                         user_id: 1,
                         post_id: 3,
                         content: 'Day la 1 cai comment 2 tu te!',
-                        is_solve: 0
+                        is_solve: 0,
+                        is_incognito : true
                     }),
                     knex('comments').insert({
                         id : 4,
                         user_id: 1,
                         post_id: 1,
                         content: 'Day la 1 cai comment 3 tu te!',
-                        is_solve: 0
+                        is_solve: 0,
+                        is_incognito : true
                     })
                 ])
             }),

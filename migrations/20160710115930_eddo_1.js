@@ -18,6 +18,7 @@ exports.up = function (knex, Promise) {
 
         knex.schema.createTable('tokens', function (table) {
             table.increments('id').unsigned();
+            table.integer('user_id').unsigned();
             table.bigInteger('time_expire').unsigned().notNullable();
         }),
 
@@ -50,6 +51,7 @@ exports.up = function (knex, Promise) {
             table.integer('user_id').unsigned();
             table.text('content').notNullable();
             table.boolean('is_solve');
+            table.boolean('is_incognito');
         }),
 
         knex.schema.createTable('rep_comments', function (table) {

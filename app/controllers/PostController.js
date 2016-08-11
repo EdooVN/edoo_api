@@ -94,7 +94,7 @@ module.exports.postDetail = {
         new Models.Post({
             id: post_id,
             user_id: user_id
-        }).fetch({withRelated: ['votes.user', 'comments.user', 'user', 'comments.votes.user']}).then(function (post) {
+        }).fetch({withRelated: ['votes.user', 'comments.user', 'user', 'comments.votes.user', 'comments.repComments.user']}).then(function (post) {
             post = post.toJSON();
 
             // xoa thong tin user khong can thiet cua post && cmt
@@ -109,7 +109,6 @@ module.exports.postDetail = {
                 tempCmt.author = tempCmt.user;
                 delete tempCmt.user;
                 delete tempCmt.author.password;
-                delete tempCmt.author.session;
 
                 // xoa thong tin user khong can thiet cua vote cmt
                 let votes = tempCmt.votes;
@@ -118,7 +117,15 @@ module.exports.postDetail = {
                     tempVote.author = tempVote.user;
                     delete tempVote.user;
                     delete tempVote.author.password;
-                    delete tempVote.author.session;
+                }
+
+                // xoa thong tin user khong can thiet cua rep cmt
+                let repCmts = tempCmt.repComments;
+                for (var j = 0; j < repCmts.length; j++) {
+                    let tempRepCmt = repCmts[j];
+                    tempRepCmt.author = tempRepCmt.user;
+                    delete tempRepCmt.user;
+                    delete tempRepCmt.author.password;
                 }
             }
 

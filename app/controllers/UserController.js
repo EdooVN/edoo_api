@@ -7,6 +7,7 @@ const bcrypt = require('bcrypt');
 const Joi = require('joi');
 const ResponseJSON = global.helpers.ResponseJSON;
 const commons = global.helpers.commons;
+const service = require('../services/AllService');
 
 /***
  * Login POST
@@ -30,31 +31,25 @@ module.exports.loginPost = {
                     return reply(Boom.unauthorized('Invalid password!'));
                 }
 
-                user = user.toJSON();
-                delete user.password;
-                delete user.token_id;
-
                 // save token
                 new Models.Token({
-                    user_id : user.id,
+                    user_id: user.get('id'),
                     time_expire: (Date.now() + commons.timeExtension)
-                }).save().then(function (token) {
-                    token = token.toJSON();
-                    let tokenId = token.id;
+                }).save().then(function (tokenSql) {
+                    let tokenId = tokenSql.get('id');
+                    user = user.toJSON();
+                    user.token_id = tokenId;
 
-                    new Models.User({
-                        id : user.id
-                    }).save({token_id : tokenId}, {method: 'update', patch : 'true'})
-                        .then(function (res_user) {
-                            // bo pass, token_expired
-                            let userToken = res_user.getToken();
-                            res_user = res_user.toJSON();
-                            user.token_id = res_user.token_id;
-                            reply(ResponseJSON('Login success', {
-                                token: userToken,
-                                user: user
-                            }));
-                        });
+                    service.user.getTokenUser(user, function (tokenUser) {
+                        delete user.password;
+                        delete user.id;
+                        delete user.token_id;
+                        reply(ResponseJSON('Login success', {
+                            token: tokenUser,
+                            user: user
+                        }));
+                    });
+
                 }).catch(function () {
                     return reply(Boom.badRequest('Something went wrong!'));
                 });

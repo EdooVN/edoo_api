@@ -9,7 +9,6 @@ exports.up = function (knex, Promise) {
             table.varchar('password', 200).notNullable();
             table.date('birthday');
             table.varchar('capability', 10);
-            table.integer('token_id').unsigned();
 
             table.index('code');
             table.index('username');

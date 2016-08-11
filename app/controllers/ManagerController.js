@@ -175,7 +175,7 @@ module.exports.joinclass = {
     validate: {
         payload: {
             user_code: Joi.string().alphanum().required(),
-            class_id: Joi.string().alphanum().required()
+            class_id: Joi.string().required()
         }
     },
     description: 'join class',

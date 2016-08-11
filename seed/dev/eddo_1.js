@@ -76,6 +76,18 @@ exports.seed = function (knex, Promise) {
                     knex('users_classes').insert({
                         user_id: 1,
                         class_id: 'INT20031-2016-2017'
+                    }),
+                    knex('users_classes').insert({
+                        user_id: 3,
+                        class_id: 'POL100141-2016-2017'
+                    }),
+                    knex('users_classes').insert({
+                        user_id: 3,
+                        class_id: 'INT340621-2016-2017'
+                    }),
+                    knex('users_classes').insert({
+                        user_id: 3,
+                        class_id: 'MAT109311-2016-2017'
                     })
                 ])
             }),

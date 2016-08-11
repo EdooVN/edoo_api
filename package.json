@@ -29,6 +29,7 @@
     "mysql": "^2.11.1",
     "node-schedule": "^1.1.1",
     "randomstring": "^1.1.5",
+    "request": "^2.74.0",
     "vision": "^4.1.0"
   }
 }

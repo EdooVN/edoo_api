@@ -27,6 +27,12 @@ exports.up = function (knex, Promise) {
             table.varchar('name', 200);
             table.varchar('type', 200);
             table.varchar('semester', 200).notNullable();
+            table.integer('credit_count');
+            table.varchar('address', 200);
+            table.integer('day_of_week');
+            table.varchar('period', 200);
+            table.integer('student_count');
+            table.varchar('teacher_name', 200);
 
             table.index('code');
         }),

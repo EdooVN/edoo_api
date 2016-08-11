@@ -59,7 +59,7 @@ module.exports.addUser = {
                         birthday: birth,
                         password: hash,
                         capability: capability
-                    }).save().then(function (user) {
+                    }).save(null, {method: 'insert'}).then(function (user) {
                         if (_.isEmpty(user)) {
                             return reply(Boom.serverUnavailable('Service Unavailable'));
                         }
@@ -110,9 +110,10 @@ module.exports.addClass = {
             code : code,
             type : type,
             semester: semester
-        }).save().then(function (result) {
+        }).save(null, {method: 'insert'}).then(function (result) {
             rep(ResponseJSON('Add class success!', result));
-        }).catch(function () {
+        }).catch(function (err) {
+            console.log(err);
             rep(Boom.badData('Something went wrong!'));
         });
     },
@@ -154,7 +155,7 @@ module.exports.joinclass = {
                     new Models.User_Class({
                         user_id: userId,
                         class_id: classId
-                    }).save().then(function (uc) {
+                    }).save(null, {method: 'insert'}).then(function (uc) {
                         if (!_.isEmpty(uc)) {
                             return rep(ResponseJSON('User join success!'));
                         } else {

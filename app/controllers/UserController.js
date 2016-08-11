@@ -42,7 +42,7 @@ module.exports.loginPost = {
 
                     service.user.getTokenUser(user, function (tokenUser) {
                         delete user.password;
-                        delete user.id;
+                        // delete user.id;
                         delete user.token_id;
                         reply(ResponseJSON('Login success', {
                             token: tokenUser,

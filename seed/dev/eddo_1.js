@@ -94,7 +94,8 @@ exports.seed = function (knex, Promise) {
                         'Một lớp mô tả các thuộc tính và hành vi của một đối tượng. ' +
                         'Một interface chứa các hành vi mà một class triển khai.',
                         type: 'question',
-                        tag: 'java'
+                        tag: 'java',
+                        is_incognito : false
                     }),
                     knex('posts').insert({
                         id : 2,
@@ -109,7 +110,24 @@ exports.seed = function (knex, Promise) {
                         'Một interface không thể kế thừa từ lớp, nó được triển khai bởi một lớp.' +
                         'Một interface có thể kế thừa từ nhiều interface khác.',
                         type : 'note',
-                        tag : 'interface'
+                        tag : 'interface',
+                        is_incognito : false
+                    }),
+                    knex('posts').insert({
+                        id : 3,
+                        user_id : 1,
+                        class_id : 'INT20031-2016-2017',
+                        title: 'ok men',
+                        content: 'Mặc dù vây, một interface khác với một class ở một số điểm sau đây, bao gồm:' +
+                        'Bạn không thể khởi tạo một interface.' +
+                        'Một interface không chứa bất cứ hàm contructor nào.' +
+                        'Tất cả các phương thức của interface đều là abstract.' +
+                        'Một interface không thể chứa một trường nào trừ các trường vừa static và final.' +
+                        'Một interface không thể kế thừa từ lớp, nó được triển khai bởi một lớp.' +
+                        'Một interface có thể kế thừa từ nhiều interface khác.',
+                        type : 'note',
+                        tag : 'interface',
+                        is_incognito : true
                     })
                 ])
             }),

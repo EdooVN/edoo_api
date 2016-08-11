@@ -18,10 +18,16 @@ module.exports.getpost = {
             let posts = result.posts;
 
             for (var i = 0; i < posts.length; i++) {
+                let post = posts[i];
                 posts[i].author = posts[i].user;
                 delete posts[i].user;
                 delete posts[i].author.password;
-                delete posts[i].author.session;
+
+                console.log(post);
+
+                if (post.is_incognito == true){
+                    delete post.author;
+                }
             }
 
             rep(ResponseJSON('', result));
@@ -48,6 +54,7 @@ module.exports.postPost = {
         let content = _.get(post, 'content', '');
         let type = _.get(post, 'type', '');
         let tag = _.get(post, 'tag', '');
+        let is_incognito = _.get(post, 'is_incognito', false);
 
         new Models.Post({
             user_id: user_id,
@@ -55,7 +62,8 @@ module.exports.postPost = {
             title: title,
             content: content,
             type: type,
-            tag: tag
+            tag: tag,
+            is_incognito : is_incognito
         }).save().then(function (result) {
             rep(ResponseJSON('Post success', result));
         }).catch(function () {
@@ -69,11 +77,12 @@ module.exports.postPost = {
     validate: {
         payload: {
             // user_id: Joi.string().alphanum().required(),
-            class_id: Joi.string().alphanum().required(),
+            class_id: Joi.string().required(),
             title: Joi.string().required(),
             content: Joi.string().required(),
             type: Joi.string().required(),
-            tag: Joi.string().optional()
+            tag: Joi.string().optional(),
+            is_incognito : Joi.boolean().optional()
         }
     },
     description: 'post a post to class',
@@ -101,7 +110,10 @@ module.exports.postDetail = {
             post.author = post.user;
             delete post.user;
             delete post.author.password;
-            delete post.author.session;
+
+            if (post.is_incognito == true){
+                delete post.author;
+            }
 
             let cmts = post.comments;
             for (var i = 0; i < cmts.length; i++) {
@@ -171,7 +183,7 @@ module.exports.postCmt = {
             post_id: post_id,
             content: content,
             is_solve: false,
-            is_incognito : isIncognito
+            is_incognito: isIncognito
         }).save().then(function (result) {
             if (result) {
                 rep(ResponseJSON('Comment success!', result));
@@ -202,7 +214,7 @@ module.exports.postCmt = {
  */
 
 module.exports.postVote = {
-    handler : function (req, rep) {
+    handler: function (req, rep) {
         let user_data = req.auth.credentials;
         let post = req.payload;
         let user_id = _.get(user_data, 'id', '');
@@ -211,15 +223,15 @@ module.exports.postVote = {
 
         let up = (content > 0);
 
-        if (content == 0){
+        if (content == 0) {
             new Models.Vote({
                 user_id: user_id,
                 post_id: post_id
             }).fetch().then(function (result) {
-                if (_.isEmpty(result)){
+                if (_.isEmpty(result)) {
                     return rep(Boom.badData('destroy fail'));
                 }
-                new Models.Vote({id : result.id}).destroy().then(function () {
+                new Models.Vote({id: result.id}).destroy().then(function () {
                     // console.log('destroy ok');
                     // console.log(result.toJSON());
                     return rep(ResponseJSON('Success', result.toJSON()));
@@ -242,7 +254,7 @@ module.exports.postVote = {
                     // update
                     new Models.Vote({
                         id: result.id
-                    }).save({up : up}, {method: 'update', patch: true}).then(function (result) {
+                    }).save({up: up}, {method: 'update', patch: true}).then(function (result) {
                         // console.log('update ok men');
                         // console.log(result.toJSON());
                         return rep(ResponseJSON('Success', result.toJSON()));
@@ -257,10 +269,10 @@ module.exports.postVote = {
                 // console.log(err);
 
                 new Models.Vote({
-                    user_id : user_id,
-                    post_id : post_id,
-                    up : up,
-                    type : 'post'
+                    user_id: user_id,
+                    post_id: post_id,
+                    up: up,
+                    type: 'post'
                 }).save().then(function (result) {
                     // console.log('insert ok');
                     // console.log(result.toJSON());
@@ -293,7 +305,7 @@ module.exports.postVote = {
  */
 
 module.exports.postVoteCmt = {
-    handler : function (req, rep) {
+    handler: function (req, rep) {
         let user_data = req.auth.credentials;
         let post = req.payload;
         let user_id = _.get(user_data, 'id', '');
@@ -302,15 +314,15 @@ module.exports.postVoteCmt = {
 
         let up = (content > 0);
 
-        if (content == 0){
+        if (content == 0) {
             new Models.Vote({
                 user_id: user_id,
                 comment_id: comment_id
             }).fetch().then(function (result) {
-                if (_.isEmpty(result)){
+                if (_.isEmpty(result)) {
                     return rep(Boom.badData('destroy fail'));
                 }
-                new Models.Vote({id : result.id}).destroy().then(function () {
+                new Models.Vote({id: result.id}).destroy().then(function () {
                     // console.log('destroy ok');
                     // console.log(result.toJSON());
                     return rep(ResponseJSON('Success', result.toJSON()));
@@ -333,7 +345,7 @@ module.exports.postVoteCmt = {
                     // update
                     new Models.Vote({
                         id: result.id
-                    }).save({up : up}, {method: 'update', patch: true}).then(function (result) {
+                    }).save({up: up}, {method: 'update', patch: true}).then(function (result) {
                         // console.log('update ok men');
                         // console.log(result.toJSON());
                         return rep(ResponseJSON('Success', result.toJSON()));
@@ -348,10 +360,10 @@ module.exports.postVoteCmt = {
                 // console.log(err);
 
                 new Models.Vote({
-                    user_id : user_id,
-                    comment_id : comment_id,
-                    up : up,
-                    type : 'comment'
+                    user_id: user_id,
+                    comment_id: comment_id,
+                    up: up,
+                    type: 'comment'
                 }).save().then(function (result) {
                     // console.log('insert ok');
                     // console.log(result.toJSON());
@@ -397,23 +409,23 @@ module.exports.postSolve = {
                 console.log(user_id);
                 console.log(tempPost.user_id);
 
-                if (user_id == tempPost.user_id){
+                if (user_id == tempPost.user_id) {
                     //find the cmt is solve and remove solve from it
                     let cmts = tempPost.comments;
                     let cmtIdSolve = 0;
-                    for (let i=0; i<cmts.length; i++){
+                    for (let i = 0; i < cmts.length; i++) {
                         let tempCmt = cmts[i];
-                        if (tempCmt.is_solve > 0){
+                        if (tempCmt.is_solve > 0) {
                             cmtIdSolve = tempCmt.id;
                             break;
                         }
                     }
 
-                    if (cmtIdSolve != 0){
-                        new Models.Comment({id : cmtIdSolve})
+                    if (cmtIdSolve != 0) {
+                        new Models.Comment({id: cmtIdSolve})
                             .save({is_solve: false}, {method: 'update', patch: true})
                             .then(function () {
-                                new Models.Comment({id : comment_id})
+                                new Models.Comment({id: comment_id})
                                     .save({is_solve: true}, {method: 'update', patch: true})
                                     .then(function (result) {
                                         rep(ResponseJSON('Success', result));
@@ -425,7 +437,7 @@ module.exports.postSolve = {
                         });
                     }
 
-                    new Models.Comment({id : comment_id})
+                    new Models.Comment({id: comment_id})
                         .save({is_solve: true}, {method: 'update', patch: true})
                         .then(function (result) {
                             rep(ResponseJSON('Success', result));
@@ -436,7 +448,7 @@ module.exports.postSolve = {
                 } else {
                     rep(Boom.unauthorized('You are not the post\'author'));
                 }
-        }).catch(function () {
+            }).catch(function () {
             rep(Boom.badData('Something went wrong!'));
         });
     },
@@ -460,21 +472,21 @@ module.exports.postSolve = {
  * param: comment_id
  */
 module.exports.repComments = {
-    handler : function (req, rep) {
+    handler: function (req, rep) {
         let cmtId = encodeURIComponent(req.params.comment_id);
 
         new Models.Comment({
-            id : cmtId
-        }).fetch({withRelated : 'repComments.user'}).then(function (cmt) {
+            id: cmtId
+        }).fetch({withRelated: 'repComments.user'}).then(function (cmt) {
             cmt = cmt.toJSON();
             let repCmts = cmt.repComments;
-            for (var i=0; i<repCmts.length; i++){
+            for (var i = 0; i < repCmts.length; i++) {
                 let repCmt = repCmts[i];
                 repCmt.author = repCmt.user;
                 delete repCmt.user;
                 delete repCmt.author.password;
                 delete repCmt.author.token_id;
-                if (repCmt.is_incognito == true){
+                if (repCmt.is_incognito == true) {
                     delete repCmt.author;
                     delete repCmt.user_id;
                 }
@@ -499,19 +511,19 @@ module.exports.repComments = {
  * method: POST
  */
 module.exports.postRepCmt = {
-    handler : function (req, rep) {
+    handler: function (req, rep) {
         let user_data = req.auth.credentials;
         let post = req.payload;
         let userId = _.get(user_data, 'id', '');
         let commentId = _.get(post, 'comment_id', '');
         let content = _.get(post, 'content', '');
-        let isIncognito = _.get(post , 'is_incognito', false);
+        let isIncognito = _.get(post, 'is_incognito', false);
 
         new Models.RepComment({
-            comment_id : commentId,
-            user_id : userId,
-            content : content,
-            is_incognito : isIncognito
+            comment_id: commentId,
+            user_id: userId,
+            content: content,
+            is_incognito: isIncognito
         }).save().then(function (cmt) {
             rep(ResponseJSON('Rep cmt success!', cmt));
         }).catch(function (err) {
@@ -523,11 +535,11 @@ module.exports.postRepCmt = {
         mode: 'required',
         strategies: ['jwt']
     },
-    validate : {
+    validate: {
         payload: {
-            comment_id : Joi.number().integer().required(),
-            content : Joi.string().required(),
-            is_incognito : Joi.boolean().optional()
+            comment_id: Joi.number().integer().required(),
+            content: Joi.string().required(),
+            is_incognito: Joi.boolean().optional()
         }
     },
     description: 'post rep comments',

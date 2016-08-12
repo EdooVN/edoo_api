@@ -1,4 +1,5 @@
 'use strict';
+
 const Models = global.Models;
 const commons = global.helpers.commons;
 const jwt = require('jsonwebtoken');

@@ -8,12 +8,13 @@ const Joi = require('joi');
 const ResponseJSON = global.helpers.ResponseJSON;
 const helpers = global.helpers;
 const config = helpers.config;
+const service = require('../services/AllService');
 
 module.exports.getpost = {
     handler: function (req, rep) {
         let class_id = encodeURIComponent(req.params.class_id);
 
-        new Models.Class({id: class_id}).fetch({withRelated: 'posts.user'}).then(function (result) {
+        new Models.Class({id: class_id}).fetch({withRelated: ['posts.user', 'posts.comments', 'posts.votes']}).then(function (result) {
             result = result.toJSON();
             let posts = result.posts;
 
@@ -23,9 +24,25 @@ module.exports.getpost = {
                 delete posts[i].user;
                 delete posts[i].author.password;
 
-                console.log(post);
+                post.comment_count = post.comments.length;
+                delete post.comments;
 
-                if (post.is_incognito == true){
+                let votes = post.votes;
+                let vote_count = 0;
+                for (let j = 0; j < votes.length; j++) {
+                    if (votes[j].up == true) {
+                        vote_count++;
+                    } else {
+                        vote_count--;
+                    }
+                }
+
+                post.vote_count = vote_count;
+                delete post.votes;
+
+                // console.log(post);
+
+                if (post.is_incognito == true) {
                     delete post.author;
                 }
             }
@@ -56,6 +73,8 @@ module.exports.postPost = {
         let tag = _.get(post, 'tag', '');
         let is_incognito = _.get(post, 'is_incognito', false);
 
+        let now = new Date(Date.now());
+
         new Models.Post({
             user_id: user_id,
             class_id: class_id,
@@ -63,7 +82,8 @@ module.exports.postPost = {
             content: content,
             type: type,
             tag: tag,
-            is_incognito : is_incognito
+            is_incognito: is_incognito,
+            created_at: now.toISOString()
         }).save().then(function (result) {
             rep(ResponseJSON('Post success', result));
         }).catch(function () {
@@ -82,7 +102,7 @@ module.exports.postPost = {
             content: Joi.string().required(),
             type: Joi.string().required(),
             tag: Joi.string().optional(),
-            is_incognito : Joi.boolean().optional()
+            is_incognito: Joi.boolean().optional()
         }
     },
     description: 'post a post to class',
@@ -111,7 +131,7 @@ module.exports.postDetail = {
             delete post.user;
             delete post.author.password;
 
-            if (post.is_incognito == true){
+            if (post.is_incognito == true) {
                 delete post.author;
             }
 
@@ -166,7 +186,7 @@ module.exports.postDetail = {
 };
 
 /**
- * cmt
+ * post a cmt
  */
 
 module.exports.postCmt = {
@@ -178,12 +198,15 @@ module.exports.postCmt = {
         let content = _.get(post, 'content', '');
         let isIncognito = _.get(post, 'is_incognito', false);
 
+        let now = new Date(Date.now());
+
         new Models.Comment({
             user_id: user_id,
             post_id: post_id,
             content: content,
             is_solve: false,
-            is_incognito: isIncognito
+            is_incognito: isIncognito,
+            created_at: now.toISOString()
         }).save().then(function (result) {
             if (result) {
                 rep(ResponseJSON('Comment success!', result));
@@ -234,7 +257,12 @@ module.exports.postVote = {
                 new Models.Vote({id: result.id}).destroy().then(function () {
                     // console.log('destroy ok');
                     // console.log(result.toJSON());
-                    return rep(ResponseJSON('Success', result.toJSON()));
+                    service.post.getVotePost(post_id, function (vote_count) {
+                        let res = {
+                            vote_count: vote_count
+                        };
+                        return rep(ResponseJSON('Success', res));
+                    });
                 }).catch(function () {
                     console.log('destroy fail');
                     return rep(Boom.badData('destroy fail'));
@@ -257,7 +285,13 @@ module.exports.postVote = {
                     }).save({up: up}, {method: 'update', patch: true}).then(function (result) {
                         // console.log('update ok men');
                         // console.log(result.toJSON());
-                        return rep(ResponseJSON('Success', result.toJSON()));
+                        // return rep(ResponseJSON('Success', result.toJSON()));
+                        service.post.getVotePost(post_id, function (vote_count) {
+                            let res = {
+                                vote_count: vote_count
+                            };
+                            return rep(ResponseJSON('Success', res));
+                        });
                     }).catch(function () {
                         // console.log('update fail');
                         return rep(Boom.badData('update fail'));
@@ -273,10 +307,16 @@ module.exports.postVote = {
                     post_id: post_id,
                     up: up,
                     type: 'post'
-                }).save().then(function (result) {
+                }).save(null, {method: 'insert'}).then(function (result) {
                     // console.log('insert ok');
                     // console.log(result.toJSON());
-                    return rep(ResponseJSON('Success', result.toJSON()));
+                    // return rep(ResponseJSON('Success', result.toJSON()));
+                    service.post.getVotePost(post_id, function (vote_count) {
+                        let res = {
+                            vote_count: vote_count
+                        };
+                        return rep(ResponseJSON('Success', res));
+                    });
                 }).catch(function () {
                     // console.log('insert fail');
                     return rep(Boom.badData('destroy fail'));

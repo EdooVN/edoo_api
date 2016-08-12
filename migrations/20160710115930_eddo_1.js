@@ -61,6 +61,7 @@ exports.up = function (knex, Promise) {
             table.varchar('type', 200);
             table.varchar('tag', 200);
             table.boolean('is_incognito');
+            table.timestamps();
 
             table.index('user_id');
             table.index('class_id');
@@ -73,6 +74,7 @@ exports.up = function (knex, Promise) {
             table.text('content').notNullable();
             table.boolean('is_solve');
             table.boolean('is_incognito');
+            table.timestamps();
         }),
 
         knex.schema.createTable('rep_comments', function (table) {
@@ -81,6 +83,7 @@ exports.up = function (knex, Promise) {
             table.integer('user_id').unsigned();
             table.text('content').notNullable();
             table.boolean('is_incognito');
+            table.timestamps();
         }),
 
         knex.schema.createTable('votes', function (table) {

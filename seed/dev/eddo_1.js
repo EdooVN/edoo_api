@@ -1,4 +1,5 @@
 exports.seed = function (knex, Promise) {
+    let now = new Date(Date.now());
     // Deletes ALL existing entries
     return Promise.all([
         knex('users').del()
@@ -35,7 +36,7 @@ exports.seed = function (knex, Promise) {
                         password: '$2a$10$dtaAZp55vPJgE4C759fkFOd.ISEcU2AvdL49yXGgBWSmiEuWfHfQi',
                         email: 'minhnt_58@vnu.edu.vn',
                         capability: 'student',
-                        avatar : 'https://lh4.googleusercontent.com/t84SFLH5SxzWhNSJrBFXfwHs12mPUl0hxpQdDCMHKNZDo70l46V_qcxUaGpfl_ubJJbBwSxvY1X-rzY=w2478-h1406'
+                        avatar : 'https://scontent-hkg3-1.xx.fbcdn.net/v/t1.0-9/12096202_898864656850723_4092586705994255622_n.jpg?oh=aae1d9601bedcadad09c217b38225fce&oe=5852665B'
                     }),
                     knex('users').insert({
                         id : 4,
@@ -58,14 +59,20 @@ exports.seed = function (knex, Promise) {
                         code: 'INT2004',
                         name: 'Lập trình hướng đối tượng',
                         type: 'subject',
-                        semester: '1-2016-2017'
+                        semester: '1-2016-2017',
+                        credit_count: 4,
+                        student_count: 90,
+                        teacher_name: "Tran Thi Minh Chau"
                     }),
                     knex('classes').insert({
                         id: 'INT20031-2016-2017',
                         code: 'INT2003',
                         name: 'Lập trình nâng cao',
                         type: 'subject',
-                        semester: '1-2016-2017'
+                        semester: '1-2016-2017',
+                        credit_count: 4,
+                        student_count: 90,
+                        teacher_name: "Tran Thi Minh Chau"
                     })
                 ])
             }),
@@ -111,7 +118,8 @@ exports.seed = function (knex, Promise) {
                         'Một interface chứa các hành vi mà một class triển khai.',
                         type: 'question',
                         tag: 'java',
-                        is_incognito : false
+                        is_incognito : false,
+                        created_at : now.toISOString()
                     }),
                     knex('posts').insert({
                         id : 2,
@@ -127,7 +135,8 @@ exports.seed = function (knex, Promise) {
                         'Một interface có thể kế thừa từ nhiều interface khác.',
                         type : 'note',
                         tag : 'interface',
-                        is_incognito : false
+                        is_incognito : false,
+                        created_at : now.toISOString()
                     }),
                     knex('posts').insert({
                         id : 3,
@@ -143,7 +152,8 @@ exports.seed = function (knex, Promise) {
                         'Một interface có thể kế thừa từ nhiều interface khác.',
                         type : 'note',
                         tag : 'interface',
-                        is_incognito : true
+                        is_incognito : true,
+                        created_at : now.toISOString()
                     })
                 ])
             }),
@@ -156,7 +166,8 @@ exports.seed = function (knex, Promise) {
                         user_id: 1,
                         post_id: 3,
                         content: 'Day la 1 cai comment tu te!',
-                        is_solve: 1
+                        is_solve: 1,
+                        created_at : now.toISOString()
                     }),
                     knex('comments').insert({
                         id : 2,
@@ -164,7 +175,8 @@ exports.seed = function (knex, Promise) {
                         post_id: 1,
                         content: 'Day la 1 cai cmt tu te!',
                         is_solve: 0,
-                        is_incognito : false
+                        is_incognito : false,
+                        created_at : now.toISOString()
                     }),
                     knex('comments').insert({
                         id: 3,
@@ -172,7 +184,8 @@ exports.seed = function (knex, Promise) {
                         post_id: 3,
                         content: 'Day la 1 cai comment 2 tu te!',
                         is_solve: 0,
-                        is_incognito : true
+                        is_incognito : true,
+                        created_at : now.toISOString()
                     }),
                     knex('comments').insert({
                         id : 4,
@@ -180,7 +193,8 @@ exports.seed = function (knex, Promise) {
                         post_id: 1,
                         content: 'Day la 1 cai comment 3 tu te!',
                         is_solve: 0,
-                        is_incognito : true
+                        is_incognito : true,
+                        created_at : now.toISOString()
                     })
                 ])
             }),
@@ -193,14 +207,16 @@ exports.seed = function (knex, Promise) {
                         user_id: 1,
                         comment_id : 4,
                         content : 'ok men rep cmt sdflkjsdlfjsdlkfjskldfjklsdjf',
-                        is_incognito: false
+                        is_incognito: false,
+                        created_at : now.toISOString()
                     }),
                     knex('rep_comments').insert({
                         id : 2,
                         user_id: 1,
                         comment_id : 4,
                         content : 'incognito ok men rep comment',
-                        is_incognito: true
+                        is_incognito: true,
+                        created_at : now.toISOString()
                     })
                 ])
             }),
@@ -239,7 +255,7 @@ exports.seed = function (knex, Promise) {
                     knex('votes').insert({
                         id : 5,
                         user_id: 1,
-                        post_id: 1,
+                        post_id: 3,
                         type : 'post',
                         up : false
                     })

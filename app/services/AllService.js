@@ -1,5 +1,6 @@
 'use strict';
 
 module.exports ={
-    user : require('./UserService')
+    user : require('./UserService'),
+    post : require('./PostService')
 };

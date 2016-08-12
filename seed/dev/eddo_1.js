@@ -12,7 +12,8 @@ exports.seed = function (knex, Promise) {
                         username: 'quytm_58',
                         password: '$2a$10$dtaAZp55vPJgE4C759fkFOd.ISEcU2AvdL49yXGgBWSmiEuWfHfQi',
                         email: 'quytm_58@vnu.edu.vn',
-                        capability: 'student'
+                        capability: 'student',
+                        avatar : 'https://lh4.googleusercontent.com/t84SFLH5SxzWhNSJrBFXfwHs12mPUl0hxpQdDCMHKNZDo70l46V_qcxUaGpfl_ubJJbBwSxvY1X-rzY=w2478-h1406'
                     }),
                     knex('users').insert({
                         id: 2,
@@ -22,7 +23,8 @@ exports.seed = function (knex, Promise) {
                         username: 'tutv95',
                         password: '$2a$10$dtaAZp55vPJgE4C759fkFOd.ISEcU2AvdL49yXGgBWSmiEuWfHfQi',
                         email: 'tutv_58@vnu.edu.vn',
-                        capability: 'student'
+                        capability: 'student',
+                        avatar : 'https://lh4.googleusercontent.com/t84SFLH5SxzWhNSJrBFXfwHs12mPUl0hxpQdDCMHKNZDo70l46V_qcxUaGpfl_ubJJbBwSxvY1X-rzY=w2478-h1406'
                     }),
                     knex('users').insert({
                         id: 3,
@@ -32,7 +34,8 @@ exports.seed = function (knex, Promise) {
                         username: 'minhnt',
                         password: '$2a$10$dtaAZp55vPJgE4C759fkFOd.ISEcU2AvdL49yXGgBWSmiEuWfHfQi',
                         email: 'minhnt_58@vnu.edu.vn',
-                        capability: 'student'
+                        capability: 'student',
+                        avatar : 'https://lh4.googleusercontent.com/t84SFLH5SxzWhNSJrBFXfwHs12mPUl0hxpQdDCMHKNZDo70l46V_qcxUaGpfl_ubJJbBwSxvY1X-rzY=w2478-h1406'
                     }),
                     knex('users').insert({
                         id : 4,
@@ -42,7 +45,8 @@ exports.seed = function (knex, Promise) {
                         username: 'khanhtv',
                         password: '$2a$10$dtaAZp55vPJgE4C759fkFOd.ISEcU2AvdL49yXGgBWSmiEuWfHfQi',
                         email: 'khanhtv@vnu.edu.vn',
-                        capability: 'teacher'
+                        capability: 'teacher',
+                        avatar : 'https://lh4.googleusercontent.com/t84SFLH5SxzWhNSJrBFXfwHs12mPUl0hxpQdDCMHKNZDo70l46V_qcxUaGpfl_ubJJbBwSxvY1X-rzY=w2478-h1406'
                     })
                 ]);
             }),

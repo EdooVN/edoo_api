@@ -110,6 +110,7 @@ exports.down = function (knex, Promise) {
         knex.schema.dropTable('users'),
         knex.schema.dropTable('tokens'),
         knex.schema.dropTable('classes'),
+        knex.schema.dropTable('lessions'),
         knex.schema.dropTable('users_classes'),
         knex.schema.dropTable('posts'),
         knex.schema.dropTable('comments'),

@@ -7,6 +7,7 @@ let config = global.helpers.config;
 let key = config('SERVER_KEY', '');
 
 module.exports.updateToken = function (tokenId) {
+    // console.log(tokenId);
     new Models.Token({
         id: tokenId
     }).save(

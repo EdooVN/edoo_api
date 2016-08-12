@@ -12,16 +12,16 @@ module.exports.getclass = {
     handler: function (req, rep) {
         let user_data = req.auth.credentials;
         let _id = _.get(user_data, 'id', '');
+        let tokenId = _.get(user_data, 'token_id', '');
 
         new Models.User({
             id : _id
         }).fetch({withRelated: 'classes'}).then(function (user){
             user = user.toJSON();
             delete user.password;
-            delete user.session;
             rep(ResponseJSON('', user));
 
-            service.user.updateToken(user.token_id);
+            service.user.updateToken(tokenId);
         }).catch(function () {
             rep(Boom.badRequest('Some thing went wrong!'));
         });
@@ -47,7 +47,6 @@ module.exports.getTimetable = {
         }).fetch({withRelated: 'classes.lessions'}).then(function (user){
             user = user.toJSON();
             delete user.password;
-            delete user.session;
             rep(ResponseJSON('', user));
 
             service.user.updateToken(tokenId);

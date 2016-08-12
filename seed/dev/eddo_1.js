@@ -226,12 +226,14 @@ exports.seed = function (knex, Promise) {
                         up : true
                     }),
                     knex('votes').insert({
+                        id : 4,
                         user_id: 3,
                         comment_id: 4,
                         type : 'comment',
                         up : true
                     }),
                     knex('votes').insert({
+                        id : 5,
                         user_id: 1,
                         post_id: 1,
                         type : 'post',

@@ -55,6 +55,11 @@ module.exports.register = (server, options, next) => {
             path: '/classes',
             config: controller.class.getclass
         },
+        {
+            method: ['GET'],
+            path: '/timetable',
+            config: controller.class.getTimetable
+        },
 
         /**
          * post

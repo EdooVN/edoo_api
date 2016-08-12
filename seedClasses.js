@@ -34,8 +34,8 @@ for (let i=0; i<classes.length; i++){
     // console.log(addressClass);
     let id = (codeClass + semester);
 
-    new Models.Class({
-        id : id,
+    new Models.Lession({
+        class_id : id,
         code : codeClass,
         name : nameClass,
         type : 'subject',
@@ -46,8 +46,23 @@ for (let i=0; i<classes.length; i++){
         period : periodClass,
         student_count : studentCountClass,
         teacher_name : teacherClass
-    }).save(null, {method: 'insert'}).then(function (classSql) {
-       console.log(classSql.toJSON());
+    }).save(null, {method: 'insert'}).then(function (lessionSql) {
+       console.log(lessionSql.toJSON());
+    }).catch(function (err) {
+        console.log(err);
+    });
+
+    new Models.Class({
+        id : id,
+        code : codeClass,
+        name : nameClass,
+        type : 'subject',
+        semester : semester,
+        credit_count : creditCountClass,
+        student_count : studentCountClass,
+        teacher_name : teacherClass
+    }).save(null, {method: 'insert'}).then(function (lessionSql) {
+        console.log(lessionSql.toJSON());
     }).catch(function (err) {
         console.log(err);
     });

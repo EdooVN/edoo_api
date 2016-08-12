@@ -46,6 +46,10 @@ var Token = module.exports.Token = bookshelf.Model.extend({
 var Class = module.exports.Class = bookshelf.Model.extend({
     tableName: 'classes',
 
+    lessions : function () {
+        return this.hasMany(Lession);
+    },
+
     posts: function () {
         return this.hasMany(Post);
     },
@@ -56,7 +60,11 @@ var Class = module.exports.Class = bookshelf.Model.extend({
 });
 
 var User_Class = module.exports.User_Class = bookshelf.Model.extend({
-    tableName: 'users_classes',
+    tableName: 'users_classes'
+});
+
+var Lession = module.exports.Lession = bookshelf.Model.extend({
+    tableName: 'lessions'
 });
 
 var Post = module.exports.Post = bookshelf.Model.extend({

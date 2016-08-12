@@ -9,6 +9,7 @@ exports.up = function (knex, Promise) {
             table.varchar('password', 200).notNullable();
             table.date('birthday');
             table.varchar('capability', 10);
+            table.varchar('avatar', 200);
 
             table.index('code');
             table.index('username');
@@ -28,13 +29,27 @@ exports.up = function (knex, Promise) {
             table.varchar('type', 200);
             table.varchar('semester', 200).notNullable();
             table.integer('credit_count');
+            table.integer('student_count');
+            table.varchar('teacher_name', 200);
+
+            table.index('code');
+        }),
+
+        knex.schema.createTable('lessions', function (table) {
+            table.increments('id').unsigned();
+            table.varchar('class_id', 200).notNullable();
+            table.varchar('code', 200).notNullable();
+            table.varchar('name', 200);
+            table.varchar('type', 200);
+            table.varchar('semester', 200).notNullable();
+            table.integer('credit_count');
             table.varchar('address', 200);
             table.integer('day_of_week');
             table.varchar('period', 200);
             table.integer('student_count');
             table.varchar('teacher_name', 200);
 
-            table.index('code');
+            table.index('class_id');
         }),
 
         knex.schema.createTable('posts', function (table) {

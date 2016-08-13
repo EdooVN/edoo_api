@@ -21,12 +21,17 @@ PATH_IMG_UPLOAD = /home/
 ```
 
 # Init database
+
 Chạy knex:
+```
 knex migrate:latest
 knex seed:run
-
+```
 # seed dữ liệu class để test
+
+```
 node seedClasses.js
+```
 
 # Documentation API
 

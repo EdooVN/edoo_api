@@ -3,7 +3,9 @@
 
 # Config
 
-Tạo file .env ở thư mục gốc. Ví dụ:
+Tạo file .env ở thư mục gốc.
+Tạo database "Edoo"
+ Ví dụ:
 
 ```
 SERVER_ADDRESS=localhost
@@ -18,6 +20,14 @@ DB_CHARSET=utf8
 PATH_IMG_UPLOAD = /home/
 ```
 
+# Init database
+Chạy knex:
+knex migrate:latest
+knex seed:run
+
+# seed dữ liệu class để test
+node seedClasses.js
+
 # Documentation API
 
 Xem tại route /docs (UI) hoặc /docs.json (json)
@@ -26,3 +36,7 @@ Xem tại route /docs (UI) hoặc /docs.json (json)
 
 Nếu cài bcrypt bị lỗi thì xem link này nhé:
 https://github.com/nodejs/node-gyp
+
+# Start server:
+
+node index.js

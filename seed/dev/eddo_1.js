@@ -1,3 +1,5 @@
+'use strict';
+
 exports.seed = function (knex, Promise) {
     let now = new Date(Date.now());
     // Deletes ALL existing entries

@@ -27,6 +27,11 @@ module.exports.register = (server, options, next) => {
             path: '/logout',
             config: controller.user.logout
         },
+        {
+            method: ['POST'],
+            path: '/resfcm',
+            config: controller.user.registerFirebaseToken
+        },
 
         /**
          * Manager

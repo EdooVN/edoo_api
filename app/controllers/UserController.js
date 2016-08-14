@@ -144,3 +144,96 @@ module.exports.logout = {
     notes: 'Logout',
     tags: ['api', 'logout']
 };
+
+/**
+ * Register firebase token
+ */
+
+module.exports.registerFirebaseToken = {
+    handler: function (req, rep) {
+        let user_data = req.auth.credentials;
+        let user_id = _.get(user_data, 'id', '');
+        let post = req.payload;
+        let type = _.get(post, 'type', '');
+        let token = _.get(post, 'token', '');
+
+        if (type != 'android' && type != 'ios' && type != 'web'){
+            return rep(Boom.badData('invalid type, the type is: android/ios/web'));
+        }
+
+        //Check FCM token is exits?
+        // yes: change user
+        // no: continue
+        new Models.FirebaseToken({
+            type : type,
+            token : token
+        }).fetch().then(function (result) {
+            if (!_.isEmpty(result)){
+                new Models.FirebaseToken({
+                    id : result.toJSON().id
+                }).save({user_id : user_id}, {method : 'update', patch : true}).then(function (tokenInsert) {
+                    return rep(ResponseJSON('Success', tokenInsert.toJSON()));
+                });
+            } else {
+                new Models.FirebaseToken({
+                    user_id: user_id,
+                    type: type
+                }).fetch().then(function (tokenSql) {
+                    if (_.isEmpty(tokenSql)){
+                        // insert new
+                        new Models.FirebaseToken({
+                            user_id: user_id,
+                            type: type,
+                            token : token
+                        }).save().then(function (tokenInsert) {
+                            return rep(ResponseJSON('Success', tokenInsert.toJSON()));
+                        });
+                    } else {
+                        new Models.FirebaseToken({
+                            id : tokenSql.toJSON().id
+                        }).save({token : token}, {method : 'update', patch : true}).then(function (tokenInsert) {
+                            return rep(ResponseJSON('Success', tokenInsert.toJSON()));
+                        });
+                    }
+                }).catch(function (err) {
+                    console.log(err);
+                    console.log('ok men 3');
+                    return rep(Boom.badData('Something went wrong!'));
+                });
+            }
+        });
+    },
+    auth: {
+        mode: 'required',
+        strategies: ['jwt']
+    },
+    validate: {
+        payload: {
+            type: Joi.string().required(),
+            token: Joi.string().required()
+        }
+    },
+    description: 'register firebase token',
+    notes: 'type: android/ios/web',
+    tags: ['api', 'register firebase token']
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

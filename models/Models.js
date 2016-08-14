@@ -13,6 +13,10 @@ var User = module.exports.User = bookshelf.Model.extend({
         return this.hasMany(Token);
     },
 
+    firebase_tokens : function () {
+        return this.hasMany(FirebaseToken);
+    },
+
     classes: function () {
         return this.belongsToMany(Class, 'users_classes', 'user_id', 'class_id');
     },
@@ -43,6 +47,13 @@ var Token = module.exports.Token = bookshelf.Model.extend({
     }
 });
 
+var FirebaseToken = module.exports.FirebaseToken = bookshelf.Model.extend({
+    tableName : 'firebase_tokens',
+    user : function () {
+        return this.belongsTo(User);
+    }
+});
+
 var Class = module.exports.Class = bookshelf.Model.extend({
     tableName: 'classes',
 
@@ -57,6 +68,10 @@ var Class = module.exports.Class = bookshelf.Model.extend({
     users: function () {
         return this.belongsToMany(User, 'users_classes', 'class_id', 'user_id');
     }
+});
+
+var Seen = module.exports.Seen = bookshelf.Model.extend({
+    tableName: 'seens'
 });
 
 var User_Class = module.exports.User_Class = bookshelf.Model.extend({

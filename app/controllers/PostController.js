@@ -186,6 +186,28 @@ module.exports.postDetail = {
 };
 
 /**
+ * Post a seen-post
+ */
+
+module.exports.postSeen = {
+    handler : function (req, rep) {
+
+    },
+    auth: {
+        mode: 'required',
+        strategies: ['jwt']
+    },
+    validate: {
+        payload: {
+            post_id: Joi.string().alphanum().required()
+        }
+    },
+    description: 'post seen',
+    notes: 'post seen',
+    tags: ['api', 'post']
+};
+
+/**
  * post a cmt
  */
 

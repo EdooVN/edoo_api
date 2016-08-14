@@ -22,6 +22,13 @@ exports.up = function (knex, Promise) {
             table.bigInteger('time_expire').unsigned().notNullable();
         }),
 
+        knex.schema.createTable('firebase_tokens', function (table) {
+            table.increments('id').unsigned();
+            table.integer('user_id').unsigned();
+            table.varchar('type', 200).notNullable();
+            table.varchar('token', 200).notNullable();
+        }),
+
         knex.schema.createTable('classes', function (table) {
             table.varchar('id', 200).primary();
             table.varchar('code', 200).notNullable();
@@ -65,6 +72,12 @@ exports.up = function (knex, Promise) {
 
             table.index('user_id');
             table.index('class_id');
+        }),
+
+        knex.schema.createTable('seens', function (table) {
+            table.increments('id').unsigned();
+            table.integer('post_id').unsigned();
+            table.integer('user_id').unsigned();
         }),
 
         knex.schema.createTable('comments', function (table) {
@@ -112,6 +125,7 @@ exports.down = function (knex, Promise) {
     return Promise.all([
         knex.schema.dropTable('users'),
         knex.schema.dropTable('tokens'),
+        knex.schema.dropTable('firebase_tokens'),
         knex.schema.dropTable('classes'),
         knex.schema.dropTable('lessions'),
         knex.schema.dropTable('users_classes'),

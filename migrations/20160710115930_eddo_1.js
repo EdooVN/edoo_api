@@ -68,6 +68,7 @@ exports.up = function (knex, Promise) {
             table.varchar('type', 200);
             table.varchar('tag', 200);
             table.boolean('is_incognito');
+            table.boolean('is_post_teacher');
             table.timestamps();
 
             table.index('user_id');

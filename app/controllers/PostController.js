@@ -66,12 +66,14 @@ module.exports.postPost = {
         let user_data = req.auth.credentials;
         let post = req.payload;
         let user_id = _.get(user_data, 'id', '');
+        let user_name = _.get(user_data, 'name', '');
         let class_id = _.get(post, 'class_id', '');
         let title = _.get(post, 'title', '');
         let content = _.get(post, 'content', '');
         let type = _.get(post, 'type', '');
         let tag = _.get(post, 'tag', '');
         let is_incognito = _.get(post, 'is_incognito', false);
+        let is_post_teacher = _.get(post, 'is_post_teacher', false);
 
         let now = new Date(Date.now());
 
@@ -83,9 +85,21 @@ module.exports.postPost = {
             type: type,
             tag: tag,
             is_incognito: is_incognito,
+            is_post_teacher: is_post_teacher,
             created_at: now.toISOString()
         }).save().then(function (result) {
             rep(ResponseJSON('Post success', result));
+
+            if (is_post_teacher == true){
+                let dataPush = {
+                    title : title,
+                    content : content,
+                    teacher_name : user_name,
+                    class_id : class_id
+                };
+                service.post.pushNotiToStudent(class_id, dataPush);
+            }
+
         }).catch(function () {
             rep(Boom.badData('Something went wrong!'));
         });
@@ -102,7 +116,8 @@ module.exports.postPost = {
             content: Joi.string().required(),
             type: Joi.string().required(),
             tag: Joi.string().optional(),
-            is_incognito: Joi.boolean().optional()
+            is_incognito: Joi.boolean().optional(),
+            is_post_teacher : Joi.boolean().optional()
         }
     },
     description: 'post a post to class',

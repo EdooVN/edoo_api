@@ -121,6 +121,7 @@ exports.seed = function (knex, Promise) {
                         type: 'question',
                         tag: 'java',
                         is_incognito : false,
+                        is_post_teacher : false,
                         created_at : now.toISOString()
                     }),
                     knex('posts').insert({
@@ -138,6 +139,7 @@ exports.seed = function (knex, Promise) {
                         type : 'note',
                         tag : 'interface',
                         is_incognito : false,
+                        is_post_teacher : false,
                         created_at : now.toISOString()
                     }),
                     knex('posts').insert({
@@ -155,6 +157,7 @@ exports.seed = function (knex, Promise) {
                         type : 'note',
                         tag : 'interface',
                         is_incognito : true,
+                        is_post_teacher : false,
                         created_at : now.toISOString()
                     })
                 ])

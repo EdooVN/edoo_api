@@ -1,6 +1,7 @@
 'use strict';
 
 const _ = require('lodash');
+const async = require("async");
 const request = require('request');
 const Models = global.Models;
 const helpers = global.helpers;
@@ -32,19 +33,41 @@ module.exports.getVotePost = function (post_id, callback) {
     });
 };
 
-// module.exports.checkUserSeen = function (posts, user_id, callback) {
-//     if (_.isEmpty(posts)) {
-//         return callback(posts);
-//     }
-//
-//     for (let i = 0; i < posts.length; i++) {
-//         let post = posts[i];
-//         new Models.Seen({
-//             post_id: post.id,
-//             user_id: user_id
-//         })
-//     }
-// };
+module.exports.checkUserSeen = function (posts, user_id, cb) {
+    if (_.isEmpty(posts)) {
+        return callback(posts);
+    }
+
+    async.each(posts,
+        function (post, callback) {
+            let is_seen = 0;
+            new Models.Post({
+                id: post.id
+            }).fetch({withRelated: 'seens'}).then(function (postSql) {
+                if (!_.isEmpty(postSql)) {
+                    postSql = postSql.toJSON();
+                    let seens = postSql.seens;
+                    for (var i = 0; i < seens.length; i++) {
+                        let seen = seens[i];
+                        if (seen.user_id == user_id) {
+                            is_seen = 1;
+                        }
+                    }
+                }
+                post.is_seen = is_seen;
+
+                callback();
+            }).catch(function (err) {
+                console.log(err);
+                callback();
+            });
+        },
+
+        function (err) {
+            // when done, call back to rep
+            cb(posts);
+        });
+};
 
 module.exports.pushNotiToStudent = function (classId, data) {
     console.log('push no ti');
@@ -91,8 +114,8 @@ function pushFirebaseNoti(apiKey, deviceToken, data) {
     let param_post = {
         url: urlReq,
         headers: {
-            'Authorization' : authorHeader,
-            'Content-Type' : 'application/json'
+            'Authorization': authorHeader,
+            'Content-Type': 'application/json'
         },
         form: form
     };

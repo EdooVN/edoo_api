@@ -91,6 +91,11 @@ module.exports.register = (server, options, next) => {
         },
         {
             method : ['POST'],
+            path: '/seen',
+            config: controller.post.postSeen
+        },
+        {
+            method : ['POST'],
             path: '/votepost',
             config: controller.post.postVote
         },

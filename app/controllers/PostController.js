@@ -12,6 +12,8 @@ const service = require('../services/AllService');
 
 module.exports.getpost = {
     handler: function (req, rep) {
+        let user_data = req.auth.credentials;
+        let user_id = _.get(user_data, 'id', '');
         let class_id = encodeURIComponent(req.params.class_id);
 
         new Models.Class({id: class_id}).fetch({withRelated: ['posts.user', 'posts.comments', 'posts.votes']}).then(function (result) {
@@ -47,7 +49,10 @@ module.exports.getpost = {
                 }
             }
 
-            rep(ResponseJSON('', result));
+            service.post.checkUserSeen(result.posts, user_id, function (posts) {
+                result.posts = posts;
+                rep(ResponseJSON('', result));
+            });
         }).catch(function () {
             rep(Boom.badData('Something went wrong!'));
         });
@@ -136,8 +141,7 @@ module.exports.postDetail = {
         let post_id = encodeURIComponent(req.params.post_id);
 
         new Models.Post({
-            id: post_id,
-            user_id: user_id
+            id: post_id
         }).fetch({withRelated: ['votes.user', 'comments.user', 'user', 'comments.votes.user', 'comments.repComments.user']}).then(function (post) {
             post = post.toJSON();
 
@@ -187,8 +191,9 @@ module.exports.postDetail = {
             }
 
             rep(ResponseJSON('', post));
-        }).catch(function () {
+        }).catch(function (err) {
             rep(Boom.badData('Something went wrong!'));
+            // console.log(err);
         });
     },
     auth: {
@@ -206,7 +211,19 @@ module.exports.postDetail = {
 
 module.exports.postSeen = {
     handler : function (req, rep) {
+        let user_data = req.auth.credentials;
+        let post = req.payload;
+        let user_id = _.get(user_data, 'id', '');
+        let post_id = _.get(post, 'post_id', '');
 
+        new Models.Seen({
+            user_id : user_id,
+            post_id : post_id
+        }).save().then(function (seen) {
+            rep(ResponseJSON('', seen.toJSON()));
+        }).catch(function (err) {
+            rep(Boom.badData('Something went wrong!'));
+        })
     },
     auth: {
         mode: 'required',

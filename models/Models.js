@@ -70,10 +70,6 @@ var Class = module.exports.Class = bookshelf.Model.extend({
     }
 });
 
-var Seen = module.exports.Seen = bookshelf.Model.extend({
-    tableName: 'seens'
-});
-
 var User_Class = module.exports.User_Class = bookshelf.Model.extend({
     tableName: 'users_classes'
 });
@@ -92,7 +88,14 @@ var Post = module.exports.Post = bookshelf.Model.extend({
     },
     comments: function () {
         return this.hasMany(Comment);
+    },
+    seens: function () {
+        return this.hasMany(Seen);
     }
+});
+
+var Seen = module.exports.Seen = bookshelf.Model.extend({
+    tableName: 'seens'
 });
 
 var Comment = module.exports.Comment = bookshelf.Model.extend({

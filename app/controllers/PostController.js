@@ -486,7 +486,7 @@ module.exports.postVoteCmt = {
 };
 
 /**
- * Post owner tick solved to cmt
+ * Owner tick solved to cmt
  */
 module.exports.postSolve = {
     handler: function (req, rep) {

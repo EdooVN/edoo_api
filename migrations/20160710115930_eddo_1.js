@@ -10,6 +10,7 @@ exports.up = function (knex, Promise) {
             table.date('birthday');
             table.varchar('capability', 10);
             table.varchar('avatar', 200);
+            table.varchar('regular_class', 200);
 
             table.index('code');
             table.index('username');

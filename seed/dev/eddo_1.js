@@ -16,6 +16,7 @@ exports.seed = function (knex, Promise) {
                         password: '$2a$10$dtaAZp55vPJgE4C759fkFOd.ISEcU2AvdL49yXGgBWSmiEuWfHfQi',
                         email: 'quytm_58@vnu.edu.vn',
                         capability: 'student',
+                        regular_class: 'ICQ-K58-CLC',
                         avatar : 'https://scontent-hkg3-1.xx.fbcdn.net/v/t1.0-9/12961735_475101389349107_8771290773156913489_n.jpg?oh=4a63a9b60b72022cb0cc69106995cbb7&oe=581750D8'
                     }),
                     knex('users').insert({
@@ -27,6 +28,7 @@ exports.seed = function (knex, Promise) {
                         password: '$2a$10$dtaAZp55vPJgE4C759fkFOd.ISEcU2AvdL49yXGgBWSmiEuWfHfQi',
                         email: 'tutv_58@vnu.edu.vn',
                         capability: 'student',
+                        regular_class: 'ICQ-K58-CLC',
                         avatar : 'https://scontent-hkg3-1.xx.fbcdn.net/v/t1.0-9/10417504_1711708798969972_9139827122448317726_n.jpg?oh=450fec405fe442e30f8393e11009afe4&oe=5850E38C'
                     }),
                     knex('users').insert({
@@ -38,6 +40,7 @@ exports.seed = function (knex, Promise) {
                         password: '$2a$10$dtaAZp55vPJgE4C759fkFOd.ISEcU2AvdL49yXGgBWSmiEuWfHfQi',
                         email: 'minhnt_58@vnu.edu.vn',
                         capability: 'student',
+                        regular_class: 'ICQ-K58-CLC',
                         avatar : 'https://scontent-hkg3-1.xx.fbcdn.net/v/t1.0-9/12096202_898864656850723_4092586705994255622_n.jpg?oh=aae1d9601bedcadad09c217b38225fce&oe=5852665B'
                     }),
                     knex('users').insert({
@@ -49,6 +52,7 @@ exports.seed = function (knex, Promise) {
                         password: '$2a$10$dtaAZp55vPJgE4C759fkFOd.ISEcU2AvdL49yXGgBWSmiEuWfHfQi',
                         email: 'khanhtv@vnu.edu.vn',
                         capability: 'teacher',
+                        regular_class: '',
                         avatar : 'https://lh4.googleusercontent.com/t84SFLH5SxzWhNSJrBFXfwHs12mPUl0hxpQdDCMHKNZDo70l46V_qcxUaGpfl_ubJJbBwSxvY1X-rzY=w2478-h1406'
                     })
                 ]);

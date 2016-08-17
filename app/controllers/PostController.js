@@ -659,7 +659,6 @@ module.exports.uploadImage = {
         let user_data = req.auth.credentials;
         let user_id = _.get(user_data, 'id', '');
         let user_code = _.get(user_data, 'code', '');
-        console.log(user_code);
         let data = req.payload;
 
         if (data.file) {
@@ -669,17 +668,11 @@ module.exports.uploadImage = {
             savePath = savePath + '/' + user_code + '/' + timeNow.getTime();
             var path = savePath + '/' + name;
 
-
-
-            console.log(path);
-            // console.log(fs.statSync(path).isFile());
             mkdirp(savePath, function (err) {
                 if (err){
                     console.error(err);
                     rep(Boom.badData('Something went wrong!'));
                 } else {
-                    console.log(savePath);
-
                     var file = fs.createWriteStream(path);
 
                     file.on('error', function (err) {

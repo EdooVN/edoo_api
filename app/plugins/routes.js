@@ -32,6 +32,11 @@ module.exports.register = (server, options, next) => {
             path: '/resfcm',
             config: controller.user.registerFirebaseToken
         },
+        {
+            method: ['GET'],
+            path: '/usersolvevote',
+            config: controller.user.getSolveVote
+        },
 
         /**
          * Manager

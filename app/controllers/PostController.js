@@ -5,6 +5,7 @@ const Boom = require('boom');
 const Models = global.Models;
 const bcrypt = require('bcrypt');
 const Joi = require('joi');
+const mkdirp = require('mkdirp');
 const ResponseJSON = global.helpers.ResponseJSON;
 const helpers = global.helpers;
 const config = helpers.config;
@@ -657,33 +658,47 @@ module.exports.uploadImage = {
     handler: function (req, rep) {
         let user_data = req.auth.credentials;
         let user_id = _.get(user_data, 'id', '');
+        let user_code = _.get(user_data, 'code', '');
+        console.log(user_code);
         let data = req.payload;
 
         if (data.file) {
             let name = data.file.hapi.filename;
-            let savePath = config('PATH_IMG_UPLOAD', '/');
-            var path = savePath + user_id + name;
+            var savePath = config('PATH_IMG_UPLOAD', '/');
+            let timeNow = new Date(Date.now());
+            savePath = savePath + '/' + user_code + '/' + timeNow.getTime();
+            var path = savePath + '/' + name;
+
+
 
             console.log(path);
             // console.log(fs.statSync(path).isFile());
+            mkdirp(savePath, function (err) {
+                if (err){
+                    console.error(err);
+                    rep(Boom.badData('Something went wrong!'));
+                } else {
+                    console.log(savePath);
 
-            var file = fs.createWriteStream(path);
+                    var file = fs.createWriteStream(path);
 
-            file.on('error', function (err) {
-                console.error(err);
-                rep(Boom.badData('Something went wrong!'));
+                    file.on('error', function (err) {
+                        console.error(err);
+                        rep(Boom.badData('Something went wrong!'));
+                    });
+
+                    data.file.pipe(file);
+
+                    data.file.on('end', function (err) {
+                        var res = {
+                            filename: data.file.hapi.filename,
+                            headers: data.file.hapi.headers,
+                            path: path
+                        };
+                        rep(ResponseJSON('Upload success!', res));
+                    })
+                }
             });
-
-            data.file.pipe(file);
-
-            data.file.on('end', function (err) {
-                var res = {
-                    filename: data.file.hapi.filename,
-                    headers: data.file.hapi.headers,
-                    path: path
-                };
-                rep(ResponseJSON('Upload success!', res));
-            })
         } else {
             rep(Boom.badData('Data is wrong!'));
         }

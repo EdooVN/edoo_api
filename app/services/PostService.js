@@ -3,13 +3,16 @@
 const _ = require('lodash');
 const async = require("async");
 const request = require('request');
+const jwt = require('jsonwebtoken');
 const Models = global.Models;
 const helpers = global.helpers;
 const config = helpers.config;
 
 const API_FIREBASE_KEY = config('API_FIREBASE_KEY', '');
+const SERVER_KEY = config('SERVER_KEY', 'server_key');
 
-module.exports.getVotePost = function (post_id, callback) {
+module.exports.getVotePost = getVotePost;
+function getVotePost(post_id, callback) {
     new Models.Post({
         id: post_id
     }).fetch({withRelated: 'votes'}).then(function (post) {
@@ -30,6 +33,42 @@ module.exports.getVotePost = function (post_id, callback) {
         }
 
         callback(vote_count);
+    });
+}
+
+module.exports.getSolveCount = function (user_id, cb) {
+    let res = {
+        solve_count: 0,
+        vote_count: 0
+    };
+    let solveCount = 0;
+    let voteCount = 0;
+    new Models.User({
+        id: user_id
+    }).fetch({withRelated: ['comments', 'posts']}).then(function (user) {
+        user = user.toJSON();
+        let cmts = user.comments;
+        for (let i = 0; i < cmts.length; i++) {
+            let cmt = cmts[i];
+            if (cmt.is_solve == true) {
+                solveCount++;
+            }
+        }
+
+        let posts = user.posts;
+        async.each(posts,
+            function (post, callback) {
+                getVotePost(post.id, function (tempVoteCount) {
+                    voteCount += tempVoteCount;
+                    callback();
+                });
+            },
+            function (err) {
+                // when done, call back to rep
+                res.solve_count = solveCount;
+                res.vote_count = voteCount;
+                cb(res);
+            })
     });
 };
 
@@ -70,7 +109,6 @@ module.exports.checkUserSeen = function (posts, user_id, cb) {
 };
 
 module.exports.pushNotiToStudent = function (classId, data) {
-    console.log('push no ti');
     new Models.Class({
         id: classId
     }).fetch({withRelated: 'users.firebase_tokens'}).then(function (classSql) {
@@ -126,7 +164,10 @@ function pushFirebaseNoti(apiKey, deviceToken, data) {
     });
 }
 
-
+module.exports.convertHashString = function (stringInput, cb) {
+    let hashString = jwt.sign(stringInput, SERVER_KEY);
+    cb(hashString);
+};
 
 
 

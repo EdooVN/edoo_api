@@ -157,7 +157,7 @@ module.exports.registerFirebaseToken = {
         let type = _.get(post, 'type', '');
         let token = _.get(post, 'token', '');
 
-        if (type != 'android' && type != 'ios' && type != 'web'){
+        if (type != 'android' && type != 'ios' && type != 'web') {
             return rep(Boom.badData('invalid type, the type is: android/ios/web'));
         }
 
@@ -165,13 +165,13 @@ module.exports.registerFirebaseToken = {
         // yes: change user
         // no: continue
         new Models.FirebaseToken({
-            type : type,
-            token : token
+            type: type,
+            token: token
         }).fetch().then(function (result) {
-            if (!_.isEmpty(result)){
+            if (!_.isEmpty(result)) {
                 new Models.FirebaseToken({
-                    id : result.toJSON().id
-                }).save({user_id : user_id}, {method : 'update', patch : true}).then(function (tokenInsert) {
+                    id: result.toJSON().id
+                }).save({user_id: user_id}, {method: 'update', patch: true}).then(function (tokenInsert) {
                     return rep(ResponseJSON('Success', tokenInsert.toJSON()));
                 });
             } else {
@@ -179,19 +179,19 @@ module.exports.registerFirebaseToken = {
                     user_id: user_id,
                     type: type
                 }).fetch().then(function (tokenSql) {
-                    if (_.isEmpty(tokenSql)){
+                    if (_.isEmpty(tokenSql)) {
                         // insert new
                         new Models.FirebaseToken({
                             user_id: user_id,
                             type: type,
-                            token : token
+                            token: token
                         }).save().then(function (tokenInsert) {
                             return rep(ResponseJSON('Success', tokenInsert.toJSON()));
                         });
                     } else {
                         new Models.FirebaseToken({
-                            id : tokenSql.toJSON().id
-                        }).save({token : token}, {method : 'update', patch : true}).then(function (tokenInsert) {
+                            id: tokenSql.toJSON().id
+                        }).save({token: token}, {method: 'update', patch: true}).then(function (tokenInsert) {
                             return rep(ResponseJSON('Success', tokenInsert.toJSON()));
                         });
                     }
@@ -218,7 +218,24 @@ module.exports.registerFirebaseToken = {
     tags: ['api', 'register firebase token']
 };
 
+module.exports.getSolveVote = {
+    handler: function (req, rep) {
+        let user_data = req.auth.credentials;
+        let user_id = _.get(user_data, 'id', '');
 
+        service.post.getSolveCount(user_id, function (res) {
+            rep(ResponseJSON('Success', res));
+        });
+
+    },
+    auth: {
+        mode: 'required',
+        strategies: ['jwt']
+    },
+    description: 'get solve vote',
+    notes: 'get solve vote of user',
+    tags: ['api', 'get solve vote']
+};
 
 
 

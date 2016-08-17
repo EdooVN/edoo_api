@@ -5,7 +5,7 @@ const commons = global.helpers.commons;
 const jwt = require('jsonwebtoken');
 
 let config = global.helpers.config;
-let key = config('SERVER_KEY', '');
+const SERVER_KEY = config('SERVER_KEY', '');
 
 module.exports.updateToken = function (tokenId) {
     // console.log(tokenId);
@@ -17,6 +17,6 @@ module.exports.updateToken = function (tokenId) {
 };
 
 module.exports.getTokenUser = function (user, callback) {
-    let tokenUser = jwt.sign(user, key);
+    let tokenUser = jwt.sign(user, SERVER_KEY);
     callback(tokenUser);
 };

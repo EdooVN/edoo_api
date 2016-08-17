@@ -25,6 +25,10 @@ var User = module.exports.User = bookshelf.Model.extend({
         return this.hasMany(Post);
     },
 
+    comments: function () {
+        return this.hasMany(Comment);
+    },
+
     votes: function () {
         return this.hasMany(Vote);
     },

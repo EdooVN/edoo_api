@@ -17,7 +17,7 @@ DB_USER=root
 DB_NAME=edoo
 DB_PASSWORD=
 DB_CHARSET=utf8
-PATH_IMG_UPLOAD = /home/
+PATH_IMG_UPLOAD = /home
 ```
 
 # Init database

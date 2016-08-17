@@ -17,6 +17,9 @@ module.exports.getpost = {
         let class_id = encodeURIComponent(req.params.class_id);
 
         new Models.Class({id: class_id}).fetch({withRelated: ['posts.user', 'posts.comments', 'posts.votes']}).then(function (result) {
+            if (_.isEmpty(result)){
+                return rep(ResponseJSON('Class has no posts'));
+            }
             result = result.toJSON();
             let posts = result.posts;
 

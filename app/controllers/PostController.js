@@ -18,7 +18,10 @@ module.exports.getpost = {
 
         new Models.Class({id: class_id}).fetch({withRelated: ['posts.user', 'posts.comments', 'posts.votes']}).then(function (result) {
             if (_.isEmpty(result)){
-                return rep(ResponseJSON('Class has no posts'));
+                let res = {};
+                let posts = [];
+                res.posts = posts;
+                return rep(ResponseJSON('Class has no posts', res));
             }
             result = result.toJSON();
             let posts = result.posts;
@@ -56,7 +59,8 @@ module.exports.getpost = {
                 result.posts = posts;
                 rep(ResponseJSON('', result));
             });
-        }).catch(function () {
+        }).catch(function (err) {
+            console.log(err);
             rep(Boom.badData('Something went wrong!'));
         });
     },

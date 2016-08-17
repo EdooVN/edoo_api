@@ -17,12 +17,12 @@ module.exports.getpost = {
         let class_id = encodeURIComponent(req.params.class_id);
 
         new Models.Class({id: class_id}).fetch({withRelated: ['posts.user', 'posts.comments', 'posts.votes']}).then(function (result) {
-            if (_.isEmpty(result)){
-                let res = {};
-                let posts = [];
-                res.posts = posts;
-                return rep(ResponseJSON('Class has no posts', res));
-            }
+            // if (_.isEmpty(result)){
+            //     let res = {};
+            //     let posts = [];
+            //     res.posts = posts;
+            //     return rep(ResponseJSON('Class has no posts', res));
+            // }
             result = result.toJSON();
             let posts = result.posts;
 

@@ -35,7 +35,7 @@ module.exports.getVotePost = function (post_id, callback) {
 
 module.exports.checkUserSeen = function (posts, user_id, cb) {
     if (_.isEmpty(posts)) {
-        return callback(posts);
+        return cb(posts);
     }
 
     async.each(posts,

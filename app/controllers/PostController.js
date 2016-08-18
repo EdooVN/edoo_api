@@ -103,12 +103,12 @@ module.exports.postPost = {
         }).save().then(function (result) {
             rep(ResponseJSON('Post success', result));
 
-            if (is_post_teacher == true){
+            if (is_post_teacher == true) {
                 let dataPush = {
-                    title : title,
-                    content : content,
-                    teacher_name : user_name,
-                    class_id : class_id
+                    title: title,
+                    content: content,
+                    teacher_name: user_name,
+                    class_id: class_id
                 };
                 service.post.pushNotiToStudent(class_id, dataPush);
             }
@@ -130,7 +130,7 @@ module.exports.postPost = {
             type: Joi.string().required(),
             tag: Joi.string().optional(),
             is_incognito: Joi.boolean().optional(),
-            is_post_teacher : Joi.boolean().optional()
+            is_post_teacher: Joi.boolean().optional()
         }
     },
     description: 'post a post to class',
@@ -218,15 +218,15 @@ module.exports.postDetail = {
  */
 
 module.exports.postSeen = {
-    handler : function (req, rep) {
+    handler: function (req, rep) {
         let user_data = req.auth.credentials;
         let post = req.payload;
         let user_id = _.get(user_data, 'id', '');
         let post_id = _.get(post, 'post_id', '');
 
         new Models.Seen({
-            user_id : user_id,
-            post_id : post_id
+            user_id: user_id,
+            post_id: post_id
         }).save().then(function (seen) {
             rep(ResponseJSON('', seen.toJSON()));
         }).catch(function (err) {
@@ -664,12 +664,14 @@ module.exports.uploadImage = {
         if (data.file) {
             let name = data.file.hapi.filename;
             var savePath = config('PATH_IMG_UPLOAD', '/');
+            let serverAdd = config('SERVER_ADDRESS', '');
             let timeNow = new Date(Date.now());
-            savePath = savePath + '/' + user_code + '/' + timeNow.getTime();
-            var path = savePath + '/' + name;
+            let zenPath = user_code + '/' + timeNow.getTime();
+            savePath = savePath + '/' + zenPath;
+            var path = savePath + '/' + encodeURI(name);
 
             mkdirp(savePath, function (err) {
-                if (err){
+                if (err) {
                     console.error(err);
                     rep(Boom.badData('Something went wrong!'));
                 } else {
@@ -686,7 +688,8 @@ module.exports.uploadImage = {
                         var res = {
                             filename: data.file.hapi.filename,
                             headers: data.file.hapi.headers,
-                            path: path
+                            path: path,
+                            url: (serverAdd + '/' + zenPath + '/' + encodeURI(name))
                         };
                         rep(ResponseJSON('Upload success!', res));
                     })

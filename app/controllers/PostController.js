@@ -664,7 +664,7 @@ module.exports.uploadImage = {
         if (data.file) {
             let name = data.file.hapi.filename;
             var savePath = config('PATH_IMG_UPLOAD', '/');
-            let serverAdd = config('SERVER_ADDRESS', '');
+            let serverName = config('SERVER_NAME', '');
             let timeNow = new Date(Date.now());
             let zenPath = user_code + '/' + timeNow.getTime();
             savePath = savePath + '/' + zenPath;
@@ -689,7 +689,7 @@ module.exports.uploadImage = {
                             filename: data.file.hapi.filename,
                             headers: data.file.hapi.headers,
                             path: path,
-                            url: (serverAdd + '/' + zenPath + '/' + encodeURI(name))
+                            url: (serverName + '/' + zenPath + '/' + encodeURI(name))
                         };
                         rep(ResponseJSON('Upload success!', res));
                     })

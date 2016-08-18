@@ -668,7 +668,7 @@ module.exports.uploadImage = {
             let timeNow = new Date(Date.now());
             let zenPath = user_code + '/' + timeNow.getTime();
             savePath = savePath + '/' + zenPath;
-            var path = savePath + '/' + encodeURI(name);
+            var path = savePath + '/' + name;
 
             mkdirp(savePath, function (err) {
                 if (err) {

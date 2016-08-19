@@ -4,6 +4,8 @@ const _ = require('lodash');
 const async = require("async");
 const request = require('request');
 const jwt = require('jsonwebtoken');
+const mkdirp = require('mkdirp');
+const fs = require('fs');
 const Models = global.Models;
 const helpers = global.helpers;
 const config = helpers.config;
@@ -164,9 +166,43 @@ function pushFirebaseNoti(apiKey, deviceToken, data) {
     });
 }
 
-module.exports.convertHashString = function (stringInput, cb) {
-    let hashString = jwt.sign(stringInput, SERVER_KEY);
-    cb(hashString);
+module.exports.saveImgAndGetStaticURL = function (file, user_code, cb) {
+    let name = file.hapi.filename;
+    var savePath = config('PATH_IMG_UPLOAD', '/');
+    let serverName = config('SERVER_NAME', '');
+    let timeNow = new Date(Date.now());
+    let zenPath = user_code + '/' + timeNow.getTime();
+    savePath = savePath + '/' + zenPath;
+    var path = savePath + '/' + name;
+
+    mkdirp(savePath, function (err) {
+        if (err) {
+            console.error(err);
+            // rep(Boom.badData('Something went wrong!'));
+            cb(true);
+        } else {
+            var newFile = fs.createWriteStream(path);
+
+            newFile.on('error', function (err) {
+                console.error(err);
+                // rep(Boom.badData('Something went wrong!'));
+                cb(true);
+            });
+
+            file.pipe(newFile);
+
+            file.on('end', function (err) {
+                var res = {
+                    filename: file.hapi.filename,
+                    headers: file.hapi.headers,
+                    path: path,
+                    url: (serverName + '/' + zenPath + '/' + encodeURI(name))
+                };
+                // rep(ResponseJSON('Upload success!', res));
+                cb(false, res);
+            })
+        }
+    });
 };
 
 

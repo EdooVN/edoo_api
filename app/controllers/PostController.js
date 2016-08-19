@@ -662,37 +662,13 @@ module.exports.uploadImage = {
         let data = req.payload;
 
         if (data.file) {
-            let name = data.file.hapi.filename;
-            var savePath = config('PATH_IMG_UPLOAD', '/');
-            let serverName = config('SERVER_NAME', '');
-            let timeNow = new Date(Date.now());
-            let zenPath = user_code + '/' + timeNow.getTime();
-            savePath = savePath + '/' + zenPath;
-            var path = savePath + '/' + name;
+            let file = data.file;
 
-            mkdirp(savePath, function (err) {
-                if (err) {
-                    console.error(err);
-                    rep(Boom.badData('Something went wrong!'));
+            service.post.saveImgAndGetStaticURL(file, user_code, function (err, res) {
+                if (!err){
+                    rep(ResponseJSON('Upload success!', res));
                 } else {
-                    var file = fs.createWriteStream(path);
-
-                    file.on('error', function (err) {
-                        console.error(err);
-                        rep(Boom.badData('Something went wrong!'));
-                    });
-
-                    data.file.pipe(file);
-
-                    data.file.on('end', function (err) {
-                        var res = {
-                            filename: data.file.hapi.filename,
-                            headers: data.file.hapi.headers,
-                            path: path,
-                            url: (serverName + '/' + zenPath + '/' + encodeURI(name))
-                        };
-                        rep(ResponseJSON('Upload success!', res));
-                    })
+                    rep(Boom.badData('Something went wrong!'));
                 }
             });
         } else {

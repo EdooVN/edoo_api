@@ -201,7 +201,6 @@ module.exports.postDetail = {
                 tempVote.author = tempVote.user;
                 delete tempVote.user;
                 delete tempVote.author.password;
-                delete tempVote.author.session;
             }
 
             rep(ResponseJSON('', post));
@@ -277,7 +276,16 @@ module.exports.postCmt = {
             created_at: now.toISOString()
         }).save().then(function (result) {
             if (result) {
-                rep(ResponseJSON('Comment success!', result));
+                new Models.Comment({
+                    id: result.toJSON().id
+                }).fetch({withRelated: 'user'}).then(function (cmtSql) {
+                    cmtSql = cmtSql.toJSON();
+                    cmtSql.author = cmtSql.user;
+                    delete cmtSql.user;
+                    delete cmtSql.author.password;
+
+                    rep(ResponseJSON('Comment success!', cmtSql));
+                });
             }
         }).catch(function (err) {
             console.log(err);

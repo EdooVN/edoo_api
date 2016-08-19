@@ -104,14 +104,19 @@ module.exports.postPost = {
             rep(ResponseJSON('Post success', result));
 
             if (is_post_teacher == true) {
-                let dataPush = {
-                    title: title,
-                    content: content,
-                    teacher_name: user_name,
-                    class_id: class_id
-                };
-                service.post.pushNotiToStudent(class_id, dataPush);
-                console.log(dataPush);
+                new Models.Class({
+                    id: class_id
+                }).fetch().then(function (classSql) {
+                    let dataPush = {
+                        title: title,
+                        content: content,
+                        teacher_name: user_name,
+                        class_id: class_id,
+                        class_name: classSql.toJSON().name
+                    };
+                    service.post.pushNotiToStudent(class_id, dataPush);
+                    console.log(dataPush);
+                });
             }
 
         }).catch(function () {
@@ -666,12 +671,12 @@ module.exports.uploadImage = {
             let file = data.file;
 
             service.post.saveImgAndGetStaticURL(file, user_code, function (err, res) {
-                if (!err){
+                if (!err) {
                     rep(ResponseJSON('Upload success!', res));
 
                     // save to db
                     new Models.AttackFile({
-                        user_id : user_id,
+                        user_id: user_id,
                         type: 'image',
                         url: res.url
                     }).save();
@@ -699,7 +704,7 @@ module.exports.uploadImage = {
 };
 
 module.exports.uploadAvatar = {
-    handler : function (req, rep) {
+    handler: function (req, rep) {
         let user_data = req.auth.credentials;
         let user_id = _.get(user_data, 'id', '');
         let user_code = _.get(user_data, 'code', '');
@@ -711,7 +716,7 @@ module.exports.uploadAvatar = {
             // let headers = file.hapi.headers;
 
             service.post.saveImgAndGetStaticURL(file, user_code, function (err, res) {
-                if (!err){
+                if (!err) {
                     rep(ResponseJSON('Upload success!', res));
 
                     // save to db

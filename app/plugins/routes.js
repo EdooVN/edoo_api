@@ -129,6 +129,12 @@ module.exports.register = (server, options, next) => {
             path: '/img',
             config: controller.post.uploadImage
         }
+        ,
+        {
+            method : ['POST'],
+            path: '/avatar',
+            config: controller.post.uploadAvatar
+        }
 
     ]);
 };

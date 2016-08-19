@@ -9,12 +9,16 @@ let key = config('SERVER_KEY', '');
 var User = module.exports.User = bookshelf.Model.extend({
     tableName: 'users',
 
-    tokens : function () {
+    tokens: function () {
         return this.hasMany(Token);
     },
 
-    firebase_tokens : function () {
+    firebase_tokens: function () {
         return this.hasMany(FirebaseToken);
+    },
+
+    attack_files: function () {
+        return this.hasMany(AttackFile);
     },
 
     classes: function () {
@@ -45,15 +49,22 @@ var User = module.exports.User = bookshelf.Model.extend({
 });
 
 var Token = module.exports.Token = bookshelf.Model.extend({
-    tableName : 'tokens',
-    user : function () {
+    tableName: 'tokens',
+    user: function () {
         return this.belongsTo(User);
     }
 });
 
 var FirebaseToken = module.exports.FirebaseToken = bookshelf.Model.extend({
-    tableName : 'firebase_tokens',
-    user : function () {
+    tableName: 'firebase_tokens',
+    user: function () {
+        return this.belongsTo(User);
+    }
+});
+
+var AttackFile = module.exports.AttackFile = bookshelf.Model.extend({
+    tableName: 'attack_files',
+    user: function () {
         return this.belongsTo(User);
     }
 });
@@ -61,7 +72,7 @@ var FirebaseToken = module.exports.FirebaseToken = bookshelf.Model.extend({
 var Class = module.exports.Class = bookshelf.Model.extend({
     tableName: 'classes',
 
-    lessions : function () {
+    lessions: function () {
         return this.hasMany(Lession);
     },
 
@@ -133,7 +144,7 @@ var Vote = module.exports.Vote = bookshelf.Model.extend({
 });
 
 var RepComment = module.exports.RepComment = bookshelf.Model.extend({
-   tableName : 'rep_comments',
+    tableName: 'rep_comments',
 
     user: function () {
         return this.belongsTo(User);

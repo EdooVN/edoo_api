@@ -667,6 +667,13 @@ module.exports.uploadImage = {
             service.post.saveImgAndGetStaticURL(file, user_code, function (err, res) {
                 if (!err){
                     rep(ResponseJSON('Upload success!', res));
+
+                    // save to db
+                    new Models.AttackFile({
+                        user_id : user_id,
+                        type: 'image',
+                        url: res.url
+                    }).save();
                 } else {
                     rep(Boom.badData('Something went wrong!'));
                 }
@@ -690,3 +697,45 @@ module.exports.uploadImage = {
     tags: ['api', 'post']
 };
 
+module.exports.uploadAvatar = {
+    handler : function (req, rep) {
+        let user_data = req.auth.credentials;
+        let user_id = _.get(user_data, 'id', '');
+        let user_code = _.get(user_data, 'code', '');
+        let data = req.payload;
+
+        if (data.file) {
+            let file = data.file;
+            // check mime type ?= image
+            // let headers = file.hapi.headers;
+
+            service.post.saveImgAndGetStaticURL(file, user_code, function (err, res) {
+                if (!err){
+                    rep(ResponseJSON('Upload success!', res));
+
+                    // save to db
+                    new Models.User({
+                        id: user_id
+                    }).save({avatar: res.url}, {method: 'update', patch: true});
+                } else {
+                    rep(Boom.badData('Something went wrong!'));
+                }
+            });
+        } else {
+            rep(Boom.badData('Data is wrong!'));
+        }
+    },
+    auth: {
+        mode: 'required',
+        strategies: ['jwt']
+    },
+    payload: {
+        output: 'stream',
+        maxBytes: 2097152,
+        allow: 'multipart/form-data',
+        parse: true
+    },
+    description: 'post avatar',
+    notes: 'post avatar',
+    tags: ['api', 'post']
+};

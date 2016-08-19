@@ -30,6 +30,15 @@ exports.up = function (knex, Promise) {
             table.varchar('token', 200).notNullable();
         }),
 
+        knex.schema.createTable('attack_files', function (table) {
+            table.increments('id').unsigned();
+            table.integer('user_id').unsigned();
+            table.varchar('type', 200).notNullable();
+            table.varchar('url', 256).notNullable();
+
+            table.index('user_id');
+        }),
+
         knex.schema.createTable('classes', function (table) {
             table.varchar('id', 200).primary();
             table.varchar('code', 200).notNullable();

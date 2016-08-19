@@ -33,7 +33,16 @@ module.exports.getpost = {
                 delete posts[i].user;
                 delete posts[i].author.password;
 
-                post.comment_count = post.comments.length;
+                let cmts = post.comments;
+                post.comment_count = cmts.length;
+                post.is_solve = 0;
+                for (let j=0; j<cmts.length; j++){
+                    let cmt = cmts[j];
+                    if (cmt.is_solve == true){
+                        post.is_solve = 1;
+                        break;
+                    }
+                }
                 delete post.comments;
 
                 let votes = post.votes;

@@ -46,7 +46,7 @@ exports.seed = function (knex, Promise) {
                     knex('users').insert({
                         id : 4,
                         name: 'Tô Văn Khánh',
-                        code: '1234',
+                        code: '12312412',
                         birthday: '1995-11-07',
                         username: 'khanhtv',
                         password: '$2a$10$dtaAZp55vPJgE4C759fkFOd.ISEcU2AvdL49yXGgBWSmiEuWfHfQi',
@@ -95,6 +95,10 @@ exports.seed = function (knex, Promise) {
                         class_id: 'INT20031-2016-2017'
                     }),
                     knex('users_classes').insert({
+                        user_id: 4,
+                        class_id: 'INT20031-2016-2017'
+                    }),
+                    knex('users_classes').insert({
                         user_id: 3,
                         class_id: 'POL100141-2016-2017'
                     }),
@@ -104,6 +108,11 @@ exports.seed = function (knex, Promise) {
                     }),
                     knex('users_classes').insert({
                         user_id: 3,
+                        class_id: 'MAT109311-2016-2017'
+                    })
+                    ,
+                    knex('users_classes').insert({
+                        user_id: 4,
                         class_id: 'MAT109311-2016-2017'
                     })
                 ])

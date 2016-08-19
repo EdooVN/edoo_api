@@ -111,6 +111,7 @@ module.exports.postPost = {
                     class_id: class_id
                 };
                 service.post.pushNotiToStudent(class_id, dataPush);
+                console.log(dataPush);
             }
 
         }).catch(function () {

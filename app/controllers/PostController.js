@@ -6,7 +6,6 @@ const Models = global.Models;
 const bcrypt = require('bcrypt');
 const Joi = require('joi');
 const mkdirp = require('mkdirp');
-const cheerio = require('cheerio');
 const ResponseJSON = global.helpers.ResponseJSON;
 const helpers = global.helpers;
 const config = helpers.config;

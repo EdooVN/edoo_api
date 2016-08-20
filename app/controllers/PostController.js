@@ -94,9 +94,13 @@ module.exports.postPost = {
         let now = new Date(Date.now());
 
         let regex = /(<([^>]+)>)/ig;
-        let desPost = content.replace(regex, '').substring(0, 300);
-        console.log('content: ' + content);
-        console.log('des: ' + desPost);
+        let desPost = content.replace('>', '> ')
+            .replace(regex, '')
+            .replace('  ', ' ')
+            .trim()
+            .substring(0, 180);
+        // console.log('content: ' + content);
+        // console.log('des: ' + desPost);
 
         new Models.Post({
             user_id: user_id,

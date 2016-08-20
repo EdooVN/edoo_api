@@ -132,6 +132,7 @@ exports.seed = function (knex, Promise) {
                         'Một lớp mô tả các thuộc tính và hành vi của một đối tượng. ' +
                         'Một interface chứa các hành vi mà một class triển khai.',
                         type: 'question',
+                        description: 'desklsdjfklsjdfkljasdl jfalsdjf lasjdfl jasldfj alsjfl ajljasdlf jasldfj ',
                         tag: 'java',
                         is_incognito : false,
                         is_post_teacher : false,
@@ -149,6 +150,7 @@ exports.seed = function (knex, Promise) {
                         'Một interface không thể chứa một trường nào trừ các trường vừa static và final.' +
                         'Một interface không thể kế thừa từ lớp, nó được triển khai bởi một lớp.' +
                         'Một interface có thể kế thừa từ nhiều interface khác.',
+                        description: 'desklsdjfklsjdfkljasdl jfalsdjf lasjdfl jasldfj alsjfl ajljasdlf jasldfj ',
                         type : 'note',
                         tag : 'interface',
                         is_incognito : false,
@@ -167,6 +169,7 @@ exports.seed = function (knex, Promise) {
                         'Một interface không thể chứa một trường nào trừ các trường vừa static và final.' +
                         'Một interface không thể kế thừa từ lớp, nó được triển khai bởi một lớp.' +
                         'Một interface có thể kế thừa từ nhiều interface khác.',
+                        description: 'desklsdjfklsjdfkljasdl jfalsdjf lasjdfl jasldfj alsjfl ajljasdlf jasldfj ',
                         type : 'note',
                         tag : 'interface',
                         is_incognito : true,

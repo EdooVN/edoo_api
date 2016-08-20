@@ -6,6 +6,7 @@ const Models = global.Models;
 const bcrypt = require('bcrypt');
 const Joi = require('joi');
 const mkdirp = require('mkdirp');
+const cheerio = require('cheerio');
 const ResponseJSON = global.helpers.ResponseJSON;
 const helpers = global.helpers;
 const config = helpers.config;
@@ -18,12 +19,6 @@ module.exports.getpost = {
         let class_id = encodeURIComponent(req.params.class_id);
 
         new Models.Class({id: class_id}).fetch({withRelated: ['posts.user', 'posts.comments', 'posts.votes']}).then(function (result) {
-            // if (_.isEmpty(result)){
-            //     let res = {};
-            //     let posts = [];
-            //     res.posts = posts;
-            //     return rep(ResponseJSON('Class has no posts', res));
-            // }
             result = result.toJSON();
             let posts = result.posts;
 
@@ -36,9 +31,9 @@ module.exports.getpost = {
                 let cmts = post.comments;
                 post.comment_count = cmts.length;
                 post.is_solve = 0;
-                for (let j=0; j<cmts.length; j++){
+                for (let j = 0; j < cmts.length; j++) {
                     let cmt = cmts[j];
-                    if (cmt.is_solve == true){
+                    if (cmt.is_solve == true) {
                         post.is_solve = 1;
                         break;
                     }
@@ -99,11 +94,17 @@ module.exports.postPost = {
 
         let now = new Date(Date.now());
 
+        let regex = /(<([^>]+)>)/ig;
+        let desPost = content.replace(regex, '').substring(0, 300);
+        console.log('content: ' + content);
+        console.log('des: ' + desPost);
+
         new Models.Post({
             user_id: user_id,
             class_id: class_id,
             title: title,
             content: content,
+            description: desPost,
             type: type,
             tag: tag,
             is_incognito: is_incognito,

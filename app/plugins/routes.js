@@ -80,6 +80,11 @@ module.exports.register = (server, options, next) => {
             config: controller.post.getpost
         },
         {
+            method: ['GET'],
+            path: '/posts/{class_id}/page/{page_number}',
+            config: controller.post.getPostInPage
+        },
+        {
             method: ['POST'],
             path: '/post',
             config: controller.post.postPost

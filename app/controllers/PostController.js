@@ -11,61 +11,20 @@ const helpers = global.helpers;
 const config = helpers.config;
 const service = require('../services/AllService');
 
+const page_size = helpers.commons.page_size;
+
 module.exports.getpost = {
     handler: function (req, rep) {
         let user_data = req.auth.credentials;
         let user_id = _.get(user_data, 'id', '');
         let class_id = encodeURIComponent(req.params.class_id);
 
-        new Models.Class({id: class_id}).fetch({withRelated: ['posts.user', 'posts.comments', 'posts.votes']}).then(function (result) {
-            result = result.toJSON();
-            let posts = result.posts;
-
-            for (var i = 0; i < posts.length; i++) {
-                let post = posts[i];
-                posts[i].author = posts[i].user;
-                delete posts[i].user;
-                delete posts[i].author.password;
-
-                let cmts = post.comments;
-                post.comment_count = cmts.length;
-                post.is_solve = 0;
-                for (let j = 0; j < cmts.length; j++) {
-                    let cmt = cmts[j];
-                    if (cmt.is_solve == true) {
-                        post.is_solve = 1;
-                        break;
-                    }
-                }
-                delete post.comments;
-
-                let votes = post.votes;
-                let vote_count = 0;
-                for (let j = 0; j < votes.length; j++) {
-                    if (votes[j].up == true) {
-                        vote_count++;
-                    } else {
-                        vote_count--;
-                    }
-                }
-
-                post.vote_count = vote_count;
-                delete post.votes;
-
-                // console.log(post);
-
-                if (post.is_incognito == true) {
-                    delete post.author;
-                }
+        service.post.getPostInPage(1, page_size, class_id, user_id, function (err, res) {
+            if (!err){
+                rep(ResponseJSON('', res));
+            } else {
+                rep(Boom.badData('Something went wrong!'));
             }
-
-            service.post.checkUserSeen(result.posts, user_id, function (posts) {
-                result.posts = posts;
-                rep(ResponseJSON('', result));
-            });
-        }).catch(function (err) {
-            console.log(err);
-            rep(Boom.badData('Something went wrong!'));
         });
     },
     auth: {
@@ -73,6 +32,30 @@ module.exports.getpost = {
         strategies: ['jwt']
     },
     description: 'get posts',
+    notes: 'get posts of class',
+    tags: ['api', 'post']
+};
+
+module.exports.getPostInPage = {
+    handler : function (req, rep) {
+        let user_data = req.auth.credentials;
+        let user_id = _.get(user_data, 'id', '');
+        let class_id = encodeURIComponent(req.params.class_id);
+        let page_number = encodeURIComponent(req.params.page_number);
+
+        service.post.getPostInPage(page_number, page_size, class_id, user_id, function (err, res) {
+            if (!err){
+                rep(ResponseJSON('', res));
+            } else {
+                rep(Boom.badData('Something went wrong!'));
+            }
+        });
+    },
+    auth: {
+        mode: 'required',
+        strategies: ['jwt']
+    },
+    description: 'get posts with page',
     notes: 'get posts of class',
     tags: ['api', 'post']
 };

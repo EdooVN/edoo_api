@@ -13,6 +13,73 @@ const config = helpers.config;
 const API_FIREBASE_KEY = config('API_FIREBASE_KEY', '');
 const SERVER_KEY = config('SERVER_KEY', 'server_key');
 
+module.exports.getPostInPage = function (pageNumber, pageSize, class_id, user_id, cb) {
+    new Models.Post({class_id: class_id})
+        .fetchPage({
+            page: pageNumber,
+            pageSize: pageSize,
+            withRelated: ['user', 'comments', 'votes']
+        })
+        .then(function (result) {
+            let pagination = _.get(result, 'pagination', '');
+            result = result.toJSON();
+            let posts = result;
+
+            for (var i = 0; i < posts.length; i++) {
+                let post = posts[i];
+                posts[i].author = posts[i].user;
+                delete posts[i].user;
+                delete posts[i].author.password;
+
+                let cmts = post.comments;
+                post.comment_count = cmts.length;
+                post.is_solve = 0;
+                for (let j = 0; j < cmts.length; j++) {
+                    let cmt = cmts[j];
+                    if (cmt.is_solve == true) {
+                        post.is_solve = 1;
+                        break;
+                    }
+                }
+                delete post.comments;
+
+                let votes = post.votes;
+                let vote_count = 0;
+                for (let j = 0; j < votes.length; j++) {
+                    if (votes[j].up == true) {
+                        vote_count++;
+                    } else {
+                        vote_count--;
+                    }
+                }
+
+                post.vote_count = vote_count;
+                delete post.votes;
+
+                // console.log(post);
+
+                if (post.is_incognito == true) {
+                    delete post.author;
+                }
+            }
+
+            checkUserSeen(result, user_id, function (posts) {
+                // result = posts;
+                let res = {
+                    class_id: class_id,
+                    posts: posts,
+                    pagination: pagination
+                };
+                // rep(ResponseJSON('', res));
+                cb(false, res);
+            });
+        }).catch(function (err) {
+        // console.log(err);
+        // rep(Boom.badData('Something went wrong!'));
+        cb(true);
+    });
+}
+
 module.exports.getVotePost = getVotePost;
 function getVotePost(post_id, callback) {
     new Models.Post({
@@ -74,7 +141,8 @@ module.exports.getSolveCount = function (user_id, cb) {
     });
 };
 
-module.exports.checkUserSeen = function (posts, user_id, cb) {
+module.exports.checkUserSeen = checkUserSeen;
+function checkUserSeen(posts, user_id, cb) {
     if (_.isEmpty(posts)) {
         return cb(posts);
     }

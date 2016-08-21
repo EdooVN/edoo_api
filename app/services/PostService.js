@@ -18,6 +18,7 @@ module.exports.getPostInPage = function (pageNumber, pageSize, class_id, user_id
         .query(function (qb) {
             qb.where('class_id', '=', class_id);
         })
+        .orderBy('-created_at')
         .fetchPage({
             page: pageNumber,
             pageSize: pageSize,

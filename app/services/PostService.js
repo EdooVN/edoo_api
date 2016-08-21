@@ -14,7 +14,10 @@ const API_FIREBASE_KEY = config('API_FIREBASE_KEY', '');
 const SERVER_KEY = config('SERVER_KEY', 'server_key');
 
 module.exports.getPostInPage = function (pageNumber, pageSize, class_id, user_id, cb) {
-    new Models.Post({class_id: class_id})
+    new Models.Post()
+        .query(function (qb) {
+            qb.where('class_id', '=', class_id);
+        })
         .fetchPage({
             page: pageNumber,
             pageSize: pageSize,

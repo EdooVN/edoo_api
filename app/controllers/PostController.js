@@ -19,8 +19,8 @@ module.exports.getpost = {
         let user_id = _.get(user_data, 'id', '');
         let class_id = encodeURIComponent(req.params.class_id);
 
-        service.post.getPostInPage(1, page_size, class_id, user_id, function (err, res) {
-            if (!err){
+        service.post.getPostInPage(1, 100, class_id, user_id, function (err, res) {
+            if (!err) {
                 rep(ResponseJSON('', res));
             } else {
                 rep(Boom.badData('Something went wrong!'));
@@ -36,15 +36,22 @@ module.exports.getpost = {
     tags: ['api', 'post']
 };
 
-module.exports.getPostInPage = {
-    handler : function (req, rep) {
+module.exports.getPostsInPage = {
+    handler: function (req, rep) {
         let user_data = req.auth.credentials;
         let user_id = _.get(user_data, 'id', '');
         let class_id = encodeURIComponent(req.params.class_id);
         let page_number = encodeURIComponent(req.params.page_number);
 
+        let params = req.query;
+
+        if (!_.isEmpty(params)) {
+
+            return rep(ResponseJSON('', params));
+        }
+
         service.post.getPostInPage(page_number, page_size, class_id, user_id, function (err, res) {
-            if (!err){
+            if (!err) {
                 rep(ResponseJSON('', res));
             } else {
                 rep(Boom.badData('Something went wrong!'));
@@ -583,7 +590,7 @@ module.exports.postSolve = {
  * method : GET
  * param: comment_id
  */
-module.exports.repComments = {
+module.exports.getRepComments = {
     handler: function (req, rep) {
         let cmtId = encodeURIComponent(req.params.comment_id);
 

@@ -49,7 +49,7 @@ module.exports.register = (server, options, next) => {
         {
             method: ['POST'],
             path: '/addclass',
-            config: controller.manager.addClass
+            config: controller.manager.addAClass
         },
         {
             method: ['POST'],
@@ -76,13 +76,13 @@ module.exports.register = (server, options, next) => {
          */
         {
             method: ['GET'],
-            path: '/posts/{class_id?}',
+            path: '/posts/{class_id}',
             config: controller.post.getpost
         },
         {
             method: ['GET'],
             path: '/posts/{class_id}/page/{page_number}',
-            config: controller.post.getPostInPage
+            config: controller.post.getPostsInPage
         },
         {
             method: ['POST'],
@@ -117,7 +117,7 @@ module.exports.register = (server, options, next) => {
         {
             method : ['GET'],
             path : '/repcmt/{comment_id}',
-            config : controller.post.repComments
+            config : controller.post.getRepComments
         },
         {
             method : ['POST'],

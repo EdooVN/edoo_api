@@ -94,7 +94,7 @@ module.exports.addUser = {
  * add class
  */
 
-module.exports.addClass = {
+module.exports.addAClass = {
     handler: function (req, rep) {
         const post = req.payload;
 

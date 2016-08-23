@@ -47,14 +47,15 @@ module.exports.getPostsInPage = {
 
         if (!_.isEmpty(params)) {
 
+
             return rep(ResponseJSON('', params));
         }
 
         service.post.getPostInPage(page_number, page_size, class_id, user_id, function (err, res) {
             if (!err) {
-                rep(ResponseJSON('', res));
+                return rep(ResponseJSON('', res));
             } else {
-                rep(Boom.badData('Something went wrong!'));
+                return rep(Boom.badData('Something went wrong!'));
             }
         });
     },
@@ -89,8 +90,6 @@ module.exports.postPost = {
             .replace('  ', ' ')
             .trim()
             .substring(0, 180);
-        // console.log('content: ' + content);
-        // console.log('des: ' + desPost);
 
         new Models.Post({
             user_id: user_id,
@@ -132,7 +131,6 @@ module.exports.postPost = {
     },
     validate: {
         payload: {
-            // user_id: Joi.string().alphanum().required(),
             class_id: Joi.string().required(),
             title: Joi.string().required(),
             content: Joi.string().required(),

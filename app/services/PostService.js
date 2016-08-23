@@ -26,6 +26,7 @@ module.exports.getPostInPage = function (pageNumber, pageSize, class_id, user_id
         })
         .then(function (result) {
             let pagination = _.get(result, 'pagination', '');
+
             result = result.toJSON();
             let posts = result;
 
@@ -74,15 +75,12 @@ module.exports.getPostInPage = function (pageNumber, pageSize, class_id, user_id
                     posts: posts,
                     pagination: pagination
                 };
-                // rep(ResponseJSON('', res));
                 cb(false, res);
             });
         }).catch(function (err) {
-        // console.log(err);
-        // rep(Boom.badData('Something went wrong!'));
         cb(true);
     });
-}
+};
 
 module.exports.getVotePost = getVotePost;
 function getVotePost(post_id, callback) {
@@ -180,7 +178,7 @@ function checkUserSeen(posts, user_id, cb) {
             // when done, call back to rep
             cb(posts);
         });
-};
+}
 
 module.exports.pushNotiToStudent = function (classId, data) {
     new Models.Class({

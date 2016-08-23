@@ -137,8 +137,7 @@ module.exports.postPost = {
             content: Joi.string().required(),
             type: Joi.string().required(),
             tag: Joi.string().optional(),
-            is_incognito: Joi.boolean().optional(),
-            is_post_teacher: Joi.boolean().optional()
+            is_incognito: Joi.boolean().optional()
         }
     },
     description: 'post a post to class',

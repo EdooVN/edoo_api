@@ -242,8 +242,8 @@ module.exports.getPostInPageFilterNotSeen = function (pageNumber, pageSize, clas
             qb.where(function () {
                 this.where('seens.user_id', '!=', user_id).orWhereNull('seens.user_id')
             }).andWhere('posts.class_id', '=', class_id);
+            qb.groupBy('id');
         })
-        .groupBy('id')
         .orderBy('-created_at')
         .fetchPage({
             page: pageNumber,

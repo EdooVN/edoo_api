@@ -182,6 +182,17 @@ module.exports.getPostInPageFilterSolve = function (pageNumber, pageSize, class_
                 posts[i].author = posts[i].user;
                 delete posts[i].user;
                 delete posts[i].author.password;
+
+                let cmts = post.comments;
+                post.comment_count = cmts.length;
+                post.is_solve = 0;
+                for (let j = 0; j < cmts.length; j++) {
+                    let cmt = cmts[j];
+                    if (cmt.is_solve == true) {
+                        post.is_solve = 1;
+                        break;
+                    }
+                }
                 delete post.comments;
 
                 let votes = post.votes;
@@ -196,6 +207,8 @@ module.exports.getPostInPageFilterSolve = function (pageNumber, pageSize, class_
 
                 post.vote_count = vote_count;
                 delete post.votes;
+
+                // console.log(post);
 
                 if (post.is_incognito == true) {
                     delete post.author;
@@ -243,6 +256,17 @@ module.exports.getPostInPageFilterNotSeen = function (pageNumber, pageSize, clas
                 posts[i].author = posts[i].user;
                 delete posts[i].user;
                 delete posts[i].author.password;
+
+                let cmts = post.comments;
+                post.comment_count = cmts.length;
+                post.is_solve = 0;
+                for (let j = 0; j < cmts.length; j++) {
+                    let cmt = cmts[j];
+                    if (cmt.is_solve == true) {
+                        post.is_solve = 1;
+                        break;
+                    }
+                }
                 delete post.comments;
 
                 let votes = post.votes;
@@ -257,6 +281,8 @@ module.exports.getPostInPageFilterNotSeen = function (pageNumber, pageSize, clas
 
                 post.vote_count = vote_count;
                 delete post.votes;
+
+                // console.log(post);
 
                 if (post.is_incognito == true) {
                     delete post.author;

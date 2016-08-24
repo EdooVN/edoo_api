@@ -126,6 +126,7 @@ module.exports.postPost = {
             tag: tag,
             is_incognito: is_incognito,
             is_post_teacher: is_post_teacher,
+            is_solve: false,
             created_at: now.toISOString()
         }).save().then(function (result) {
             rep(ResponseJSON('Post success', result));

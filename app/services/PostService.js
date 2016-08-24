@@ -239,7 +239,7 @@ module.exports.getPostInPageFilterNotSeen = function (pageNumber, pageSize, clas
     new Models.Post()
         .query(function (qb) {
             qb.leftJoin('seens', 'posts.id', 'seens.post_id');
-            qb.groupBy('id');
+            qb.groupBy('posts.id');
             qb.where(function () {
                 this.where('seens.user_id', '!=', user_id).orWhereNull('seens.user_id')
             }).andWhere('posts.class_id', '=', class_id);

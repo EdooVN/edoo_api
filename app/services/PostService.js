@@ -163,7 +163,9 @@ module.exports.getPostInPageFilterTeacher = function (pageNumber, pageSize, clas
 module.exports.getPostInPageFilterSolve = function (pageNumber, pageSize, class_id, user_id, cb) {
     new Models.Post()
         .query(function (qb) {
-            qb.where('class_id', '=', class_id).andWhere('is_solve', '=', false);
+            qb.where('class_id', '=', class_id)
+                .andWhere('is_solve', '=', false)
+                .andWhere('is_post_teacher', '=', false);
         })
         .orderBy('-created_at')
         .fetchPage({

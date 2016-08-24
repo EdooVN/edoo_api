@@ -376,6 +376,21 @@ module.exports.solvePost = function (post_id, is_solve, cb) {
     });
 };
 
+module.exports.postSeenPost = function (post_id, user_id, cb) {
+    new Models.Seen({
+        user_id: user_id,
+        post_id: post_id
+    }).save().then(function (seen) {
+        if (cb){
+            cb(false);
+        }
+    }).catch(function (err) {
+        if (cb){
+            cb(true);
+        }
+    })
+};
+
 module.exports.checkUserSeen = checkUserSeen;
 function checkUserSeen(posts, user_id, cb) {
     if (_.isEmpty(posts)) {

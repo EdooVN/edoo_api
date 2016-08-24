@@ -230,6 +230,8 @@ module.exports.postDetail = {
             }
 
             rep(ResponseJSON('', post));
+
+            service.post.postSeenPost(post_id, user_id);
         }).catch(function (err) {
             rep(Boom.badData('Something went wrong!'));
             // console.log(err);

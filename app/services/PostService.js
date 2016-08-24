@@ -236,7 +236,7 @@ module.exports.getPostInPageFilterSolve = function (pageNumber, pageSize, class_
 module.exports.getPostInPageFilterNotSeen = function (pageNumber, pageSize, class_id, user_id, cb) {
     new Models.Post()
         .query(function (qb) {
-            qb.rightJoin('seens', 'posts.id', 'seens.post_id');
+            qb.leftJoin('seens', 'posts.id', 'seens.post_id');
             qb.where(function () {
                 this.where('seens.user_id', '!=', user_id).orWhereNull('seens.user_id')
             }).andWhere('posts.class_id', '=', class_id);

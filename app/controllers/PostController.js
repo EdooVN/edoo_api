@@ -46,9 +46,33 @@ module.exports.getPostsInPage = {
         let params = req.query;
 
         if (!_.isEmpty(params)) {
+            if (params.filter == 'post_teacher'){
+                service.post.getPostInPageFilterTeacher(page_number, page_size, class_id, user_id, function (err, res) {
+                    if (!err) {
+                        return rep(ResponseJSON('', res));
+                    } else {
+                        return rep(Boom.badData('Something went wrong!'));
+                    }
+                });
+            } else if (params.filter == 'post_notsolve'){
+                service.post.getPostInPageFilterSolve(page_number, page_size, class_id, user_id, function (err, res) {
+                    if (!err) {
+                        return rep(ResponseJSON('', res));
+                    } else {
+                        return rep(Boom.badData('Something went wrong!'));
+                    }
+                });
+            } else if (params.filter == 'post_notseen'){
+                service.post.getPostInPageFilterNotSeen(page_number, page_size, class_id, user_id, function (err, res) {
+                    if (!err) {
+                        return rep(ResponseJSON('', res));
+                    } else {
+                        return rep(Boom.badData('Something went wrong!'));
+                    }
+                });
+            }
 
-
-            return rep(ResponseJSON('', params));
+            return;
         }
 
         service.post.getPostInPage(page_number, page_size, class_id, user_id, function (err, res) {
@@ -523,10 +547,10 @@ module.exports.postSolve = {
                 result = result.toJSON();
                 let tempPost = result.post;
 
-                console.log(user_id);
-                console.log(tempPost.user_id);
-
                 if (user_id == tempPost.user_id) {
+                    // tick solve to post
+                    service.post.solvePost(tempPost.id, true);
+
                     //find the cmt is solve and remove solve from it
                     let cmts = tempPost.comments;
                     let cmtIdSolve = 0;

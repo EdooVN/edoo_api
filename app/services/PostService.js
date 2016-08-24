@@ -82,6 +82,201 @@ module.exports.getPostInPage = function (pageNumber, pageSize, class_id, user_id
     });
 };
 
+
+/**
+ *  get post with filter
+ */
+
+module.exports.getPostInPageFilterTeacher = function (pageNumber, pageSize, class_id, user_id, cb) {
+    new Models.Post()
+        .query(function (qb) {
+            qb.where('class_id', '=', class_id).andWhere('is_post_teacher', '=', true);
+        })
+        .orderBy('-created_at')
+        .fetchPage({
+            page: pageNumber,
+            pageSize: pageSize,
+            withRelated: ['user', 'comments', 'votes']
+        })
+        .then(function (result) {
+            let pagination = _.get(result, 'pagination', '');
+
+            result = result.toJSON();
+            let posts = result;
+
+            for (var i = 0; i < posts.length; i++) {
+                let post = posts[i];
+                posts[i].author = posts[i].user;
+                delete posts[i].user;
+                delete posts[i].author.password;
+
+                let cmts = post.comments;
+                post.comment_count = cmts.length;
+                post.is_solve = 0;
+                for (let j = 0; j < cmts.length; j++) {
+                    let cmt = cmts[j];
+                    if (cmt.is_solve == true) {
+                        post.is_solve = 1;
+                        break;
+                    }
+                }
+                delete post.comments;
+
+                let votes = post.votes;
+                let vote_count = 0;
+                for (let j = 0; j < votes.length; j++) {
+                    if (votes[j].up == true) {
+                        vote_count++;
+                    } else {
+                        vote_count--;
+                    }
+                }
+
+                post.vote_count = vote_count;
+                delete post.votes;
+
+                // console.log(post);
+
+                if (post.is_incognito == true) {
+                    delete post.author;
+                }
+            }
+
+            checkUserSeen(result, user_id, function (posts) {
+                // result = posts;
+                let res = {
+                    class_id: class_id,
+                    posts: posts,
+                    pagination: pagination
+                };
+                cb(false, res);
+            });
+        }).catch(function (err) {
+        cb(true);
+    });
+};
+
+/**
+ *  get post with filter
+ */
+
+module.exports.getPostInPageFilterSolve = function (pageNumber, pageSize, class_id, user_id, cb) {
+    new Models.Post()
+        .query(function (qb) {
+            qb.where('class_id', '=', class_id).andWhere('is_solve', '=', false);
+        })
+        .orderBy('-created_at')
+        .fetchPage({
+            page: pageNumber,
+            pageSize: pageSize,
+            withRelated: ['user', 'comments', 'votes']
+        })
+        .then(function (result) {
+            let pagination = _.get(result, 'pagination', '');
+
+            result = result.toJSON();
+            let posts = result;
+
+            for (var i = 0; i < posts.length; i++) {
+                let post = posts[i];
+                posts[i].author = posts[i].user;
+                delete posts[i].user;
+                delete posts[i].author.password;
+                delete post.comments;
+
+                let votes = post.votes;
+                let vote_count = 0;
+                for (let j = 0; j < votes.length; j++) {
+                    if (votes[j].up == true) {
+                        vote_count++;
+                    } else {
+                        vote_count--;
+                    }
+                }
+
+                post.vote_count = vote_count;
+                delete post.votes;
+
+                if (post.is_incognito == true) {
+                    delete post.author;
+                }
+            }
+
+            checkUserSeen(result, user_id, function (posts) {
+                // result = posts;
+                let res = {
+                    class_id: class_id,
+                    posts: posts,
+                    pagination: pagination
+                };
+                cb(false, res);
+            });
+        }).catch(function (err) {
+        cb(true);
+    });
+};
+
+/**
+ *  get post with filter
+ */
+
+module.exports.getPostInPageFilterNotSeen = function (pageNumber, pageSize, class_id, user_id, cb) {
+    new Models.Post()
+        .query(function (qb) {
+            qb.rightJoin('seens', 'posts.id', 'seens.post_id');
+            qb.where('class_id', '=', class_id).andWhere('seens.user_id', '!=', user_id);
+        })
+        .orderBy('-created_at')
+        .fetchPage({
+            page: pageNumber,
+            pageSize: pageSize,
+            withRelated: ['user', 'comments', 'votes']
+        })
+        .then(function (result) {
+            let pagination = _.get(result, 'pagination', '');
+
+            result = result.toJSON();
+            let posts = result;
+
+            for (var i = 0; i < posts.length; i++) {
+                let post = posts[i];
+                posts[i].author = posts[i].user;
+                delete posts[i].user;
+                delete posts[i].author.password;
+                delete post.comments;
+
+                let votes = post.votes;
+                let vote_count = 0;
+                for (let j = 0; j < votes.length; j++) {
+                    if (votes[j].up == true) {
+                        vote_count++;
+                    } else {
+                        vote_count--;
+                    }
+                }
+
+                post.vote_count = vote_count;
+                delete post.votes;
+
+                if (post.is_incognito == true) {
+                    delete post.author;
+                }
+            }
+
+            checkUserSeen(result, user_id, function (posts) {
+                // result = posts;
+                let res = {
+                    class_id: class_id,
+                    posts: posts,
+                    pagination: pagination
+                };
+                cb(false, res);
+            });
+        }).catch(function (err) {
+        cb(true);
+    });
+};
+
 module.exports.getVotePost = getVotePost;
 function getVotePost(post_id, callback) {
     new Models.Post({
@@ -140,6 +335,16 @@ module.exports.getSolveCount = function (user_id, cb) {
                 res.vote_count = voteCount;
                 cb(res);
             })
+    });
+};
+
+module.exports.solvePost = function (post_id, is_solve, cb) {
+    new Models.Post({
+        id: post_id
+    }).save({is_solve: is_solve}, {method: 'update', patch: true}).then(function (result) {
+        if (cb){
+            cb();
+        }
     });
 };
 

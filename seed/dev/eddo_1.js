@@ -119,169 +119,172 @@ exports.seed = function (knex, Promise) {
             }),
 
 
-        knex('posts').del()
-            .then(function () {
-                return Promise.all([
-                    knex('posts').insert({
-                        id : 1,
-                        user_id : 1,
-                        class_id : 'INT20031-2016-2017',
-                        title: 'Hoi ve Java',
-                        content: 'Một interface không phải là một lớp. Viết một interface giống như viết một lớp, ' +
-                        'nhưng chúng có 2 định nghĩa khác nhau. ' +
-                        'Một lớp mô tả các thuộc tính và hành vi của một đối tượng. ' +
-                        'Một interface chứa các hành vi mà một class triển khai.',
-                        type: 'question',
-                        description: 'desklsdjfklsjdfkljasdl jfalsdjf lasjdfl jasldfj alsjfl ajljasdlf jasldfj ',
-                        tag: 'java',
-                        is_incognito : false,
-                        is_post_teacher : false,
-                        created_at : now.toISOString()
-                    }),
-                    knex('posts').insert({
-                        id : 2,
-                        user_id : 1,
-                        class_id : 'INT20031-2016-2017',
-                        title: 'ok men',
-                        content: 'Mặc dù vây, một interface khác với một class ở một số điểm sau đây, bao gồm:' +
-                        'Bạn không thể khởi tạo một interface.' +
-                        'Một interface không chứa bất cứ hàm contructor nào.' +
-                        'Tất cả các phương thức của interface đều là abstract.' +
-                        'Một interface không thể chứa một trường nào trừ các trường vừa static và final.' +
-                        'Một interface không thể kế thừa từ lớp, nó được triển khai bởi một lớp.' +
-                        'Một interface có thể kế thừa từ nhiều interface khác.',
-                        description: 'desklsdjfklsjdfkljasdl jfalsdjf lasjdfl jasldfj alsjfl ajljasdlf jasldfj ',
-                        type : 'note',
-                        tag : 'interface',
-                        is_incognito : false,
-                        is_post_teacher : false,
-                        created_at : now.toISOString()
-                    }),
-                    knex('posts').insert({
-                        id : 3,
-                        user_id : 1,
-                        class_id : 'INT20031-2016-2017',
-                        title: 'ok men',
-                        content: 'Mặc dù vây, một interface khác với một class ở một số điểm sau đây, bao gồm:' +
-                        'Bạn không thể khởi tạo một interface.' +
-                        'Một interface không chứa bất cứ hàm contructor nào.' +
-                        'Tất cả các phương thức của interface đều là abstract.' +
-                        'Một interface không thể chứa một trường nào trừ các trường vừa static và final.' +
-                        'Một interface không thể kế thừa từ lớp, nó được triển khai bởi một lớp.' +
-                        'Một interface có thể kế thừa từ nhiều interface khác.',
-                        description: 'desklsdjfklsjdfkljasdl jfalsdjf lasjdfl jasldfj alsjfl ajljasdlf jasldfj ',
-                        type : 'note',
-                        tag : 'interface',
-                        is_incognito : true,
-                        is_post_teacher : false,
-                        created_at : now.toISOString()
-                    })
-                ])
-            }),
-
-        knex('comments').del()
-            .then(function () {
-                return Promise.all([
-                    knex('comments').insert({
-                        id : 1,
-                        user_id: 1,
-                        post_id: 3,
-                        content: 'Day la 1 cai comment tu te!',
-                        is_solve: 1,
-                        created_at : now.toISOString()
-                    }),
-                    knex('comments').insert({
-                        id : 2,
-                        user_id: 1,
-                        post_id: 1,
-                        content: 'Day la 1 cai cmt tu te!',
-                        is_solve: 0,
-                        is_incognito : false,
-                        created_at : now.toISOString()
-                    }),
-                    knex('comments').insert({
-                        id: 3,
-                        user_id: 1,
-                        post_id: 3,
-                        content: 'Day la 1 cai comment 2 tu te!',
-                        is_solve: 0,
-                        is_incognito : true,
-                        created_at : now.toISOString()
-                    }),
-                    knex('comments').insert({
-                        id : 4,
-                        user_id: 1,
-                        post_id: 1,
-                        content: 'Day la 1 cai comment 3 tu te!',
-                        is_solve: 0,
-                        is_incognito : true,
-                        created_at : now.toISOString()
-                    })
-                ])
-            }),
-
-        knex('rep_comments').del()
-            .then(function () {
-                return Promise.all([
-                    knex('rep_comments').insert({
-                        id : 1,
-                        user_id: 1,
-                        comment_id : 4,
-                        content : 'ok men rep cmt sdflkjsdlfjsdlkfjskldfjklsdjf',
-                        is_incognito: false,
-                        created_at : now.toISOString()
-                    }),
-                    knex('rep_comments').insert({
-                        id : 2,
-                        user_id: 1,
-                        comment_id : 4,
-                        content : 'incognito ok men rep comment',
-                        is_incognito: true,
-                        created_at : now.toISOString()
-                    })
-                ])
-            }),
-
-        knex('votes').del()
-            .then(function () {
-                return Promise.all([
-                    knex('votes').insert({
-                        id : 1,
-                        user_id: 1,
-                        post_id: 1,
-                        type : 'post',
-                        up : true
-                    }),
-                    knex('votes').insert({
-                        id : 2,
-                        user_id: 1,
-                        comment_id: 2,
-                        type : 'comment',
-                        up : true
-                    }),
-                    knex('votes').insert({
-                        id : 3,
-                        user_id: 2,
-                        comment_id: 2,
-                        type : 'comment',
-                        up : true
-                    }),
-                    knex('votes').insert({
-                        id : 4,
-                        user_id: 3,
-                        comment_id: 4,
-                        type : 'comment',
-                        up : true
-                    }),
-                    knex('votes').insert({
-                        id : 5,
-                        user_id: 1,
-                        post_id: 3,
-                        type : 'post',
-                        up : false
-                    })
-                ])
-            }),
+        // knex('posts').del()
+        //     .then(function () {
+        //         return Promise.all([
+        //             knex('posts').insert({
+        //                 id : 1,
+        //                 user_id : 1,
+        //                 class_id : 'INT20031-2016-2017',
+        //                 title: 'Hoi ve Java',
+        //                 content: 'Một interface không phải là một lớp. Viết một interface giống như viết một lớp, ' +
+        //                 'nhưng chúng có 2 định nghĩa khác nhau. ' +
+        //                 'Một lớp mô tả các thuộc tính và hành vi của một đối tượng. ' +
+        //                 'Một interface chứa các hành vi mà một class triển khai.',
+        //                 type: 'question',
+        //                 description: 'desklsdjfklsjdfkljasdl jfalsdjf lasjdfl jasldfj alsjfl ajljasdlf jasldfj ',
+        //                 tag: 'java',
+        //                 is_incognito : false,
+        //                 is_post_teacher : false,
+        //                 is_solve : false,
+        //                 created_at : now.toISOString()
+        //             }),
+        //             knex('posts').insert({
+        //                 id : 2,
+        //                 user_id : 1,
+        //                 class_id : 'INT20031-2016-2017',
+        //                 title: 'ok men',
+        //                 content: 'Mặc dù vây, một interface khác với một class ở một số điểm sau đây, bao gồm:' +
+        //                 'Bạn không thể khởi tạo một interface.' +
+        //                 'Một interface không chứa bất cứ hàm contructor nào.' +
+        //                 'Tất cả các phương thức của interface đều là abstract.' +
+        //                 'Một interface không thể chứa một trường nào trừ các trường vừa static và final.' +
+        //                 'Một interface không thể kế thừa từ lớp, nó được triển khai bởi một lớp.' +
+        //                 'Một interface có thể kế thừa từ nhiều interface khác.',
+        //                 description: 'desklsdjfklsjdfkljasdl jfalsdjf lasjdfl jasldfj alsjfl ajljasdlf jasldfj ',
+        //                 type : 'note',
+        //                 tag : 'interface',
+        //                 is_incognito : false,
+        //                 is_post_teacher : false,
+        //                 is_solve : false,
+        //                 created_at : now.toISOString()
+        //             }),
+        //             knex('posts').insert({
+        //                 id : 3,
+        //                 user_id : 1,
+        //                 class_id : 'INT20031-2016-2017',
+        //                 title: 'ok men',
+        //                 content: 'Mặc dù vây, một interface khác với một class ở một số điểm sau đây, bao gồm:' +
+        //                 'Bạn không thể khởi tạo một interface.' +
+        //                 'Một interface không chứa bất cứ hàm contructor nào.' +
+        //                 'Tất cả các phương thức của interface đều là abstract.' +
+        //                 'Một interface không thể chứa một trường nào trừ các trường vừa static và final.' +
+        //                 'Một interface không thể kế thừa từ lớp, nó được triển khai bởi một lớp.' +
+        //                 'Một interface có thể kế thừa từ nhiều interface khác.',
+        //                 description: 'desklsdjfklsjdfkljasdl jfalsdjf lasjdfl jasldfj alsjfl ajljasdlf jasldfj ',
+        //                 type : 'note',
+        //                 tag : 'interface',
+        //                 is_incognito : true,
+        //                 is_post_teacher : false,
+        //                 is_solve : false,
+        //                 created_at : now.toISOString()
+        //             })
+        //         ])
+        //     }),
+        //
+        // knex('comments').del()
+        //     .then(function () {
+        //         return Promise.all([
+        //             knex('comments').insert({
+        //                 id : 1,
+        //                 user_id: 1,
+        //                 post_id: 3,
+        //                 content: 'Day la 1 cai comment tu te!',
+        //                 is_solve: 1,
+        //                 created_at : now.toISOString()
+        //             }),
+        //             knex('comments').insert({
+        //                 id : 2,
+        //                 user_id: 1,
+        //                 post_id: 1,
+        //                 content: 'Day la 1 cai cmt tu te!',
+        //                 is_solve: 0,
+        //                 is_incognito : false,
+        //                 created_at : now.toISOString()
+        //             }),
+        //             knex('comments').insert({
+        //                 id: 3,
+        //                 user_id: 1,
+        //                 post_id: 3,
+        //                 content: 'Day la 1 cai comment 2 tu te!',
+        //                 is_solve: 0,
+        //                 is_incognito : true,
+        //                 created_at : now.toISOString()
+        //             }),
+        //             knex('comments').insert({
+        //                 id : 4,
+        //                 user_id: 1,
+        //                 post_id: 1,
+        //                 content: 'Day la 1 cai comment 3 tu te!',
+        //                 is_solve: 0,
+        //                 is_incognito : true,
+        //                 created_at : now.toISOString()
+        //             })
+        //         ])
+        //     }),
+        //
+        // knex('rep_comments').del()
+        //     .then(function () {
+        //         return Promise.all([
+        //             knex('rep_comments').insert({
+        //                 id : 1,
+        //                 user_id: 1,
+        //                 comment_id : 4,
+        //                 content : 'ok men rep cmt sdflkjsdlfjsdlkfjskldfjklsdjf',
+        //                 is_incognito: false,
+        //                 created_at : now.toISOString()
+        //             }),
+        //             knex('rep_comments').insert({
+        //                 id : 2,
+        //                 user_id: 1,
+        //                 comment_id : 4,
+        //                 content : 'incognito ok men rep comment',
+        //                 is_incognito: true,
+        //                 created_at : now.toISOString()
+        //             })
+        //         ])
+        //     }),
+        //
+        // knex('votes').del()
+        //     .then(function () {
+        //         return Promise.all([
+        //             knex('votes').insert({
+        //                 id : 1,
+        //                 user_id: 1,
+        //                 post_id: 1,
+        //                 type : 'post',
+        //                 up : true
+        //             }),
+        //             knex('votes').insert({
+        //                 id : 2,
+        //                 user_id: 1,
+        //                 comment_id: 2,
+        //                 type : 'comment',
+        //                 up : true
+        //             }),
+        //             knex('votes').insert({
+        //                 id : 3,
+        //                 user_id: 2,
+        //                 comment_id: 2,
+        //                 type : 'comment',
+        //                 up : true
+        //             }),
+        //             knex('votes').insert({
+        //                 id : 4,
+        //                 user_id: 3,
+        //                 comment_id: 4,
+        //                 type : 'comment',
+        //                 up : true
+        //             }),
+        //             knex('votes').insert({
+        //                 id : 5,
+        //                 user_id: 1,
+        //                 post_id: 3,
+        //                 type : 'post',
+        //                 up : false
+        //             })
+        //         ])
+        //     }),
 
         // end
     ])

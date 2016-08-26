@@ -164,6 +164,7 @@ module.exports.getPostInPageFilterSolve = function (pageNumber, pageSize, class_
     new Models.Post()
         .query(function (qb) {
             qb.where('class_id', '=', class_id)
+                .andWhere('type', '=', 'question')
                 .andWhere('is_solve', '=', false)
                 .andWhere('is_post_teacher', '=', false);
         })

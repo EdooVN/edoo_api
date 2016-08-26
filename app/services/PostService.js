@@ -383,9 +383,16 @@ module.exports.postSeenPost = function (post_id, user_id, cb) {
     new Models.Seen({
         user_id: user_id,
         post_id: post_id
-    }).save().then(function (seen) {
-        if (cb){
-            cb(false);
+    }).fetch().then(function (seen) {
+        if (_.isEmpty(seen)){
+            new Models.Seen({
+                user_id: user_id,
+                post_id: post_id
+            }).save().then(function (seen) {
+                if (cb){
+                    cb(false);
+                }
+            })
         }
     }).catch(function (err) {
         if (cb){

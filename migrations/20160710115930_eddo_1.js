@@ -17,6 +17,13 @@ exports.up = function (knex, Promise) {
             table.index('email');
         }),
 
+        knex.schema.createTable('user_detail', function (table) {
+            table.increments('id').unsigned();
+            table.integer('user_id').unsigned();
+            table.text('favorite');
+            table.text('description');
+        }),
+
         knex.schema.createTable('tokens', function (table) {
             table.increments('id').unsigned();
             table.integer('user_id').unsigned();

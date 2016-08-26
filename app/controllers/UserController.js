@@ -238,7 +238,63 @@ module.exports.getSolveVote = {
 };
 
 
+module.exports.getProfile = {
+    handler: function (req, rep) {
+        let user_data = req.auth.credentials;
+        let user_id = _.get(user_data, 'id', '');
 
+        service.user.getUserInfo(user_id, function (res) {
+            // let solveCount = res.solve_count;
+            // let voteCount = res.vote_count;
+            //
+            // let point = solveCount*40 + voteCount*5;
+            //
+            // let response = {
+            //     point: point
+            // };
+
+            rep(ResponseJSON('Success', res));
+        });
+
+    },
+    auth: {
+        mode: 'required',
+        strategies: ['jwt']
+    },
+    description: 'get solve vote',
+    notes: 'get solve vote of user',
+    tags: ['api', 'get solve vote']
+};
+
+
+
+module.exports.updateProfile = {
+    handler: function (req, rep) {
+        let user_data = req.auth.credentials;
+        let payload = req.payload;
+        let user_id = _.get(user_data, 'id', '');
+        let favorite = _.get(payload, 'favorite', '');
+        let description = _.get(payload, 'description', '');
+
+        service.user.updateUserProfile(user_id, favorite, description, function (res) {
+            rep(ResponseJSON('Success', res));
+        });
+
+    },
+    auth: {
+        mode: 'required',
+        strategies: ['jwt']
+    },
+    validate: {
+        payload: {
+            description: Joi.string().optional(),
+            favorite: Joi.string().optional()
+        }
+    },
+    description: 'get solve vote',
+    notes: 'get solve vote of user',
+    tags: ['api', 'get solve vote']
+};
 
 
 

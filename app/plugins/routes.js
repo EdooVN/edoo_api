@@ -37,6 +37,16 @@ module.exports.register = (server, options, next) => {
             path: '/usersolvevote',
             config: controller.user.getSolveVote
         },
+        {
+            method: ['GET'],
+            path: '/profile',
+            config: controller.user.getProfile
+        },
+        {
+            method: ['POST'],
+            path: '/profile',
+            config: controller.user.updateProfile
+        },
 
         /**
          * Manager

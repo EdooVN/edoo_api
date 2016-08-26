@@ -9,6 +9,10 @@ let key = config('SERVER_KEY', '');
 var User = module.exports.User = bookshelf.Model.extend({
     tableName: 'users',
 
+    user_detail: function () {
+        return this.hasOne(UserDetail);
+    },
+
     tokens: function () {
         return this.hasMany(Token);
     },
@@ -45,6 +49,13 @@ var User = module.exports.User = bookshelf.Model.extend({
         let user = this.toJSON();
 
         return jwt.sign(user, key);
+    }
+});
+
+var UserDetail = module.exports.UserDetail = bookshelf.Model.extend({
+    tableName: 'user_detail',
+    user: function () {
+        return this.belongsTo(User);
     }
 });
 

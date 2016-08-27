@@ -740,6 +740,46 @@ module.exports.postRepCmt = {
     tags: ['api', 'post', 'post cmt']
 };
 
+module.exports.deleteCmt = {
+    handler: function (req, rep) {
+        let user_data = req.auth.credentials;
+        let post = req.payload;
+        let userId = _.get(user_data, 'id', '');
+        let commentId = _.get(post, 'comment_id', '');
+
+        new Models.Comment({
+            id: commentId
+        }).fetch().then(function (cmt) {
+            cmt = cmt.toJSON();
+
+            if (cmt.user_id != userId){
+                return rep(Boom.unauthorized('You are not the author'));
+            }
+
+            new Models.Comment({
+                id: commentId
+            }).destroy().then(function (cmtDelete) {
+                rep(ResponseJSON('Delete cmt success!', cmtDelete));
+            });
+        }).catch(function (err) {
+            console.log(err);
+            rep(Boom.badData('Something went wrong!'));
+        });
+    },
+    auth: {
+        mode: 'required',
+        strategies: ['jwt']
+    },
+    validate: {
+        payload: {
+            comment_id: Joi.number().integer().required()
+        }
+    },
+    description: 'post rep comments',
+    notes: 'post rep comments',
+    tags: ['api', 'post', 'post cmt']
+};
+
 /**
  * Post/attack a image
  * @return linkImg : String

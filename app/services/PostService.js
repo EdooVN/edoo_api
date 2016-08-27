@@ -535,9 +535,25 @@ module.exports.saveImgAndGetStaticURL = function (file, user_code, cb) {
     });
 };
 
+module.exports.deletePost = function (post_id, cb) {
+    new Models.Post({
+        id : post_id
+    }).destroy().then(function (post) {
+        deleteCmtInPost(post_id);
 
+        if (cb){
+            cb(false);
+        }
+    }).catch(function (err) {
+        if (cb){
+            cb(true);
+        }
+    })
+};
 
-
+function deleteCmtInPost(post_id, cb) {
+    knex('comments').where('post_id', '=', post_id).del();
+}
 
 
 

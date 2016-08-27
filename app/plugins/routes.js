@@ -116,6 +116,11 @@ module.exports.register = (server, options, next) => {
         },
         {
             method : ['POST'],
+            path: '/deletepost',
+            config: controller.post.deletePost
+        },
+        {
+            method : ['POST'],
             path: '/seen',
             config: controller.post.postSeen
         },

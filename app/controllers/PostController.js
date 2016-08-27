@@ -762,7 +762,6 @@ module.exports.deleteCmt = {
                 rep(ResponseJSON('Delete cmt success!', cmtDelete));
             });
         }).catch(function (err) {
-            console.log(err);
             rep(Boom.badData('Something went wrong!'));
         });
     },
@@ -778,6 +777,47 @@ module.exports.deleteCmt = {
     description: 'post rep comments',
     notes: 'post rep comments',
     tags: ['api', 'post', 'post cmt']
+};
+
+module.exports.deletePost = {
+    handler: function (req, rep) {
+        let user_data = req.auth.credentials;
+        let post = req.payload;
+        let userId = _.get(user_data, 'id', '');
+        let post_id = _.get(post, 'post_id', '');
+
+        new Models.Post({
+            id: post_id
+        }).fetch().then(function (post) {
+            post = post.toJSON();
+
+            if (post.user_id != userId){
+                return rep(Boom.unauthorized('You are not the author'));
+            } else {
+                service.post.deletePost(post_id, function (err) {
+                    if (!err){
+                        rep(ResponseJSON('Success'));
+                    } else {
+                        rep(Boom.badData('Something went wrong!'));
+                    }
+                })
+            }
+        }).catch(function (err) {
+            rep(Boom.badData('Something went wrong!'));
+        });
+    },
+    auth: {
+        mode: 'required',
+        strategies: ['jwt']
+    },
+    validate: {
+        payload: {
+            post_id: Joi.number().integer().required()
+        }
+    },
+    description: 'delete post',
+    notes: 'delete post',
+    tags: ['api', 'post', 'delete post']
 };
 
 /**

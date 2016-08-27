@@ -552,7 +552,7 @@ module.exports.deletePost = function (post_id, cb) {
 };
 
 function deleteCmtInPost(post_id, cb) {
-    knex('comments').where('post_id', '=', post_id).del();
+    knex('comments').where('post_id', post_id).del();
 }
 
 

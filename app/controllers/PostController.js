@@ -46,7 +46,7 @@ module.exports.getPostsInPage = {
         let params = req.query;
 
         if (!_.isEmpty(params)) {
-            if (params.filter == 'post_teacher'){
+            if (params.filter == 'post_teacher') {
                 service.post.getPostInPageFilterTeacher(page_number, page_size, class_id, user_id, function (err, res) {
                     if (!err) {
                         return rep(ResponseJSON('', res));
@@ -54,7 +54,7 @@ module.exports.getPostsInPage = {
                         return rep(Boom.badData('Something went wrong!'));
                     }
                 });
-            } else if (params.filter == 'post_notsolve'){
+            } else if (params.filter == 'post_notsolve') {
                 service.post.getPostInPageFilterSolve(page_number, page_size, class_id, user_id, function (err, res) {
                     if (!err) {
                         return rep(ResponseJSON('', res));
@@ -62,7 +62,7 @@ module.exports.getPostsInPage = {
                         return rep(Boom.badData('Something went wrong!'));
                     }
                 });
-            } else if (params.filter == 'post_notseen'){
+            } else if (params.filter == 'post_notseen') {
                 service.post.getPostInPageFilterNotSeen(page_number, page_size, class_id, user_id, function (err, res) {
                     if (!err) {
                         return rep(ResponseJSON('', res));
@@ -608,6 +608,55 @@ module.exports.postSolve = {
     description: 'post solve',
     notes: 'post solve',
     tags: ['api', 'post', 'solve']
+};
+
+
+/**
+ * Owner un-tick solved to cmt
+ */
+module.exports.postUnSolve = {
+    handler: function (req, rep) {
+        let user_data = req.auth.credentials;
+        let user_id = _.get(user_data, 'id', '');
+        let post = req.payload;
+        let comment_id = _.get(post, 'comment_id', '');
+
+        new Models.Comment({id: comment_id}).fetch({withRelated: ['post']})
+            .then(function (result) {
+                result = result.toJSON();
+                let tempPost = result.post;
+
+                if (user_id == tempPost.user_id) {
+                    // un tick solve to post
+                    service.post.solvePost(tempPost.id, false);
+
+                    new Models.Comment({id: comment_id})
+                        .save({is_solve: false}, {method: 'update', patch: true})
+                        .then(function (result) {
+                            rep(ResponseJSON('Success', result));
+                        }).catch(function () {
+                        rep(Boom.badData(''));
+                    });
+
+                } else {
+                    rep(Boom.unauthorized('You are not the post\'author'));
+                }
+            }).catch(function () {
+            rep(Boom.badData('Something went wrong!'));
+        });
+    },
+    auth: {
+        mode: 'required',
+        strategies: ['jwt']
+    },
+    validate: {
+        payload: {
+            comment_id: Joi.string().alphanum().required()
+        }
+    },
+    description: 'post unsolve',
+    notes: 'post unsolve',
+    tags: ['api', 'post', 'unsolve']
 };
 
 /**

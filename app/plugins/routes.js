@@ -141,6 +141,11 @@ module.exports.register = (server, options, next) => {
         },
         {
             method : ['POST'],
+            path: '/unsolve',
+            config: controller.post.postUnSolve
+        },
+        {
+            method : ['POST'],
             path: '/img',
             config: controller.post.uploadImage
         }

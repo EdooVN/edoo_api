@@ -1,6 +1,7 @@
 'use strict';
 
 const _ = require('lodash');
+const knex = require('../../config/bookshelft').knex;
 const async = require("async");
 const request = require('request');
 const jwt = require('jsonwebtoken');
@@ -239,11 +240,11 @@ module.exports.getPostInPageFilterSolve = function (pageNumber, pageSize, class_
 module.exports.getPostInPageFilterNotSeen = function (pageNumber, pageSize, class_id, user_id, cb) {
     new Models.Post()
         .query(function (qb) {
-            qb.leftJoin('seens', 'posts.id', 'seens.post_id');
+            let subQuery = knex('seens').where('seens.user_id', '=', user_id).select('post_id');
+            qb.innerJoin('seens', 'posts.id', 'seens.post_id');
+            qb.where('posts.class_id', '=', class_id)
+                .andWhere('posts.id', 'not in', subQuery);
             qb.groupBy('posts.id');
-            qb.where(function () {
-                this.where('seens.user_id', '!=', user_id).orWhereNull('seens.user_id')
-            }).andWhere('posts.class_id', '=', class_id);
         })
         .orderBy('-created_at')
         .fetchPage({

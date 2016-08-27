@@ -14,4 +14,5 @@ var knex = require('knex')({
 const bookshelf = require('bookshelf')(knex);
 bookshelf.plugin('pagination');
 
-module.exports = bookshelf;
+module.exports.bookshelf = bookshelf;
+module.exports.knex = knex;

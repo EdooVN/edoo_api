@@ -504,6 +504,40 @@ exports.seed = function (knex, Promise) {
                         class_id: 'PES102541-2016-2017'
                     }),
 
+                    // Dũng
+                    knex('users_classes').insert({
+                        user_id: 12,
+                        class_id: 'POL100111-2016-2017'
+                    }),
+                    knex('users_classes').insert({
+                        user_id: 12,
+                        class_id: 'MAT110031-2016-2017'
+                    }),
+                    knex('users_classes').insert({
+                        user_id: 12,
+                        class_id: 'INT220731-2016-2017'
+                    }),
+                    knex('users_classes').insert({
+                        user_id: 12,
+                        class_id: 'ELT203541-2016-2017'
+                    }),
+                    knex('users_classes').insert({
+                        user_id: 12,
+                        class_id: 'MAT110141-2016-2017'
+                    }),
+                    knex('users_classes').insert({
+                        user_id: 12,
+                        class_id: 'INT311521-2016-2017'
+                    }),
+                    knex('users_classes').insert({
+                        user_id: 12,
+                        class_id: 'INT204421-2016-2017'
+                    }),
+                    knex('users_classes').insert({
+                        user_id: 12,
+                        class_id: 'PES102541-2016-2017'
+                    }),
+
 
                     // Thầy Khánh
                     knex('users_classes').insert({

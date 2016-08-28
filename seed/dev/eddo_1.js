@@ -56,7 +56,7 @@ exports.seed = function (knex, Promise) {
                         email: 'khanhtv@vnu.edu.vn',
                         capability: 'teacher',
                         regular_class: '',
-                        avatar: 'https://lh4.googleusercontent.com/t84SFLH5SxzWhNSJrBFXfwHs12mPUl0hxpQdDCMHKNZDo70l46V_qcxUaGpfl_ubJJbBwSxvY1X-rzY=w2478-h1406'
+                        avatar: 'https://scontent-hkg3-1.xx.fbcdn.net/v/t1.0-9/11214292_10203838883452144_3980940379632774496_n.jpg?oh=a202b01995304b4bdf25070c8976a2c0&oe=583F246C'
                     }),
 
                     knex('users').insert({
@@ -69,7 +69,7 @@ exports.seed = function (knex, Promise) {
                         email: 'halv@vnu.edu.vn',
                         capability: 'teacher',
                         regular_class: '',
-                        avatar: 'https://lh4.googleusercontent.com/t84SFLH5SxzWhNSJrBFXfwHs12mPUl0hxpQdDCMHKNZDo70l46V_qcxUaGpfl_ubJJbBwSxvY1X-rzY=w2478-h1406'
+                        avatar: 'http://fit.uet.vnu.edu.vn/wp-content/uploads/avatars/185/4f110ae095c97dac4ead3b08c5c7fe8e-bpfull.png'
                     }),
 
                     knex('users').insert({
@@ -82,7 +82,7 @@ exports.seed = function (knex, Promise) {
                         email: 'thanhntn@vnu.edu.vn',
                         capability: 'teacher',
                         regular_class: '',
-                        avatar: 'https://lh4.googleusercontent.com/t84SFLH5SxzWhNSJrBFXfwHs12mPUl0hxpQdDCMHKNZDo70l46V_qcxUaGpfl_ubJJbBwSxvY1X-rzY=w2478-h1406'
+                        avatar: 'http://fit.uet.vnu.edu.vn/wp-content/uploads/avatars/255/ad4e5336f95edfadcc500e29d31717e3-bpfull.jpg'
                     }),
 
                     knex('users').insert({
@@ -95,7 +95,7 @@ exports.seed = function (knex, Promise) {
                         email: 'huanhx@vnu.edu.vn',
                         capability: 'teacher',
                         regular_class: '',
-                        avatar: 'https://lh4.googleusercontent.com/t84SFLH5SxzWhNSJrBFXfwHs12mPUl0hxpQdDCMHKNZDo70l46V_qcxUaGpfl_ubJJbBwSxvY1X-rzY=w2478-h1406'
+                        avatar: 'http://fit.uet.vnu.edu.vn/wp-content/uploads/avatars/185/4f110ae095c97dac4ead3b08c5c7fe8e-bpfull.png'
                     }),
 
                     knex('users').insert({
@@ -108,7 +108,7 @@ exports.seed = function (knex, Promise) {
                         email: 'hanhdp@vnu.edu.vn',
                         capability: 'teacher',
                         regular_class: '',
-                        avatar: 'https://lh4.googleusercontent.com/t84SFLH5SxzWhNSJrBFXfwHs12mPUl0hxpQdDCMHKNZDo70l46V_qcxUaGpfl_ubJJbBwSxvY1X-rzY=w2478-h1406'
+                        avatar: 'http://fit.uet.vnu.edu.vn/wp-content/uploads/avatars/228/c25d0acd77a46bbe4f1afbdaf27ab38a-bpfull.jpg'
                     }),
 
                     knex('users').insert({
@@ -121,7 +121,7 @@ exports.seed = function (knex, Promise) {
                         email: 'dolp@vnu.edu.vn',
                         capability: 'teacher',
                         regular_class: '',
-                        avatar: 'https://lh4.googleusercontent.com/t84SFLH5SxzWhNSJrBFXfwHs12mPUl0hxpQdDCMHKNZDo70l46V_qcxUaGpfl_ubJJbBwSxvY1X-rzY=w2478-h1406'
+                        avatar: 'http://fit.uet.vnu.edu.vn/wp-content/uploads/avatars/243/d86c80f2fec85a44a338f2141bc5fa6a-bpfull.jpg'
                     }),
 
                     knex('users').insert({
@@ -134,7 +134,7 @@ exports.seed = function (knex, Promise) {
                         email: 'khoiln@vnu.edu.vn',
                         capability: 'teacher',
                         regular_class: '',
-                        avatar: 'https://lh4.googleusercontent.com/t84SFLH5SxzWhNSJrBFXfwHs12mPUl0hxpQdDCMHKNZDo70l46V_qcxUaGpfl_ubJJbBwSxvY1X-rzY=w2478-h1406'
+                        avatar: 'http://fit.uet.vnu.edu.vn/wp-content/uploads/avatars/185/4f110ae095c97dac4ead3b08c5c7fe8e-bpfull.png'
                     }),
 
                     knex('users').insert({
@@ -147,7 +147,7 @@ exports.seed = function (knex, Promise) {
                         email: 'thuanht@vnu.edu.vn',
                         capability: 'teacher',
                         regular_class: '',
-                        avatar: 'https://lh4.googleusercontent.com/t84SFLH5SxzWhNSJrBFXfwHs12mPUl0hxpQdDCMHKNZDo70l46V_qcxUaGpfl_ubJJbBwSxvY1X-rzY=w2478-h1406'
+                        avatar: 'http://fit.uet.vnu.edu.vn/wp-content/uploads/avatars/228/c25d0acd77a46bbe4f1afbdaf27ab38a-bpfull.jpg'
                     })
                 ]);
             }),

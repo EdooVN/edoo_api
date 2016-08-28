@@ -37,7 +37,7 @@ exports.seed = function (knex, Promise) {
                         id: 3,
                         name: 'Nguyễn Tiến Minh',
                         code: '13020285',
-                        birthday: '1995-11-07',
+                        birthday: '1995-18-10',
                         username: 'minhnt',
                         password: '$2a$10$dtaAZp55vPJgE4C759fkFOd.ISEcU2AvdL49yXGgBWSmiEuWfHfQi',
                         email: 'minhnt_58@vnu.edu.vn',

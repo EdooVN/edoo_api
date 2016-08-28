@@ -112,7 +112,8 @@ module.exports.postPost = {
 
         let regex = /(<([^>]+)>)/ig;
 
-        let desPost = Entities.decode(content.replace('>', '> ')
+        let entities = new Entities();
+        let desPost = entities.decode(content.replace('>', '> ')
             .replace(regex, '')
             .replace('  ', ' ')
             .trim()

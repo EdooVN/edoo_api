@@ -161,7 +161,7 @@ exports.seed = function (knex, Promise) {
                         email: 'dungntm_58@vnu.edu.vn',
                         capability: 'student',
                         regular_class: 'QH/ICQ-K58-CLC',
-                        avatar: 'https://scontent-hkg3-1.xx.fbcdn.net/v/t1.0-9/12096202_898864656850723_4092586705994255622_n.jpg?oh=aae1d9601bedcadad09c217b38225fce&oe=5852665B'
+                        avatar: 'https://scontent-hkg3-1.xx.fbcdn.net/v/t1.0-9/13716022_1043702169057191_2563928747563875622_n.jpg?oh=a34ab383e6a0d4b70a5fad91cc22c75d&oe=5847BE16'
                     }),
                 ]);
             }),

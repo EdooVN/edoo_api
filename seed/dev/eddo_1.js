@@ -19,6 +19,7 @@ exports.seed = function (knex, Promise) {
                         regular_class: 'ICQ-K58-CLC',
                         avatar: 'https://scontent-hkg3-1.xx.fbcdn.net/v/t1.0-9/12961735_475101389349107_8771290773156913489_n.jpg?oh=4a63a9b60b72022cb0cc69106995cbb7&oe=581750D8'
                     }),
+
                     knex('users').insert({
                         id: 2,
                         name: 'Trần Văn Tú',
@@ -31,6 +32,7 @@ exports.seed = function (knex, Promise) {
                         regular_class: 'ICQ-K58-CLC',
                         avatar: 'https://scontent-hkg3-1.xx.fbcdn.net/v/t1.0-9/10417504_1711708798969972_9139827122448317726_n.jpg?oh=450fec405fe442e30f8393e11009afe4&oe=5850E38C'
                     }),
+
                     knex('users').insert({
                         id: 3,
                         name: 'Nguyễn Tiến Minh',
@@ -43,14 +45,106 @@ exports.seed = function (knex, Promise) {
                         regular_class: 'ICQ-K58-CLC',
                         avatar: 'https://scontent-hkg3-1.xx.fbcdn.net/v/t1.0-9/12096202_898864656850723_4092586705994255622_n.jpg?oh=aae1d9601bedcadad09c217b38225fce&oe=5852665B'
                     }),
+
                     knex('users').insert({
                         id: 4,
                         name: 'Tô Văn Khánh',
                         code: '12312412',
-                        birthday: '1995-11-07',
+                        birthday: '1989-11-07',
                         username: 'khanhtv',
                         password: '$2a$10$dtaAZp55vPJgE4C759fkFOd.ISEcU2AvdL49yXGgBWSmiEuWfHfQi',
                         email: 'khanhtv@vnu.edu.vn',
+                        capability: 'teacher',
+                        regular_class: '',
+                        avatar: 'https://lh4.googleusercontent.com/t84SFLH5SxzWhNSJrBFXfwHs12mPUl0hxpQdDCMHKNZDo70l46V_qcxUaGpfl_ubJJbBwSxvY1X-rzY=w2478-h1406'
+                    }),
+
+                    knex('users').insert({
+                        id: 5,
+                        name: 'Lê Vũ Hà',
+                        code: '12312234',
+                        birthday: '1967-11-07',
+                        username: 'halv',
+                        password: '$2a$10$dtaAZp55vPJgE4C759fkFOd.ISEcU2AvdL49yXGgBWSmiEuWfHfQi',
+                        email: 'halv@vnu.edu.vn',
+                        capability: 'teacher',
+                        regular_class: '',
+                        avatar: 'https://lh4.googleusercontent.com/t84SFLH5SxzWhNSJrBFXfwHs12mPUl0hxpQdDCMHKNZDo70l46V_qcxUaGpfl_ubJJbBwSxvY1X-rzY=w2478-h1406'
+                    }),
+
+                    knex('users').insert({
+                        id: 6,
+                        name: 'Nguyễn Thị Nhật Thanh',
+                        code: '12312233',
+                        birthday: '1967-11-07',
+                        username: 'thanhntn',
+                        password: '$2a$10$dtaAZp55vPJgE4C759fkFOd.ISEcU2AvdL49yXGgBWSmiEuWfHfQi',
+                        email: 'thanhntn@vnu.edu.vn',
+                        capability: 'teacher',
+                        regular_class: '',
+                        avatar: 'https://lh4.googleusercontent.com/t84SFLH5SxzWhNSJrBFXfwHs12mPUl0hxpQdDCMHKNZDo70l46V_qcxUaGpfl_ubJJbBwSxvY1X-rzY=w2478-h1406'
+                    }),
+
+                    knex('users').insert({
+                        id: 7,
+                        name: 'Hoàng Xuân Huấn',
+                        code: '12312231',
+                        birthday: '1967-11-07',
+                        username: 'huanhx',
+                        password: '$2a$10$dtaAZp55vPJgE4C759fkFOd.ISEcU2AvdL49yXGgBWSmiEuWfHfQi',
+                        email: 'huanhx@vnu.edu.vn',
+                        capability: 'teacher',
+                        regular_class: '',
+                        avatar: 'https://lh4.googleusercontent.com/t84SFLH5SxzWhNSJrBFXfwHs12mPUl0hxpQdDCMHKNZDo70l46V_qcxUaGpfl_ubJJbBwSxvY1X-rzY=w2478-h1406'
+                    }),
+
+                    knex('users').insert({
+                        id: 8,
+                        name: 'Dư Phương Hạnh',
+                        code: '12312230',
+                        birthday: '1967-11-07',
+                        username: 'hanhdp',
+                        password: '$2a$10$dtaAZp55vPJgE4C759fkFOd.ISEcU2AvdL49yXGgBWSmiEuWfHfQi',
+                        email: 'hanhdp@vnu.edu.vn',
+                        capability: 'teacher',
+                        regular_class: '',
+                        avatar: 'https://lh4.googleusercontent.com/t84SFLH5SxzWhNSJrBFXfwHs12mPUl0hxpQdDCMHKNZDo70l46V_qcxUaGpfl_ubJJbBwSxvY1X-rzY=w2478-h1406'
+                    }),
+
+                    knex('users').insert({
+                        id: 9,
+                        name: 'Lê Phê Đô',
+                        code: '12312239',
+                        birthday: '1967-11-07',
+                        username: 'dolp',
+                        password: '$2a$10$dtaAZp55vPJgE4C759fkFOd.ISEcU2AvdL49yXGgBWSmiEuWfHfQi',
+                        email: 'dolp@vnu.edu.vn',
+                        capability: 'teacher',
+                        regular_class: '',
+                        avatar: 'https://lh4.googleusercontent.com/t84SFLH5SxzWhNSJrBFXfwHs12mPUl0hxpQdDCMHKNZDo70l46V_qcxUaGpfl_ubJJbBwSxvY1X-rzY=w2478-h1406'
+                    }),
+
+                    knex('users').insert({
+                        id: 10,
+                        name: 'Lê Nguyên Khôi',
+                        code: '12312238',
+                        birthday: '1967-11-07',
+                        username: 'khoiln',
+                        password: '$2a$10$dtaAZp55vPJgE4C759fkFOd.ISEcU2AvdL49yXGgBWSmiEuWfHfQi',
+                        email: 'khoiln@vnu.edu.vn',
+                        capability: 'teacher',
+                        regular_class: '',
+                        avatar: 'https://lh4.googleusercontent.com/t84SFLH5SxzWhNSJrBFXfwHs12mPUl0hxpQdDCMHKNZDo70l46V_qcxUaGpfl_ubJJbBwSxvY1X-rzY=w2478-h1406'
+                    }),
+
+                    knex('users').insert({
+                        id: 11,
+                        name: 'Hoàng Thị Thuận',
+                        code: '12312237',
+                        birthday: '1967-11-07',
+                        username: 'thuanht',
+                        password: '$2a$10$dtaAZp55vPJgE4C759fkFOd.ISEcU2AvdL49yXGgBWSmiEuWfHfQi',
+                        email: 'thuanht@vnu.edu.vn',
                         capability: 'teacher',
                         regular_class: '',
                         avatar: 'https://lh4.googleusercontent.com/t84SFLH5SxzWhNSJrBFXfwHs12mPUl0hxpQdDCMHKNZDo70l46V_qcxUaGpfl_ubJJbBwSxvY1X-rzY=w2478-h1406'
@@ -395,6 +489,69 @@ exports.seed = function (knex, Promise) {
                         user_id: 3,
                         class_id: 'PES102541-2016-2017'
                     }),
+
+
+                    // Thầy Khánh
+                    knex('users_classes').insert({
+                        user_id: 4,
+                        class_id: 'POL100111-2016-2017'
+                    }),
+                    knex('users_classes').insert({
+                        user_id: 4,
+                        class_id: 'MAT110031-2016-2017'
+                    }),
+                    knex('users_classes').insert({
+                        user_id: 4,
+                        class_id: 'INT220731-2016-2017'
+                    }),
+                    knex('users_classes').insert({
+                        user_id: 4,
+                        class_id: 'ELT203541-2016-2017'
+                    }),
+                    knex('users_classes').insert({
+                        user_id: 4,
+                        class_id: 'MAT110141-2016-2017'
+                    }),
+                    knex('users_classes').insert({
+                        user_id: 4,
+                        class_id: 'INT311521-2016-2017'
+                    }),
+                    knex('users_classes').insert({
+                        user_id: 4,
+                        class_id: 'INT204421-2016-2017'
+                    }),
+                    knex('users_classes').insert({
+                        user_id: 4,
+                        class_id: 'PES102541-2016-2017'
+                    }),
+
+
+                    // Cô Thuận
+                    knex('users_classes').insert({
+                        user_id: 11,
+                        class_id: 'POL100111-2016-2017'
+                    }),
+
+
+                    // Thầy Khôi
+                    knex('users_classes').insert({
+                        user_id: 10,
+                        class_id: 'INT204421-2016-2017'
+                    }),
+
+
+                    // Thầy Hà
+                    knex('users_classes').insert({
+                        user_id: 5,
+                        class_id: 'ELT203541-2016-2017'
+                    }),
+
+
+                    // Cô Thanh
+                    knex('users_classes').insert({
+                        user_id: 6,
+                        class_id: 'INT311521-2016-2017'
+                    })
 
 
                 ])

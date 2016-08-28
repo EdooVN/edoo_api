@@ -17,7 +17,7 @@ exports.seed = function (knex, Promise) {
                         email: 'quytm_58@vnu.edu.vn',
                         capability: 'student',
                         regular_class: 'ICQ-K58-CLC',
-                        avatar : 'https://scontent-hkg3-1.xx.fbcdn.net/v/t1.0-9/12961735_475101389349107_8771290773156913489_n.jpg?oh=4a63a9b60b72022cb0cc69106995cbb7&oe=581750D8'
+                        avatar: 'https://scontent-hkg3-1.xx.fbcdn.net/v/t1.0-9/12961735_475101389349107_8771290773156913489_n.jpg?oh=4a63a9b60b72022cb0cc69106995cbb7&oe=581750D8'
                     }),
                     knex('users').insert({
                         id: 2,
@@ -29,7 +29,7 @@ exports.seed = function (knex, Promise) {
                         email: 'tutv_58@vnu.edu.vn',
                         capability: 'student',
                         regular_class: 'ICQ-K58-CLC',
-                        avatar : 'https://scontent-hkg3-1.xx.fbcdn.net/v/t1.0-9/10417504_1711708798969972_9139827122448317726_n.jpg?oh=450fec405fe442e30f8393e11009afe4&oe=5850E38C'
+                        avatar: 'https://scontent-hkg3-1.xx.fbcdn.net/v/t1.0-9/10417504_1711708798969972_9139827122448317726_n.jpg?oh=450fec405fe442e30f8393e11009afe4&oe=5850E38C'
                     }),
                     knex('users').insert({
                         id: 3,
@@ -41,10 +41,10 @@ exports.seed = function (knex, Promise) {
                         email: 'minhnt_58@vnu.edu.vn',
                         capability: 'student',
                         regular_class: 'ICQ-K58-CLC',
-                        avatar : 'https://scontent-hkg3-1.xx.fbcdn.net/v/t1.0-9/12096202_898864656850723_4092586705994255622_n.jpg?oh=aae1d9601bedcadad09c217b38225fce&oe=5852665B'
+                        avatar: 'https://scontent-hkg3-1.xx.fbcdn.net/v/t1.0-9/12096202_898864656850723_4092586705994255622_n.jpg?oh=aae1d9601bedcadad09c217b38225fce&oe=5852665B'
                     }),
                     knex('users').insert({
-                        id : 4,
+                        id: 4,
                         name: 'Tô Văn Khánh',
                         code: '12312412',
                         birthday: '1995-11-07',
@@ -53,7 +53,7 @@ exports.seed = function (knex, Promise) {
                         email: 'khanhtv@vnu.edu.vn',
                         capability: 'teacher',
                         regular_class: '',
-                        avatar : 'https://lh4.googleusercontent.com/t84SFLH5SxzWhNSJrBFXfwHs12mPUl0hxpQdDCMHKNZDo70l46V_qcxUaGpfl_ubJJbBwSxvY1X-rzY=w2478-h1406'
+                        avatar: 'https://lh4.googleusercontent.com/t84SFLH5SxzWhNSJrBFXfwHs12mPUl0hxpQdDCMHKNZDo70l46V_qcxUaGpfl_ubJJbBwSxvY1X-rzY=w2478-h1406'
                     })
                 ]);
             }),
@@ -61,24 +61,231 @@ exports.seed = function (knex, Promise) {
             .then(function () {
                 return Promise.all([
                     knex('classes').insert({
-                        id: 'INT20041-2016-2017',
-                        code: 'INT2004',
-                        name: 'Lập trình hướng đối tượng',
+                        id: 'POL100111-2016-2017',
+                        code: 'POL1001',
+                        name: 'Tư tưởng Hồ Chí Minh',
                         type: 'subject',
                         semester: '1-2016-2017',
-                        credit_count: 4,
-                        student_count: 90,
-                        teacher_name: "Tran Thi Minh Chau"
+                        credit_count: 2,
+                        student_count: 120,
+                        teacher_name: "ThS.Hoàng Thị Thuận"
                     }),
+
                     knex('classes').insert({
-                        id: 'INT20031-2016-2017',
-                        code: 'INT2003',
-                        name: 'Lập trình nâng cao',
+                        id: 'MAT110031-2016-2017',
+                        code: 'MAT1100',
+                        name: 'Tối ưu hóa',
                         type: 'subject',
                         semester: '1-2016-2017',
-                        credit_count: 4,
+                        credit_count: 2,
                         student_count: 90,
-                        teacher_name: "Tran Thi Minh Chau"
+                        teacher_name: "PGS.TS.Hoàng Xuân Huấn"
+                    }),
+
+                    knex('classes').insert({
+                        id: 'INT220731-2016-2017',
+                        code: 'INT2207',
+                        name: 'Cơ sở dữ liệu',
+                        type: 'subject',
+                        semester: '1-2016-2017',
+                        credit_count: 3,
+                        student_count: 30,
+                        teacher_name: "ThS.Dư Phương Hạnh"
+                    }),
+
+                    knex('classes').insert({
+                        id: 'ELT203541-2016-2017',
+                        code: 'ELT2035',
+                        name: 'Tín hiệu và hệ thống',
+                        type: 'subject',
+                        semester: '1-2016-2017',
+                        credit_count: 3,
+                        student_count: 90,
+                        teacher_name: "TS.Lê Vũ Hà"
+                    }),
+
+                    knex('classes').insert({
+                        id: 'MAT110141-2016-2017',
+                        code: 'MAT1101',
+                        name: 'Xác suất thống kê',
+                        type: 'subject',
+                        semester: '1-2016-2017',
+                        credit_count: 3,
+                        student_count: 70,
+                        teacher_name: "TS.Lê Phê Đô"
+                    }),
+
+                    knex('classes').insert({
+                        id: 'INT311521-2016-2017',
+                        code: 'INT3115',
+                        name: 'Thiết kế giao diện người dùng',
+                        type: 'subject',
+                        semester: '1-2016-2017',
+                        credit_count: 3,
+                        student_count: 90,
+                        teacher_name: "TS.Nguyễn Thị Nhật Thanh"
+                    }),
+
+                    knex('classes').insert({
+                        id: 'INT204421-2016-2017',
+                        code: 'INT2044',
+                        name: 'Lý thuyết thông tin',
+                        type: 'subject',
+                        semester: '1-2016-2017',
+                        credit_count: 3,
+                        student_count: 70,
+                        teacher_name: "TS.Lê Nguyên Khôi"
+                    }),
+
+                    knex('classes').insert({
+                        id: 'PES102541-2016-2017',
+                        code: 'PES1025',
+                        name: 'Bóng đá',
+                        type: 'subject',
+                        semester: '1-2016-2017',
+                        credit_count: 1,
+                        student_count: 45,
+                        teacher_name: "TT GDTC"
+                    })
+                ])
+            }),
+
+
+        knex('lessions').del()
+            .then(function () {
+                return Promise.all([
+                    knex('lessions').insert({
+                        id : 1,
+                        code : 'POL1001 1',
+                        name : 'Tư tưởng Hồ Chí Minh',
+                        type : 'subject',
+                        semester : '1-2016-2017',
+                        credit_count : 2,
+                        student_count : 120,
+                        teacher_name : 'ThS.Hoàng Thị Thuận',
+                        class_id : 'POL100111-2016-2017',
+                        address : "3-G3",
+                        day_of_week : 4,
+                        period : "9-10"
+                    }),
+
+                    knex('lessions').insert({
+                        id : 2,
+                        code: 'MAT1100 3',
+                        name: 'Tối ưu hóa',
+                        type: 'subject',
+                        semester: '1-2016-2017',
+                        credit_count: 2,
+                        student_count: 90,
+                        teacher_name: "PGS.TS.Hoàng Xuân Huấn",
+                        class_id : 'MAT110031-2016-2017',
+                        address : "303-G2",
+                        day_of_week : 3,
+                        period : "2-3"
+                    }),
+
+                    knex('lessions').insert({
+                        id : 3,
+                        code: 'INT2207 3',
+                        name: 'Cơ sở dữ liệu',
+                        type: 'subject',
+                        semester: '1-2016-2017',
+                        credit_count: 3,
+                        student_count: 30,
+                        teacher_name: "ThS.Dư Phương Hạnh",
+                        class_id : 'INT220731-2016-2017',
+                        address : "303-G2",
+                        day_of_week : 3,
+                        period : "2-3"
+                    }),
+                    knex('lessions').insert({
+                        id : 9,
+                        code: 'INT2207 3',
+                        name: 'Cơ sở dữ liệu',
+                        type: 'subject',
+                        semester: '1-2016-2017',
+                        credit_count: 3,
+                        student_count: 30,
+                        teacher_name: "ThS.Dư Phương Hạnh",
+                        class_id : 'INT220731-2016-2017',
+                        address : "303-G2",
+                        day_of_week : 2,
+                        period : "6-7"
+                    }),
+
+                    knex('lessions').insert({
+                        id : 4,
+                        code: 'ELT2035 3',
+                        name: 'Tín hiệu và hệ thống',
+                        type: 'subject',
+                        semester: '1-2016-2017',
+                        credit_count: 3,
+                        student_count: 90,
+                        teacher_name: "TS.Lê Vũ Hà",
+                        class_id : 'ELT203541-2016-2017',
+                        address : "207-E4",
+                        day_of_week : 4,
+                        period : "6-8"
+                    }),
+
+                    knex('lessions').insert({
+                        id : 5,
+                        code: 'MAT1101 4',
+                        name: 'Xác suất thống kê',
+                        type: 'subject',
+                        semester: '1-2016-2017',
+                        credit_count: 3,
+                        student_count: 70,
+                        teacher_name: "TS.Lê Phê Đô",
+                        class_id : 'MAT110141-2016-2017',
+                        address : "304-G2",
+                        day_of_week : 6,
+                        period : "6-8"
+                    }),
+
+                    knex('lessions').insert({
+                        id : 6,
+                        code: 'INT3115 2',
+                        name: 'Thiết kế giao diện người dùng',
+                        type: 'subject',
+                        semester: '1-2016-2017',
+                        credit_count: 3,
+                        student_count: 90,
+                        teacher_name: "TS.Nguyễn Thị Nhật Thanh",
+                        class_id : 'INT311521-2016-2017',
+                        address : "308-GĐ2",
+                        day_of_week : 2,
+                        period : "3-5"
+                    }),
+
+                    knex('lessions').insert({
+                        id : 7,
+                        code: 'INT2044 2',
+                        name: 'Lý thuyết thông tin',
+                        type: 'subject',
+                        semester: '1-2016-2017',
+                        credit_count: 3,
+                        student_count: 70,
+                        teacher_name: "TS.Lê Nguyên Khôi",
+                        class_id : 'INT204421-2016-2017',
+                        address : "304-G2",
+                        day_of_week : 5,
+                        period : "3-5"
+                    }),
+
+                    knex('lessions').insert({
+                        id : 8,
+                        code: 'PES1025 4',
+                        name: 'Bóng đá',
+                        type: 'subject',
+                        semester: '1-2016-2017',
+                        credit_count: 1,
+                        student_count: 45,
+                        teacher_name: "TT GDTC",
+                        class_id : 'PES102541-2016-2017',
+                        address : "Sân bãi",
+                        day_of_week : 3,
+                        period : "8-9"
                     })
                 ])
             }),
@@ -86,37 +293,113 @@ exports.seed = function (knex, Promise) {
         knex('users_classes').del()
             .then(function () {
                 return Promise.all([
+
+                    // Quý
                     knex('users_classes').insert({
                         user_id: 1,
-                        class_id: 'INT20041-2016-2017'
+                        class_id: 'POL100111-2016-2017'
                     }),
                     knex('users_classes').insert({
                         user_id: 1,
-                        class_id: 'INT20031-2016-2017'
+                        class_id: 'MAT110031-2016-2017'
                     }),
                     knex('users_classes').insert({
-                        user_id: 4,
-                        class_id: 'INT20031-2016-2017'
+                        user_id: 1,
+                        class_id: 'INT220731-2016-2017'
+                    }),
+                    knex('users_classes').insert({
+                        user_id: 1,
+                        class_id: 'ELT203541-2016-2017'
+                    }),
+                    knex('users_classes').insert({
+                        user_id: 1,
+                        class_id: 'MAT110141-2016-2017'
+                    }),
+                    knex('users_classes').insert({
+                        user_id: 1,
+                        class_id: 'INT311521-2016-2017'
+                    }),
+                    knex('users_classes').insert({
+                        user_id: 1,
+                        class_id: 'INT204421-2016-2017'
+                    }),
+                    knex('users_classes').insert({
+                        user_id: 1,
+                        class_id: 'PES102541-2016-2017'
+                    }),
+
+                    //Tú
+                    knex('users_classes').insert({
+                        user_id: 2,
+                        class_id: 'POL100111-2016-2017'
+                    }),
+                    knex('users_classes').insert({
+                        user_id: 2,
+                        class_id: 'MAT110031-2016-2017'
+                    }),
+                    knex('users_classes').insert({
+                        user_id: 2,
+                        class_id: 'INT220731-2016-2017'
+                    }),
+                    knex('users_classes').insert({
+                        user_id: 2,
+                        class_id: 'ELT203541-2016-2017'
+                    }),
+                    knex('users_classes').insert({
+                        user_id: 2,
+                        class_id: 'MAT110141-2016-2017'
+                    }),
+                    knex('users_classes').insert({
+                        user_id: 2,
+                        class_id: 'INT311521-2016-2017'
+                    }),
+                    knex('users_classes').insert({
+                        user_id: 2,
+                        class_id: 'INT204421-2016-2017'
+                    }),
+                    knex('users_classes').insert({
+                        user_id: 2,
+                        class_id: 'PES102541-2016-2017'
+                    }),
+
+                    // Minh
+                    knex('users_classes').insert({
+                        user_id: 3,
+                        class_id: 'POL100111-2016-2017'
                     }),
                     knex('users_classes').insert({
                         user_id: 3,
-                        class_id: 'POL100141-2016-2017'
+                        class_id: 'MAT110031-2016-2017'
                     }),
                     knex('users_classes').insert({
                         user_id: 3,
-                        class_id: 'INT340621-2016-2017'
+                        class_id: 'INT220731-2016-2017'
                     }),
                     knex('users_classes').insert({
                         user_id: 3,
-                        class_id: 'MAT109311-2016-2017'
-                    })
-                    ,
+                        class_id: 'ELT203541-2016-2017'
+                    }),
                     knex('users_classes').insert({
-                        user_id: 4,
-                        class_id: 'MAT109311-2016-2017'
-                    })
+                        user_id: 3,
+                        class_id: 'MAT110141-2016-2017'
+                    }),
+                    knex('users_classes').insert({
+                        user_id: 3,
+                        class_id: 'INT311521-2016-2017'
+                    }),
+                    knex('users_classes').insert({
+                        user_id: 3,
+                        class_id: 'INT204421-2016-2017'
+                    }),
+                    knex('users_classes').insert({
+                        user_id: 3,
+                        class_id: 'PES102541-2016-2017'
+                    }),
+
+
                 ])
             }),
+
 
 
         // knex('posts').del()

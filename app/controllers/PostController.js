@@ -110,11 +110,12 @@ module.exports.postPost = {
         let now = new Date(Date.now());
 
         let regex = /(<([^>]+)>)/ig;
-        let desPost = content.replace('>', '> ')
+
+        let desPost = decodeHtmlEntity(content.replace('>', '> ')
             .replace(regex, '')
             .replace('  ', ' ')
             .trim()
-            .substring(0, 180);
+            .substring(0, 180));
 
         new Models.Post({
             user_id: user_id,
@@ -168,6 +169,12 @@ module.exports.postPost = {
     description: 'post a post to class',
     notes: 'post a post to class',
     tags: ['api', 'post']
+};
+
+var decodeHtmlEntity = function (str) {
+    return str.replace(/&#(\d+);/g, function (match, dec) {
+        return String.fromCharCode(dec);
+    });
 };
 
 /**
@@ -752,7 +759,7 @@ module.exports.deleteCmt = {
         }).fetch().then(function (cmt) {
             cmt = cmt.toJSON();
 
-            if (cmt.user_id != userId){
+            if (cmt.user_id != userId) {
                 return rep(Boom.unauthorized('You are not the author'));
             }
 
@@ -791,11 +798,11 @@ module.exports.deletePost = {
         }).fetch().then(function (post) {
             post = post.toJSON();
 
-            if (post.user_id != userId){
+            if (post.user_id != userId) {
                 return rep(Boom.unauthorized('You are not the author'));
             } else {
                 service.post.deletePost(post_id, function (err) {
-                    if (!err){
+                    if (!err) {
                         rep(ResponseJSON('Success'));
                     } else {
                         rep(Boom.badData('Something went wrong!'));

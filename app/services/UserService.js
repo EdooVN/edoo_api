@@ -19,9 +19,12 @@ module.exports.getUserInfo = function (user_id, cb) {
 
         addUserDetail(userSql, user_id, function (userDetail) {
             postService.getSolveCount(user_id, function (solveVoteInfo) {
-                userDetail.solve_count = solveVoteInfo.solve_count;
-                userDetail.vote_count = solveVoteInfo.vote_count;
+                let solve_count = solveVoteInfo.solve_count;
+                let vote_count = solveVoteInfo.vote_count;
 
+                let pointCount = (solve_count * 40) + (vote_count * 5);
+
+                userDetail.point_count = pointCount;
                 cb(userDetail);
             });
         });

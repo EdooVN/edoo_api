@@ -1,6 +1,7 @@
 'use strict';
 const _ = require('lodash');
 const fs = require('fs');
+const Entities = require('html-entities').AllHtmlEntities;
 const Boom = require('boom');
 const Models = global.Models;
 const bcrypt = require('bcrypt');
@@ -111,7 +112,7 @@ module.exports.postPost = {
 
         let regex = /(<([^>]+)>)/ig;
 
-        let desPost = decodeHtmlEntity(content.replace('>', '> ')
+        let desPost = Entities.decode(content.replace('>', '> ')
             .replace(regex, '')
             .replace('  ', ' ')
             .trim()

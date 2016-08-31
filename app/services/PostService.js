@@ -601,7 +601,69 @@ function deleteCmtInPost(post_id, cb) {
         });
 }
 
+module.exports.postVoteCmt = function (content, comment_id, user_id, cb) {
+    let up = (content > 0);
+    if (content == 0) {
+        new Models.Vote({
+            user_id: user_id,
+            comment_id: comment_id
+        }).fetch().then(function (result) {
+            if (_.isEmpty(result)) {
+                return cb(true);
+            }
+            new Models.Vote({id: result.id}).destroy().then(function () {
+                // console.log('destroy ok');
+                // console.log(result.toJSON());
+                return cb(false, result.toJSON());
+            }).catch(function () {
+                console.log('destroy fail');
+                return cb(true);
+            });
+        })
+    } else {
+        new Models.Vote({
+            user_id: user_id,
+            comment_id: comment_id
+        }).fetch().then(function (result) {
+            if (_.isEmpty(result)) {
+                // console.log('empty');
+                throw new Error('empty');
+            } else {
+                // console.log(result.toJSON());
+                result = result.toJSON();
+                // update
+                new Models.Vote({
+                    id: result.id
+                }).save({up: up}, {method: 'update', patch: true}).then(function (result) {
+                    // console.log('update ok men');
+                    // console.log(result.toJSON());
+                    return cb(false, result.toJSON());
+                }).catch(function () {
+                    // console.log('update fail');
+                    return cb(true);
+                })
+            }
+        }).catch(function (err) {
+            // add new
+            // console.log('loi cmnr');
+            // console.log(err);
 
+            new Models.Vote({
+                user_id: user_id,
+                comment_id: comment_id,
+                up: up,
+                type: 'comment'
+            }).save().then(function (result) {
+                // console.log('insert ok');
+                // console.log(result.toJSON());
+                return cb(false, result.toJSON());
+            }).catch(function () {
+                // console.log('insert fail');
+                return cb(true);
+            });
+        });
+    }
+};
 
 
 

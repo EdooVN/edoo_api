@@ -457,71 +457,15 @@ module.exports.postVoteCmt = {
         let post = req.payload;
         let user_id = _.get(user_data, 'id', '');
         let comment_id = _.get(post, 'comment_id', '');
-        let content = _.get(post, 'content', '');
 
-        let up = (content > 0);
-
-        if (content == 0) {
-            new Models.Vote({
-                user_id: user_id,
-                comment_id: comment_id
-            }).fetch().then(function (result) {
-                if (_.isEmpty(result)) {
-                    return rep(Boom.badData('destroy fail'));
-                }
-                new Models.Vote({id: result.id}).destroy().then(function () {
-                    // console.log('destroy ok');
-                    // console.log(result.toJSON());
-                    return rep(ResponseJSON('Success', result.toJSON()));
-                }).catch(function () {
-                    console.log('destroy fail');
-                    return rep(Boom.badData('destroy fail'));
-                });
-            })
-        } else {
-            new Models.Vote({
-                user_id: user_id,
-                comment_id: comment_id
-            }).fetch().then(function (result) {
-                if (_.isEmpty(result)) {
-                    // console.log('empty');
-                    throw new Error('empty');
-                } else {
-                    // console.log(result.toJSON());
-                    result = result.toJSON();
-                    // update
-                    new Models.Vote({
-                        id: result.id
-                    }).save({up: up}, {method: 'update', patch: true}).then(function (result) {
-                        // console.log('update ok men');
-                        // console.log(result.toJSON());
-                        return rep(ResponseJSON('Success', result.toJSON()));
-                    }).catch(function () {
-                        // console.log('update fail');
-                        return rep(Boom.badData('update fail'));
-                    })
-                }
-            }).catch(function (err) {
-                // add new
-                // console.log('loi cmnr');
-                // console.log(err);
-
-                new Models.Vote({
-                    user_id: user_id,
-                    comment_id: comment_id,
-                    up: up,
-                    type: 'comment'
-                }).save().then(function (result) {
-                    // console.log('insert ok');
-                    // console.log(result.toJSON());
-                    return rep(ResponseJSON('Success', result.toJSON()));
-                }).catch(function () {
-                    // console.log('insert fail');
-                    return rep(Boom.badData('destroy fail'));
-                });
-            });
-        }
-
+        // let content = _.get(post, 'content', '');
+        service.post.postVoteCmt(1, comment_id, user_id, function (err, res) {
+            if (!err){
+                return rep(ResponseJSON('Success', res));
+            } else {
+                return rep(Boom.badData('Something went wrong!'));
+            }
+        });
     },
     auth: {
         mode: 'required',
@@ -529,8 +473,70 @@ module.exports.postVoteCmt = {
     },
     validate: {
         payload: {
-            comment_id: Joi.string().alphanum().required(),
-            content: Joi.number().integer().required()
+            comment_id: Joi.string().alphanum().required()
+            // content: Joi.number().integer().required()
+        }
+    },
+    description: 'post vote cmt',
+    notes: 'post vote cmt',
+    tags: ['api', 'post', 'vote']
+};
+
+module.exports.postDeVoteCmt = {
+    handler: function (req, rep) {
+        let user_data = req.auth.credentials;
+        let post = req.payload;
+        let user_id = _.get(user_data, 'id', '');
+        let comment_id = _.get(post, 'comment_id', '');
+
+        // let content = _.get(post, 'content', '');
+        service.post.postVoteCmt(-1, comment_id, user_id, function (err, res) {
+            if (!err){
+                return rep(ResponseJSON('Success', res));
+            } else {
+                return rep(Boom.badData('Something went wrong!'));
+            }
+        });
+    },
+    auth: {
+        mode: 'required',
+        strategies: ['jwt']
+    },
+    validate: {
+        payload: {
+            comment_id: Joi.string().alphanum().required()
+            // content: Joi.number().integer().required()
+        }
+    },
+    description: 'post vote cmt',
+    notes: 'post vote cmt',
+    tags: ['api', 'post', 'vote']
+};
+
+module.exports.postUnVoteCmt = {
+    handler: function (req, rep) {
+        let user_data = req.auth.credentials;
+        let post = req.payload;
+        let user_id = _.get(user_data, 'id', '');
+        let comment_id = _.get(post, 'comment_id', '');
+
+        // let content = _.get(post, 'content', '');
+        service.post.postVoteCmt(0, comment_id, user_id, function (err, res) {
+            if (!err){
+                return rep(ResponseJSON('Success', res));
+            } else {
+                return rep(Boom.badData('Something went wrong!'));
+            }
+        });
+    },
+    auth: {
+        mode: 'required',
+        strategies: ['jwt']
+    },
+    validate: {
+        payload: {
+            comment_id: Joi.string().alphanum().required()
+            // content: Joi.number().integer().required()
         }
     },
     description: 'post vote cmt',

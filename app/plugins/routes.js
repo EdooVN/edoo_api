@@ -131,8 +131,18 @@ module.exports.register = (server, options, next) => {
         },
         {
             method : ['POST'],
-            path: '/votecomment',
+            path: '/votecmt',
             config: controller.post.postVoteCmt
+        },
+        {
+            method : ['POST'],
+            path: '/devotecmt',
+            config: controller.post.postDeVoteCmt
+        },
+        {
+            method : ['POST'],
+            path: '/unvotecmt',
+            config: controller.post.postUnVoteCmt
         },
         {
             method : ['GET'],

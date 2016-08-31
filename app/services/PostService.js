@@ -76,7 +76,14 @@ module.exports.getPostInPage = function (pageNumber, pageSize, class_id, user_id
                     posts: posts,
                     pagination: pagination
                 };
-                cb(false, res);
+
+                addClassInfo(res, class_id, function (err, resWithClassInfo) {
+                    if (!err){
+                        cb(false, resWithClassInfo);
+                    } else {
+                        cb(true);
+                    }
+                });
             });
         }).catch(function (err) {
         cb(true);
@@ -150,7 +157,13 @@ module.exports.getPostInPageFilterTeacher = function (pageNumber, pageSize, clas
                     posts: posts,
                     pagination: pagination
                 };
-                cb(false, res);
+                addClassInfo(res, class_id, function (err, resWithClassInfo) {
+                    if (!err){
+                        cb(false, resWithClassInfo);
+                    } else {
+                        cb(true);
+                    }
+                });
             });
         }).catch(function (err) {
         cb(true);
@@ -226,7 +239,13 @@ module.exports.getPostInPageFilterSolve = function (pageNumber, pageSize, class_
                     posts: posts,
                     pagination: pagination
                 };
-                cb(false, res);
+                addClassInfo(res, class_id, function (err, resWithClassInfo) {
+                    if (!err){
+                        cb(false, resWithClassInfo);
+                    } else {
+                        cb(true);
+                    }
+                });
             });
         }).catch(function (err) {
         cb(true);
@@ -303,12 +322,37 @@ module.exports.getPostInPageFilterNotSeen = function (pageNumber, pageSize, clas
                     posts: posts,
                     pagination: pagination
                 };
-                cb(false, res);
+                addClassInfo(res, class_id, function (err, resWithClassInfo) {
+                    if (!err){
+                        cb(false, resWithClassInfo);
+                    } else {
+                        cb(true);
+                    }
+                });
             });
         }).catch(function (err) {
         cb(true);
     });
 };
+
+function addClassInfo(input, class_id, cb) {
+    new Models.Class({
+        id: class_id
+    }).fetch().then(function (classSql) {
+        classSql = classSql.toJSON();
+        input.class_id = class_id;
+        input.code = classSql.code;
+        input.name = classSql.name;
+        input.type = classSql.type;
+        input.semester = classSql.semester;
+        input.credit_count = classSql.credit_count;
+        input.student_count = classSql.student_count;
+        input.teacher_name = classSql.teacher_name;
+        return cb(false, input);
+    }).catch(function (err) {
+        return cb(true);
+    })
+}
 
 module.exports.getVotePost = getVotePost;
 function getVotePost(post_id, callback) {

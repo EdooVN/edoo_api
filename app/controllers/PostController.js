@@ -116,8 +116,8 @@ module.exports.postPost = {
         let desPost = entities.decode(content.replace('>', '> ')
             .replace(regex, '')
             .replace('  ', ' ')
-            .trim()
-            .substring(0, 180));
+            .trim())
+            .substring(0, 180);
 
         new Models.Post({
             user_id: user_id,

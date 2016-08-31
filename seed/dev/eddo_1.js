@@ -163,6 +163,32 @@ exports.seed = function (knex, Promise) {
                         regular_class: 'QH/ICQ-K58-CLC',
                         avatar: 'https://scontent-hkg3-1.xx.fbcdn.net/v/t1.0-9/13716022_1043702169057191_2563928747563875622_n.jpg?oh=a34ab383e6a0d4b70a5fad91cc22c75d&oe=5847BE16'
                     }),
+
+                    knex('users').insert({
+                        id: 13,
+                        name: 'Vũ Minh Tuấn',
+                        code: '14020521',
+                        birthday: '1996-13-09',
+                        username: 'tuanvm',
+                        password: '$2a$10$dtaAZp55vPJgE4C759fkFOd.ISEcU2AvdL49yXGgBWSmiEuWfHfQi',
+                        email: '14020521@vnu.edu.vn',
+                        capability: 'student',
+                        regular_class: 'QH/ICQ-K59-CLC',
+                        avatar: 'https://scontent-hkg3-1.xx.fbcdn.net/v/t1.0-9/13716022_1043702169057191_2563928747563875622_n.jpg?oh=a34ab383e6a0d4b70a5fad91cc22c75d&oe=5847BE16'
+                    }),
+
+                    knex('users').insert({
+                        id: 14,
+                        name: 'Nguyễn Đức Khanh',
+                        code: '14020522',
+                        birthday: '1996-13-09',
+                        username: 'khanhnd',
+                        password: '$2a$10$dtaAZp55vPJgE4C759fkFOd.ISEcU2AvdL49yXGgBWSmiEuWfHfQi',
+                        email: '14020522@vnu.edu.vn',
+                        capability: 'student',
+                        regular_class: 'QH/ICQ-K59-CLC',
+                        avatar: 'https://scontent-hkg3-1.xx.fbcdn.net/v/t1.0-9/13716022_1043702169057191_2563928747563875622_n.jpg?oh=a34ab383e6a0d4b70a5fad91cc22c75d&oe=5847BE16'
+                    })
                 ]);
             }),
         knex('classes').del()
@@ -535,6 +561,74 @@ exports.seed = function (knex, Promise) {
                     }),
                     knex('users_classes').insert({
                         user_id: 12,
+                        class_id: 'PES102541-2016-2017'
+                    }),
+
+                    // Tuấn
+                    knex('users_classes').insert({
+                        user_id: 13,
+                        class_id: 'POL100111-2016-2017'
+                    }),
+                    knex('users_classes').insert({
+                        user_id: 13,
+                        class_id: 'MAT110031-2016-2017'
+                    }),
+                    knex('users_classes').insert({
+                        user_id: 13,
+                        class_id: 'INT220731-2016-2017'
+                    }),
+                    knex('users_classes').insert({
+                        user_id: 13,
+                        class_id: 'ELT203541-2016-2017'
+                    }),
+                    knex('users_classes').insert({
+                        user_id: 13,
+                        class_id: 'MAT110141-2016-2017'
+                    }),
+                    knex('users_classes').insert({
+                        user_id: 13,
+                        class_id: 'INT311521-2016-2017'
+                    }),
+                    knex('users_classes').insert({
+                        user_id: 13,
+                        class_id: 'INT204421-2016-2017'
+                    }),
+                    knex('users_classes').insert({
+                        user_id: 13,
+                        class_id: 'PES102541-2016-2017'
+                    }),
+
+                    // Khanh
+                    knex('users_classes').insert({
+                        user_id: 14,
+                        class_id: 'POL100111-2016-2017'
+                    }),
+                    knex('users_classes').insert({
+                        user_id: 14,
+                        class_id: 'MAT110031-2016-2017'
+                    }),
+                    knex('users_classes').insert({
+                        user_id: 14,
+                        class_id: 'INT220731-2016-2017'
+                    }),
+                    knex('users_classes').insert({
+                        user_id: 14,
+                        class_id: 'ELT203541-2016-2017'
+                    }),
+                    knex('users_classes').insert({
+                        user_id: 14,
+                        class_id: 'MAT110141-2016-2017'
+                    }),
+                    knex('users_classes').insert({
+                        user_id: 14,
+                        class_id: 'INT311521-2016-2017'
+                    }),
+                    knex('users_classes').insert({
+                        user_id: 14,
+                        class_id: 'INT204421-2016-2017'
+                    }),
+                    knex('users_classes').insert({
+                        user_id: 14,
                         class_id: 'PES102541-2016-2017'
                     }),
 

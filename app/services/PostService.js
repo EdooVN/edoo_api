@@ -64,7 +64,7 @@ module.exports.getPostInPage = function (pageNumber, pageSize, class_id, user_id
 
                 // console.log(post);
 
-                if (post.is_incognito == true) {
+                if (post.is_incognito == true && post.user_id != user_id) {
                     delete post.author;
                 }
             }
@@ -138,7 +138,7 @@ module.exports.getPostInPageFilterTeacher = function (pageNumber, pageSize, clas
 
                 // console.log(post);
 
-                if (post.is_incognito == true) {
+                if (post.is_incognito == true && post.user_id != user_id) {
                     delete post.author;
                 }
             }
@@ -214,7 +214,7 @@ module.exports.getPostInPageFilterSolve = function (pageNumber, pageSize, class_
 
                 // console.log(post);
 
-                if (post.is_incognito == true) {
+                if (post.is_incognito == true && post.user_id != user_id) {
                     delete post.author;
                 }
             }
@@ -291,7 +291,7 @@ module.exports.getPostInPageFilterNotSeen = function (pageNumber, pageSize, clas
 
                 // console.log(post);
 
-                if (post.is_incognito == true) {
+                if (post.is_incognito == true && post.user_id != user_id) {
                     delete post.author;
                 }
             }
@@ -375,7 +375,7 @@ module.exports.solvePost = function (post_id, is_solve, cb) {
     new Models.Post({
         id: post_id
     }).save({is_solve: is_solve}, {method: 'update', patch: true}).then(function (result) {
-        if (cb){
+        if (cb) {
             cb();
         }
     });
@@ -386,18 +386,18 @@ module.exports.postSeenPost = function (post_id, user_id, cb) {
         user_id: user_id,
         post_id: post_id
     }).fetch().then(function (seen) {
-        if (_.isEmpty(seen)){
+        if (_.isEmpty(seen)) {
             new Models.Seen({
                 user_id: user_id,
                 post_id: post_id
             }).save().then(function (seen) {
-                if (cb){
+                if (cb) {
                     cb(false);
                 }
             })
         }
     }).catch(function (err) {
-        if (cb){
+        if (cb) {
             cb(true);
         }
     })
@@ -537,15 +537,15 @@ module.exports.saveImgAndGetStaticURL = function (file, user_code, cb) {
 
 module.exports.deletePost = function (post_id, cb) {
     new Models.Post({
-        id : post_id
+        id: post_id
     }).destroy().then(function (post) {
         deleteCmtInPost(post_id);
 
-        if (cb){
+        if (cb) {
             cb(false);
         }
     }).catch(function (err) {
-        if (cb){
+        if (cb) {
             cb(true);
         }
     })
@@ -553,7 +553,8 @@ module.exports.deletePost = function (post_id, cb) {
 
 function deleteCmtInPost(post_id, cb) {
     knex('comments').where('post_id', post_id).del()
-        .then(function () {});
+        .then(function () {
+        });
 }
 
 

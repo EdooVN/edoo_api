@@ -173,12 +173,6 @@ module.exports.postPost = {
     tags: ['api', 'post']
 };
 
-var decodeHtmlEntity = function (str) {
-    return str.replace(/&#(\d+);/g, function (match, dec) {
-        return String.fromCharCode(dec);
-    });
-};
-
 /**
  * get a detail post (with cmt)
  */

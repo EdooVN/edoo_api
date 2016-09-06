@@ -27,15 +27,10 @@ Chạy knex:
 knex migrate:latest
 knex seed:run
 ```
-# seed dữ liệu class để test
-
-```
-node seedClasses.js
-```
 
 # Documentation API
 
-Xem tại route /docs (UI) hoặc /docs.json (json)
+https://docs.google.com/spreadsheets/d/1HvkoSS6OSoEWc6cfFKgmyFgaEji7WcQchsxgEdgELSI/edit?usp=sharing
 
 ## Note
 

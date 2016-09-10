@@ -509,8 +509,8 @@ module.exports.pushNotiToStudent = function (classId, data) {
 };
 
 function pushFirebaseNoti(apiKey, deviceToken, data) {
-    console.log('api key: ' + apiKey);
-    console.log('device: ' + deviceToken);
+    // console.log('api key: ' + apiKey);
+    // console.log('device: ' + deviceToken);
 
     let urlReq = 'https://fcm.googleapis.com/fcm/send';
 

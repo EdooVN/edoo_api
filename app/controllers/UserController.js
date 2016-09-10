@@ -32,26 +32,12 @@ module.exports.loginPost = {
                 }
 
                 // save token
-                new Models.Token({
-                    user_id: user.get('id'),
-                    time_expire: (Date.now() + commons.timeExtension)
-                }).save().then(function (tokenSql) {
-                    let tokenId = tokenSql.get('id');
-                    user = user.toJSON();
-                    user.token_id = tokenId;
-
-                    service.user.getTokenUser(user, function (tokenUser) {
-                        delete user.password;
-                        // delete user.id;
-                        delete user.token_id;
-                        reply(ResponseJSON('Login success', {
-                            token: tokenUser,
-                            user: user
-                        }));
-                    });
-
-                }).catch(function () {
-                    return reply(Boom.badRequest('Something went wrong!'));
+                service.user.saveNewToken(user, function (err, responseData) {
+                    if (!err){
+                        return reply(ResponseJSON('Login success!', responseData));
+                    } else {
+                        return reply(Boom.badRequest('Something went wrong!'));
+                    }
                 });
             });
         });
@@ -267,7 +253,6 @@ module.exports.getProfile = {
 };
 
 
-
 module.exports.updateProfile = {
     handler: function (req, rep) {
         let user_data = req.auth.credentials;
@@ -297,7 +282,37 @@ module.exports.updateProfile = {
 };
 
 
+module.exports.changePassword = {
+    handler: function (req, rep) {
+        let user_data = req.auth.credentials;
+        let payload = req.payload;
+        let user_id = _.get(user_data, 'id', '');
+        let old_password = _.get(payload, 'old_password', '');
+        let new_password = _.get(payload, 'new_password', '');
 
+        service.user.changePassword(user_id, old_password, new_password, function (err, res) {
+            if (!err) {
+                return rep(ResponseJSON('Success', res));
+            } else {
+                return rep(Boom.badData(res));
+            }
+        });
+
+    },
+    auth: {
+        mode: 'required',
+        strategies: ['jwt']
+    },
+    validate: {
+        payload: {
+            old_password: Joi.string().required(),
+            new_password: Joi.string().required()
+        }
+    },
+    description: 'get solve vote',
+    notes: 'get solve vote of user',
+    tags: ['api', 'get solve vote']
+};
 
 
 

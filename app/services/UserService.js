@@ -1,6 +1,8 @@
 'use strict';
 
 const _ = require('lodash');
+const bcrypt = require('bcrypt');
+const knex = require('../../config/bookshelft').knex;
 const Models = global.Models;
 const commons = global.helpers.commons;
 const jwt = require('jsonwebtoken');
@@ -96,7 +98,94 @@ module.exports.updateToken = function (tokenId) {
         {method: 'update', patch: true})
 };
 
-module.exports.getTokenUser = function (user, callback) {
+module.exports.getTokenUser = getTokenUser;
+
+function getTokenUser(user, callback) {
     let tokenUser = jwt.sign(user, SERVER_KEY);
     callback(tokenUser);
+}
+
+module.exports.saveNewToken = saveNewToken;
+
+function saveNewToken(userData, cb) {
+    new Models.Token({
+        user_id: userData.id,
+        time_expire: (Date.now() + commons.timeExtension)
+    }).save().then(function (tokenSql) {
+        let tokenId = tokenSql.get('id');
+        userData.token_id = tokenId;
+
+        getTokenUser(userData, function (tokenUser) {
+            delete userData.password;
+
+            return cb(false, {token: tokenUser, user: userData});
+        });
+
+    }).catch(function () {
+        return cb(true);
+    });
+}
+
+function deleteAllUserToken(user_id, cb) {
+    knex('tokens').where('user_id', user_id).del()
+        .then(function () {
+            knex('firebase_tokens').where('user_id', user_id).del()
+                .then(function () {
+                    cb(false);
+                });
+        })
+        .catch(function () {
+            cb(true);
+        });
+}
+
+module.exports.changePassword = function (user_id, old_password, new_password, cb) {
+    new Models.User({
+        id: user_id
+    }).fetch().then(function (userSql) {
+        userSql = userSql.toJSON();
+
+        // check old password
+        bcrypt.compare(old_password, userSql.password, function (err, res) {
+            if (!res) {//Password invalid
+                return cb(true, 'Invalid password!');
+            }
+
+            // hash password
+            bcrypt.hash(new_password, 10, function (err, hashPassword) {
+                if (!err){
+                    // change password to db
+                    new Models.User({
+                        id: user_id
+                    }).save(
+                        {password: hashPassword},
+                        {method: 'update', patch: true})
+                        .then(function () {
+                            userSql.password = hashPassword;
+
+                            // delete all user token & firebase token
+                            deleteAllUserToken(user_id, function (err) {
+                                if (!err){
+                                    // save token
+                                    saveNewToken(userSql, function (err, responseData) {
+                                        if (!err) {
+                                            return cb(false, responseData);
+                                        } else {
+                                            return cb(true, 'Something went wrong!');
+                                        }
+                                    });
+                                } else {
+                                    throw new Error();
+                                }
+                            });
+                        })
+                        .catch(function () {
+                            return cb(true, 'Something went wrong!');
+                        });
+                } else {
+                    return cb(true, 'Something went wrong!');
+                }
+            });
+        });
+    });
 };

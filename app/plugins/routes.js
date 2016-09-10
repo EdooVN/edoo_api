@@ -47,6 +47,11 @@ module.exports.register = (server, options, next) => {
             path: '/profile',
             config: controller.user.updateProfile
         },
+        {
+            method: ['POST'],
+            path: '/editpass',
+            config: controller.user.changePassword
+        },
 
         /**
          * Manager

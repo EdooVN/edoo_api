@@ -232,6 +232,18 @@ module.exports.postDetail = {
                 delete tempVote.author.password;
             }
 
+            let vote_count = 0;
+            for (let j = 0; j < votes.length; j++) {
+                if (votes[j].up == true) {
+                    vote_count++;
+                } else {
+                    vote_count--;
+                }
+            }
+
+            post.vote_count = vote_count;
+            post.comment_count = cmts.length;
+
             rep(ResponseJSON('', post));
 
             service.post.postSeenPost(post_id, user_id);

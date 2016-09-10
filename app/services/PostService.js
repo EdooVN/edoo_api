@@ -78,7 +78,7 @@ module.exports.getPostInPage = function (pageNumber, pageSize, class_id, user_id
                 };
 
                 addClassInfo(res, class_id, function (err, resWithClassInfo) {
-                    if (!err){
+                    if (!err) {
                         cb(false, resWithClassInfo);
                     } else {
                         cb(true);
@@ -158,7 +158,7 @@ module.exports.getPostInPageFilterTeacher = function (pageNumber, pageSize, clas
                     pagination: pagination
                 };
                 addClassInfo(res, class_id, function (err, resWithClassInfo) {
-                    if (!err){
+                    if (!err) {
                         cb(false, resWithClassInfo);
                     } else {
                         cb(true);
@@ -240,7 +240,7 @@ module.exports.getPostInPageFilterSolve = function (pageNumber, pageSize, class_
                     pagination: pagination
                 };
                 addClassInfo(res, class_id, function (err, resWithClassInfo) {
-                    if (!err){
+                    if (!err) {
                         cb(false, resWithClassInfo);
                     } else {
                         cb(true);
@@ -323,7 +323,7 @@ module.exports.getPostInPageFilterNotSeen = function (pageNumber, pageSize, clas
                     pagination: pagination
                 };
                 addClassInfo(res, class_id, function (err, resWithClassInfo) {
-                    if (!err){
+                    if (!err) {
                         cb(false, resWithClassInfo);
                     } else {
                         cb(true);
@@ -447,7 +447,9 @@ module.exports.postSeenPost = function (post_id, user_id, cb) {
     })
 };
 
+
 module.exports.checkUserSeen = checkUserSeen;
+
 function checkUserSeen(posts, user_id, cb) {
     if (_.isEmpty(posts)) {
         return cb(posts);
@@ -614,7 +616,17 @@ module.exports.postVoteCmt = function (content, comment_id, user_id, cb) {
             new Models.Vote({id: result.id}).destroy().then(function () {
                 // console.log('destroy ok');
                 // console.log(result.toJSON());
-                return cb(false, result.toJSON());
+
+                countVoteCmt(comment_id, function (err, vote_count) {
+                    if (!err){
+                        result = result.toJSON();
+                        result.vote_count = vote_count;
+
+                        return cb(false, result);
+                    } else {
+                        throw new Error();
+                    }
+                });
             }).catch(function () {
                 console.log('destroy fail');
                 return cb(true);
@@ -637,7 +649,18 @@ module.exports.postVoteCmt = function (content, comment_id, user_id, cb) {
                 }).save({up: up}, {method: 'update', patch: true}).then(function (result) {
                     // console.log('update ok men');
                     // console.log(result.toJSON());
-                    return cb(false, result.toJSON());
+
+                    countVoteCmt(comment_id, function (err, vote_count) {
+                        if (!err){
+                            result = result.toJSON();
+                            result.vote_count = vote_count;
+
+                            return cb(false, result);
+                        } else {
+                            throw new Error();
+                        }
+                    });
+                    // return cb(false, result.toJSON());
                 }).catch(function () {
                     // console.log('update fail');
                     return cb(true);
@@ -656,7 +679,17 @@ module.exports.postVoteCmt = function (content, comment_id, user_id, cb) {
             }).save().then(function (result) {
                 // console.log('insert ok');
                 // console.log(result.toJSON());
-                return cb(false, result.toJSON());
+                countVoteCmt(comment_id, function (err, vote_count) {
+                    if (!err){
+                        result = result.toJSON();
+                        result.vote_count = vote_count;
+
+                        return cb(false, result);
+                    } else {
+                        throw new Error();
+                    }
+                });
+                // return cb(false, result.toJSON());
             }).catch(function () {
                 // console.log('insert fail');
                 return cb(true);
@@ -666,5 +699,26 @@ module.exports.postVoteCmt = function (content, comment_id, user_id, cb) {
 };
 
 
+function countVoteCmt(comment_id, cb) {
+    new Models.Vote({
+        comment_id: comment_id
+    }).fetch().then(function (votes) {
+        votes = votes.toJSON();
 
+        let vote_count = 0;
+        for (let i = 0; i < votes.length; i++) {
+            let vote = votes[i];
+            if (vote.up == true){
+                vote_count++;
+            } else {
+                vote_count--;
+            }
+        }
+
+        cb(false, vote_count);
+
+    }).catch(function () {
+        cb(true);
+    })
+}
 

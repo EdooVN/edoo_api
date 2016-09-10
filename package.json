@@ -7,7 +7,8 @@
     "prestart" : "npm i",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "pm2 start index.js",
-    "ki": "npm i -g knex"
+    "ki": "npm i -g knex",
+    "restart" : "pm2 restart 9"
   },
   "author": "",
   "license": "ISC",

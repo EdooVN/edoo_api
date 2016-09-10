@@ -206,15 +206,14 @@ module.exports.postDetail = {
 
                 // xoa thong tin user khong can thiet cua vote cmt
                 let votes = tempCmt.votes;
+                let vote_count = 0;
                 for (var j = 0; j < votes.length; j++) {
                     let tempVote = votes[j];
                     tempVote.author = tempVote.user;
                     delete tempVote.user;
                     delete tempVote.author.password;
-                }
 
-                let vote_count = 0;
-                for (let j = 0; j < votes.length; j++) {
+                    // count vote
                     if (votes[j].up == true) {
                         vote_count++;
                     } else {
@@ -236,15 +235,14 @@ module.exports.postDetail = {
 
             // xoa thong tin user khong can thiet cua vote
             let votes = post.votes;
+            let vote_count = 0;
             for (var i = 0; i < votes.length; i++) {
                 let tempVote = votes[i];
                 tempVote.author = tempVote.user;
                 delete tempVote.user;
                 delete tempVote.author.password;
-            }
 
-            let vote_count = 0;
-            for (let j = 0; j < votes.length; j++) {
+                // count vote
                 if (votes[j].up == true) {
                     vote_count++;
                 } else {

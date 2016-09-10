@@ -41,6 +41,10 @@ var User = module.exports.User = bookshelf.Model.extend({
         return this.hasMany(Vote);
     },
 
+    supports: function () {
+        return this.hasMany(Support);
+    },
+
     /**
      * Get token
      * @return string
@@ -162,5 +166,13 @@ var RepComment = module.exports.RepComment = bookshelf.Model.extend({
     },
     comment: function () {
         return this.belongsTo(Comment);
+    }
+});
+
+var Support = module.exports.Support = bookshelf.Model.extend({
+    tableName: 'supports',
+
+    user: function () {
+        return this.belongsTo(User);
     }
 });

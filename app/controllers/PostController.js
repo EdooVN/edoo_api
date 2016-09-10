@@ -193,7 +193,7 @@ module.exports.postDetail = {
             delete post.user;
             delete post.author.password;
 
-            if (post.is_incognito == true) {
+            if (post.is_incognito == true && post.user_id != user_id) {
                 delete post.author;
             }
 
@@ -460,7 +460,7 @@ module.exports.postVoteCmt = {
 
         // let content = _.get(post, 'content', '');
         service.post.postVoteCmt(1, comment_id, user_id, function (err, res) {
-            if (!err){
+            if (!err) {
                 return rep(ResponseJSON('Success', res));
             } else {
                 return rep(Boom.badData('Something went wrong!'));
@@ -491,7 +491,7 @@ module.exports.postDeVoteCmt = {
 
         // let content = _.get(post, 'content', '');
         service.post.postVoteCmt(-1, comment_id, user_id, function (err, res) {
-            if (!err){
+            if (!err) {
                 return rep(ResponseJSON('Success', res));
             } else {
                 return rep(Boom.badData('Something went wrong!'));
@@ -522,7 +522,7 @@ module.exports.postUnVoteCmt = {
 
         // let content = _.get(post, 'content', '');
         service.post.postVoteCmt(0, comment_id, user_id, function (err, res) {
-            if (!err){
+            if (!err) {
                 return rep(ResponseJSON('Success', res));
             } else {
                 return rep(Boom.badData('Something went wrong!'));
@@ -918,4 +918,38 @@ module.exports.uploadAvatar = {
     description: 'post avatar',
     notes: 'post avatar',
     tags: ['api', 'post']
+};
+
+
+module.exports.postSupport = {
+    handler: function (req, rep) {
+        let user_data = req.auth.credentials;
+        let post = req.payload;
+        let userId = _.get(user_data, 'id', '');
+        let content = _.get(post, 'content', '');
+
+        let now = new Date(Date.now());
+
+        new Models.Support({
+            user_id: userId,
+            content: content,
+            created_at: now.toISOString()
+        }).save().then((result)=> {
+            rep(ResponseJSON('Post support msg success!', result));
+        }).catch(()=> {
+            rep(Boom.badData('Something went wrong!'));
+        });
+    },
+    auth: {
+        mode: 'required',
+        strategies: ['jwt']
+    },
+    validate: {
+        payload: {
+            content: Joi.string().required()
+        }
+    },
+    description: 'post report',
+    notes: 'post report',
+    tags: ['api', 'post', 'post report']
 };

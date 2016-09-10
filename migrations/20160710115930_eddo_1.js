@@ -128,6 +128,13 @@ exports.up = function (knex, Promise) {
             table.boolean('up');
         }),
 
+        knex.schema.createTable('supports', function (table) {
+            table.increments('id').unsigned();
+            table.integer('user_id').unsigned();
+            table.text('content').notNullable();
+            table.timestamps();
+        }),
+
         // Table: relationship
 
         knex.schema.createTable('users_classes', function (table) {

@@ -213,6 +213,17 @@ module.exports.postDetail = {
                     delete tempVote.author.password;
                 }
 
+                let vote_count = 0;
+                for (let j = 0; j < votes.length; j++) {
+                    if (votes[j].up == true) {
+                        vote_count++;
+                    } else {
+                        vote_count--;
+                    }
+                }
+
+                tempCmt.vote_count = vote_count;
+
                 // xoa thong tin user khong can thiet cua rep cmt
                 let repCmts = tempCmt.repComments;
                 for (var j = 0; j < repCmts.length; j++) {

@@ -4,8 +4,9 @@
   "description": "",
   "main": "app.js",
   "scripts": {
+    "prestart" : "npm i",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app.js",
+    "start": "pm2 start index.js",
     "ki": "npm i -g knex"
   },
   "author": "",

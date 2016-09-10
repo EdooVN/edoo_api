@@ -296,7 +296,7 @@ module.exports.postSeen = {
     },
     validate: {
         payload: {
-            post_id: Joi.string().alphanum().required()
+            post_id: Joi.number().integer().required()
         }
     },
     description: 'post seen',
@@ -350,7 +350,7 @@ module.exports.postCmt = {
     },
     validate: {
         payload: {
-            post_id: Joi.string().alphanum().required(),
+            post_id: Joi.number().integer().required(),
             content: Joi.string().required(),
             is_incognito: Joi.boolean().optional()
         }
@@ -459,8 +459,8 @@ module.exports.postVote = {
     },
     validate: {
         payload: {
-            post_id: Joi.string().alphanum().required(),
-            content: Joi.number().integer().required()
+            post_id: Joi.number().integer().required(),
+            content: Joi.string().required()
         }
     },
     description: 'post vote',
@@ -494,7 +494,7 @@ module.exports.postVoteCmt = {
     },
     validate: {
         payload: {
-            comment_id: Joi.string().alphanum().required()
+            comment_id: Joi.number().integer().required()
             // content: Joi.number().integer().required()
         }
     },
@@ -525,7 +525,7 @@ module.exports.postDeVoteCmt = {
     },
     validate: {
         payload: {
-            comment_id: Joi.string().alphanum().required()
+            comment_id: Joi.number().integer().required()
             // content: Joi.number().integer().required()
         }
     },
@@ -556,7 +556,7 @@ module.exports.postUnVoteCmt = {
     },
     validate: {
         payload: {
-            comment_id: Joi.string().alphanum().required()
+            comment_id: Joi.number().integer().required()
             // content: Joi.number().integer().required()
         }
     },
@@ -632,7 +632,7 @@ module.exports.postSolve = {
     },
     validate: {
         payload: {
-            comment_id: Joi.string().alphanum().required()
+            comment_id: Joi.number().integer().required()
         }
     },
     description: 'post solve',
@@ -681,7 +681,7 @@ module.exports.postUnSolve = {
     },
     validate: {
         payload: {
-            comment_id: Joi.string().alphanum().required()
+            comment_id: Joi.number().integer().required()
         }
     },
     description: 'post unsolve',

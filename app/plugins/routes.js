@@ -49,7 +49,7 @@ module.exports.register = (server, options, next) => {
         },
         {
             method: ['POST'],
-            path: '/editpass',
+            path: '/changepass',
             config: controller.user.changePassword
         },
 

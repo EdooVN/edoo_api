@@ -460,7 +460,7 @@ module.exports.postVote = {
     validate: {
         payload: {
             post_id: Joi.number().integer().required(),
-            content: Joi.string().required()
+            content: Joi.number().integer().required()
         }
     },
     description: 'post vote',

@@ -700,9 +700,10 @@ module.exports.postVoteCmt = function (content, comment_id, user_id, cb) {
 
 
 function countVoteCmt(comment_id, cb) {
-    new Models.Vote({
-        comment_id: comment_id
-    }).fetch().then(function (votes) {
+    new Models.Vote()
+        .where('comment_id', '=', comment_id)
+        .fetchAll()
+        .then(function (votes) {
         votes = votes.toJSON();
 
         let vote_count = 0;

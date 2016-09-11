@@ -146,12 +146,12 @@ module.exports.postPost = {
                         class_name: classSql.toJSON().name
                     };
                     service.post.pushNotiToStudent(class_id, dataPush);
-                    console.log(dataPush);
+                    // console.log(dataPush);
                 });
             }
 
         }).catch(function () {
-            rep(Boom.badData('Something went wrong!'));
+            return rep(Boom.badData('Something went wrong!'));
         });
     },
     auth: {

@@ -185,78 +185,87 @@ module.exports.postDetail = {
 
         new Models.Post({
             id: post_id
-        }).fetch({withRelated: ['votes.user', 'comments.user', 'user', 'comments.votes.user', 'comments.repComments.user']}).then(function (post) {
-            post = post.toJSON();
+        }).fetch({
+            withRelated: [
+                'votes.user',
+                'comments.user',
+                'user',
+                'comments.votes.user',
+                'comments.repComments.user'
+            ]
+        })
+            .then(function (post) {
+                post = post.toJSON();
 
-            // xoa thong tin user khong can thiet cua post && cmt
-            post.author = post.user;
-            delete post.user;
-            delete post.author.password;
+                // xoa thong tin user khong can thiet cua post && cmt
+                post.author = post.user;
+                delete post.user;
+                delete post.author.password;
 
-            if (post.is_incognito == true && post.user_id != user_id) {
-                delete post.author;
-            }
+                if (post.is_incognito == true && post.user_id != user_id) {
+                    delete post.author;
+                }
 
-            let cmts = post.comments;
-            for (var i = 0; i < cmts.length; i++) {
-                let tempCmt = cmts[i];
-                tempCmt.author = tempCmt.user;
-                delete tempCmt.user;
-                delete tempCmt.author.password;
+                let cmts = post.comments;
+                for (var i = 0; i < cmts.length; i++) {
+                    let tempCmt = cmts[i];
+                    tempCmt.author = tempCmt.user;
+                    delete tempCmt.user;
+                    delete tempCmt.author.password;
 
-                // xoa thong tin user khong can thiet cua vote cmt
-                let votes = tempCmt.votes;
+                    // xoa thong tin user khong can thiet cua vote cmt
+                    let votes = tempCmt.votes;
+                    let vote_count = 0;
+                    for (var j = 0; j < votes.length; j++) {
+                        let tempVote = votes[j];
+                        tempVote.author = tempVote.user;
+                        delete tempVote.user;
+                        delete tempVote.author.password;
+
+                        // count vote
+                        if (votes[j].up == true) {
+                            vote_count++;
+                        } else {
+                            vote_count--;
+                        }
+                    }
+
+                    tempCmt.vote_count = vote_count;
+
+                    // xoa thong tin user khong can thiet cua rep cmt
+                    let repCmts = tempCmt.repComments;
+                    for (var j = 0; j < repCmts.length; j++) {
+                        let tempRepCmt = repCmts[j];
+                        tempRepCmt.author = tempRepCmt.user;
+                        delete tempRepCmt.user;
+                        delete tempRepCmt.author.password;
+                    }
+                }
+
+                // xoa thong tin user khong can thiet cua vote
+                let votes = post.votes;
                 let vote_count = 0;
-                for (var j = 0; j < votes.length; j++) {
-                    let tempVote = votes[j];
+                for (var i = 0; i < votes.length; i++) {
+                    let tempVote = votes[i];
                     tempVote.author = tempVote.user;
                     delete tempVote.user;
                     delete tempVote.author.password;
 
                     // count vote
-                    if (votes[j].up == true) {
+                    if (votes[i].up == true) {
                         vote_count++;
                     } else {
                         vote_count--;
                     }
                 }
 
-                tempCmt.vote_count = vote_count;
+                post.vote_count = vote_count;
+                post.comment_count = cmts.length;
 
-                // xoa thong tin user khong can thiet cua rep cmt
-                let repCmts = tempCmt.repComments;
-                for (var j = 0; j < repCmts.length; j++) {
-                    let tempRepCmt = repCmts[j];
-                    tempRepCmt.author = tempRepCmt.user;
-                    delete tempRepCmt.user;
-                    delete tempRepCmt.author.password;
-                }
-            }
+                rep(ResponseJSON('', post));
 
-            // xoa thong tin user khong can thiet cua vote
-            let votes = post.votes;
-            let vote_count = 0;
-            for (var i = 0; i < votes.length; i++) {
-                let tempVote = votes[i];
-                tempVote.author = tempVote.user;
-                delete tempVote.user;
-                delete tempVote.author.password;
-
-                // count vote
-                if (votes[j].up == true) {
-                    vote_count++;
-                } else {
-                    vote_count--;
-                }
-            }
-
-            post.vote_count = vote_count;
-            post.comment_count = cmts.length;
-
-            rep(ResponseJSON('', post));
-
-            service.post.postSeenPost(post_id, user_id);
-        }).catch(function (err) {
+                service.post.postSeenPost(post_id, user_id);
+            }).catch(function (err) {
             rep(Boom.badData('Something went wrong!'));
             // console.log(err);
         });
@@ -337,6 +346,15 @@ module.exports.postCmt = {
                     delete cmtSql.author.password;
 
                     rep(ResponseJSON('Comment success!', cmtSql));
+
+                    // push noti to post's owner
+                    let dataPush = {
+                        title: title,
+                        content: content,
+                        teacher_name: user_name,
+                        class_id: class_id,
+                        class_name: classSql.toJSON().name
+                    };
                 });
             }
         }).catch(function (err) {

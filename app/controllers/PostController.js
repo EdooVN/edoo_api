@@ -119,6 +119,8 @@ module.exports.postPost = {
             .trim())
             .substring(0, 180);
 
+        // console.log(user_data);
+
         new Models.Post({
             user_id: user_id,
             class_id: class_id,

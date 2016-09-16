@@ -141,6 +141,7 @@ module.exports.postPost = {
                     id: class_id
                 }).fetch().then(function (classSql) {
                     let dataPush = {
+                        type: 'teacher_post',
                         title: title,
                         content: content,
                         teacher_name: user_name,
@@ -324,6 +325,7 @@ module.exports.postCmt = {
         let user_data = req.auth.credentials;
         let post = req.payload;
         let user_id = _.get(user_data, 'id', '');
+        let username = _.get(user_data, 'username', '');
         let post_id = _.get(post, 'post_id', '');
         let content = _.get(post, 'content', '');
         let isIncognito = _.get(post, 'is_incognito', false);
@@ -351,12 +353,13 @@ module.exports.postCmt = {
 
                     // push noti to post's owner
                     let dataPush = {
-                        title: title,
+                        type: 'comment',
                         content: content,
-                        teacher_name: user_name,
-                        class_id: class_id,
-                        class_name: classSql.toJSON().name
+                        username: username,
+                        is_incognito: isIncognito
                     };
+
+                    service.post.pushNotiToPostOwner(post_id, dataPush);
                 });
             }
         }).catch(function (err) {

@@ -98,7 +98,9 @@ module.exports.getPostInPage = function (pageNumber, pageSize, class_id, user_id
 module.exports.getPostInPageFilterTeacher = function (pageNumber, pageSize, class_id, user_id, cb) {
     new Models.Post()
         .query(function (qb) {
-            qb.where('class_id', '=', class_id).andWhere('is_post_teacher', '=', true);
+            qb.where('class_id', '=', class_id)
+                .andWhere('is_post_teacher', '=', true)
+                .andWhere('is_incognito', '=', false);
         })
         .orderBy('-created_at')
         .fetchPage({

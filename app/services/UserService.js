@@ -126,6 +126,34 @@ function saveNewToken(userData, cb) {
     });
 }
 
+module.exports.saveFcmToken = function (user_id, type, token_id, device_token, cb) {
+    // insert new token with token_id, if exist change token_id & user_id
+    new Models.FirebaseToken({
+        user_id: user_id,
+        token_id: token_id,
+        type: type,
+        token: device_token
+    }).save()
+        .then(function (tokenInsert) {
+            return cb(false, tokenInsert.toJSON());
+        })
+        .catch(function () {
+            // update
+            knex('firebase_tokens')
+                .where('token', '=', device_token)
+                .update({
+                    user_id: user_id,
+                    token_id: token_id
+                })
+                .then(function (result) {
+                    return cb(false, result)
+                })
+                .catch(function () {
+                    return cb(true);
+                });
+        });
+};
+
 function deleteAllUserToken(user_id, cb) {
     knex('tokens').where('user_id', user_id).del()
         .then(function () {
@@ -153,7 +181,7 @@ module.exports.changePassword = function (user_id, old_password, new_password, c
 
             // hash password
             bcrypt.hash(new_password, 10, function (err, hashPassword) {
-                if (!err){
+                if (!err) {
                     // change password to db
                     new Models.User({
                         id: user_id
@@ -165,7 +193,7 @@ module.exports.changePassword = function (user_id, old_password, new_password, c
 
                             // delete all user token & firebase token
                             deleteAllUserToken(user_id, function (err) {
-                                if (!err){
+                                if (!err) {
                                     // save token
                                     saveNewToken(userSql, function (err, responseData) {
                                         if (!err) {

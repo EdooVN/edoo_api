@@ -33,7 +33,7 @@ module.exports.loginPost = {
 
                 // save token
                 service.user.saveNewToken(user.toJSON(), function (err, responseData) {
-                    if (!err){
+                    if (!err) {
                         return reply(ResponseJSON('Login success!', responseData));
                     } else {
                         return reply(Boom.badRequest('Something went wrong!'));
@@ -139,55 +139,23 @@ module.exports.registerFirebaseToken = {
     handler: function (req, rep) {
         let user_data = req.auth.credentials;
         let user_id = _.get(user_data, 'id', '');
+        let token_id = _.get(user_data, 'token_id', '');
+
         let post = req.payload;
         let type = _.get(post, 'type', '');
-        let token = _.get(post, 'token', '');
+        let device_token = _.get(post, 'token', '');
 
         if (type != 'android' && type != 'ios' && type != 'web') {
             return rep(Boom.badData('invalid type, the type is: android/ios/web'));
         }
 
-        //Check FCM token is exits?
-        // yes: change user
-        // no: continue
-        new Models.FirebaseToken({
-            type: type,
-            token: token
-        }).fetch().then(function (result) {
-            if (!_.isEmpty(result)) {
-                new Models.FirebaseToken({
-                    id: result.toJSON().id
-                }).save({user_id: user_id}, {method: 'update', patch: true}).then(function (tokenInsert) {
-                    return rep(ResponseJSON('Success', tokenInsert.toJSON()));
-                });
+        service.user.saveFcmToken(user_id, type, token_id, device_token, function (err, res) {
+            if (!err){
+                return rep(ResponseJSON('Resgister FCM success', res));
             } else {
-                new Models.FirebaseToken({
-                    user_id: user_id,
-                    type: type
-                }).fetch().then(function (tokenSql) {
-                    if (_.isEmpty(tokenSql)) {
-                        // insert new
-                        new Models.FirebaseToken({
-                            user_id: user_id,
-                            type: type,
-                            token: token
-                        }).save().then(function (tokenInsert) {
-                            return rep(ResponseJSON('Success', tokenInsert.toJSON()));
-                        });
-                    } else {
-                        new Models.FirebaseToken({
-                            id: tokenSql.toJSON().id
-                        }).save({token: token}, {method: 'update', patch: true}).then(function (tokenInsert) {
-                            return rep(ResponseJSON('Success', tokenInsert.toJSON()));
-                        });
-                    }
-                }).catch(function (err) {
-                    console.log(err);
-                    console.log('ok men 3');
-                    return rep(Boom.badData('Something went wrong!'));
-                });
+                return rep(Boom.badData('Something went wrong!'));
             }
-        });
+        })
     },
     auth: {
         mode: 'required',

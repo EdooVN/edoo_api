@@ -33,8 +33,12 @@ exports.up = function (knex, Promise) {
         knex.schema.createTable('firebase_tokens', function (table) {
             table.increments('id').unsigned();
             table.integer('user_id').unsigned();
+            table.integer('token_id').unsigned();
             table.varchar('type', 200).notNullable();
-            table.varchar('token', 200).notNullable();
+            table.varchar('token', 200).notNullable().unique();
+
+            table.index('user_id');
+            table.index('token_id');
         }),
 
         knex.schema.createTable('attack_files', function (table) {

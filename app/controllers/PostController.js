@@ -354,6 +354,7 @@ module.exports.postCmt = {
                     // push noti to post's owner
                     let dataPush = {
                         type: 'comment',
+                        post_id: post_id,
                         content: content,
                         username: username,
                         is_incognito: isIncognito

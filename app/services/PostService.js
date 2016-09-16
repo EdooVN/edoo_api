@@ -510,9 +510,26 @@ module.exports.pushNotiToStudent = function (classId, data) {
     });
 };
 
+module.exports.pushNotiToPostOwner = function (post_id, data) {
+    new Models.Post({
+        id: post_id
+    }).fetch({withRelated: 'user.firebase_tokens'})
+        .then(function (postSql) {
+            postSql = postSql.toJSON();
+
+            let firebaseTokens = postSql.user.firebase_tokens;
+            for (var j = 0; j < firebaseTokens.length; j++) {
+                let firebaseToken = firebaseTokens[j];
+                if (firebaseToken.type == 'android') {
+                    pushFirebaseNoti(API_FIREBASE_KEY, firebaseToken.token, data);
+                }
+            }
+        });
+};
+
 function pushFirebaseNoti(apiKey, deviceToken, data) {
-    // console.log('api key: ' + apiKey);
-    // console.log('device: ' + deviceToken);
+    console.log('api key: ' + apiKey);
+    console.log('device: ' + deviceToken);
 
     let urlReq = 'https://fcm.googleapis.com/fcm/send';
 
@@ -618,7 +635,7 @@ module.exports.postVoteCmt = function (content, comment_id, user_id, cb) {
                 // console.log(result.toJSON());
 
                 countVoteCmt(comment_id, function (err, vote_count) {
-                    if (!err){
+                    if (!err) {
                         result = result.toJSON();
                         result.vote_count = vote_count;
 
@@ -651,7 +668,7 @@ module.exports.postVoteCmt = function (content, comment_id, user_id, cb) {
                     // console.log(result.toJSON());
 
                     countVoteCmt(comment_id, function (err, vote_count) {
-                        if (!err){
+                        if (!err) {
                             result = result.toJSON();
                             result.vote_count = vote_count;
 
@@ -680,7 +697,7 @@ module.exports.postVoteCmt = function (content, comment_id, user_id, cb) {
                 // console.log('insert ok');
                 // console.log(result.toJSON());
                 countVoteCmt(comment_id, function (err, vote_count) {
-                    if (!err){
+                    if (!err) {
                         result = result.toJSON();
                         result.vote_count = vote_count;
 
@@ -704,21 +721,21 @@ function countVoteCmt(comment_id, cb) {
         .where('comment_id', '=', comment_id)
         .fetchAll()
         .then(function (votes) {
-        votes = votes.toJSON();
+            votes = votes.toJSON();
 
-        let vote_count = 0;
-        for (let i = 0; i < votes.length; i++) {
-            let vote = votes[i];
-            if (vote.up == true){
-                vote_count++;
-            } else {
-                vote_count--;
+            let vote_count = 0;
+            for (let i = 0; i < votes.length; i++) {
+                let vote = votes[i];
+                if (vote.up == true) {
+                    vote_count++;
+                } else {
+                    vote_count--;
+                }
             }
-        }
 
-        cb(false, vote_count);
+            cb(false, vote_count);
 
-    }).catch(function () {
+        }).catch(function () {
         cb(true);
     })
 }

@@ -99,8 +99,8 @@ module.exports.postPost = {
         let post = req.payload;
         let user_id = _.get(user_data, 'id', '');
         let user_name = _.get(user_data, 'name', '');
-        let capability = _.get(user_data, 'capability', false);
-        let is_post_teacher = (capability === 'teacher');
+        let capability = _.get(user_data, 'capability', '');
+        let is_post_teacher = (capability == 'teacher');
         let class_id = _.get(post, 'class_id', '');
         let title = _.get(post, 'title', '');
         let content = _.get(post, 'content', '');

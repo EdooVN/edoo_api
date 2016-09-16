@@ -26,13 +26,15 @@ module.exports.loginPost = {
                 return reply(Boom.unauthorized('Email doesn\'t exist!'));
             }
 
+            console.log(user.toJSON());
+
             bcrypt.compare(password, user.get('password'), function (err, res) {
                 if (!res) {//Password invalid
                     return reply(Boom.unauthorized('Invalid password!'));
                 }
 
                 // save token
-                service.user.saveNewToken(user, function (err, responseData) {
+                service.user.saveNewToken(user.toJSON(), function (err, responseData) {
                     if (!err){
                         return reply(ResponseJSON('Login success!', responseData));
                     } else {

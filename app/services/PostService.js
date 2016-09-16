@@ -528,8 +528,8 @@ module.exports.pushNotiToPostOwner = function (post_id, data) {
 };
 
 function pushFirebaseNoti(apiKey, deviceToken, data) {
-    console.log('api key: ' + apiKey);
-    console.log('device: ' + deviceToken);
+    // console.log('api key: ' + apiKey);
+    // console.log('device: ' + deviceToken);
 
     let urlReq = 'https://fcm.googleapis.com/fcm/send';
 
@@ -564,7 +564,7 @@ module.exports.saveImgAndGetStaticURL = function (file, user_code, cb) {
     var savePath = config('PATH_IMG_UPLOAD', '/');
     let serverName = config('SERVER_STATIC_FILES', 'http://media.uetf.me');
     let timeNow = new Date(Date.now());
-    let zenPath = user_code + '/' + timeNow.getTime();
+    let zenPath = '/' + user_code + '/' + timeNow.getTime();
     savePath = savePath + '/' + zenPath;
     var path = savePath + '/' + name;
 
@@ -589,7 +589,7 @@ module.exports.saveImgAndGetStaticURL = function (file, user_code, cb) {
                     filename: file.hapi.filename,
                     headers: file.hapi.headers,
                     path: path,
-                    url: (serverName + '/' + zenPath + '/' + encodeURI(name))
+                    url: (serverName + zenPath + '/' + encodeURI(name))
                 };
                 // rep(ResponseJSON('Upload success!', res));
                 cb(false, res);

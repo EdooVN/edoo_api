@@ -2,6 +2,7 @@
 
 const _ = require('lodash');
 const Models = global.Models;
+const jwt = require('hapi-auth-jwt2');
 
 module.exports.register = function register(server, options, next) {
     let config = global.helpers.config;
@@ -13,6 +14,8 @@ module.exports.register = function register(server, options, next) {
         }
 
         request.auth.credentials = decoded;
+
+        // console.log('decoder' + decoded);
 
         let tokenId = _.get(decoded, 'token_id', '');
         new Models.Token({
@@ -29,7 +32,7 @@ module.exports.register = function register(server, options, next) {
         });
     };
 
-    server.register(require('hapi-auth-jwt2'), function (err) {
+    server.register(jwt, function (err) {
         if (err) {
             return console.log(err);
         }

@@ -136,7 +136,7 @@ module.exports.postPost = {
         }).save().then(function (result) {
             rep(ResponseJSON('Post success', result));
 
-            if (is_post_teacher == true) {
+            if (is_post_teacher == true && is_incognito == false) {
                 new Models.Class({
                     id: class_id
                 }).fetch().then(function (classSql) {

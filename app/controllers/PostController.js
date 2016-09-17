@@ -325,7 +325,7 @@ module.exports.postCmt = {
         let user_data = req.auth.credentials;
         let post = req.payload;
         let user_id = _.get(user_data, 'id', '');
-        let username = _.get(user_data, 'username', '');
+        let name = _.get(user_data, 'name', '');
         let post_id = _.get(post, 'post_id', '');
         let content = _.get(post, 'content', '');
         let isIncognito = _.get(post, 'is_incognito', false);
@@ -356,9 +356,13 @@ module.exports.postCmt = {
                         type: 'comment',
                         post_id: post_id,
                         content: content,
-                        username: username,
+                        name: name,
                         is_incognito: isIncognito
                     };
+
+                    if (isIncognito){
+                        delete dataPush.name;
+                    }
 
                     service.post.pushNotiToPostOwner(post_id, dataPush);
                 });

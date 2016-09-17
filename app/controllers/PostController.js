@@ -343,7 +343,7 @@ module.exports.postCmt = {
             if (result) {
                 new Models.Comment({
                     id: result.toJSON().id
-                }).fetch({withRelated: 'user'}).then(function (cmtSql) {
+                }).fetch({withRelated: ['user', 'post.user']}).then(function (cmtSql) {
                     cmtSql = cmtSql.toJSON();
                     cmtSql.author = cmtSql.user;
                     delete cmtSql.user;
@@ -364,7 +364,11 @@ module.exports.postCmt = {
                         delete dataPush.name;
                     }
 
-                    service.post.pushNotiToPostOwner(post_id, dataPush);
+                    let ownerPost_id = cmtSql.post.user.id;
+
+                    if (user_id != ownerPost_id){
+                        service.post.pushNotiToPostOwner(post_id, dataPush);
+                    }
                 });
             }
         }).catch(function (err) {

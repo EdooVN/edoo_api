@@ -351,11 +351,19 @@ module.exports.postCmt = {
 
                     rep(ResponseJSON('Comment success!', cmtSql));
 
+                    let regex = /(<([^>]+)>)/ig;
+                    let entities = new Entities();
+                    let desCmt = entities.decode(content.replace('>', '> ')
+                        .replace(regex, '')
+                        .replace('  ', ' ')
+                        .trim())
+                        .substring(0, 180);
+
                     // push noti to post's owner
                     let dataPush = {
                         type: 'comment',
                         post_id: post_id,
-                        content: content,
+                        content: desCmt,
                         name: name,
                         is_incognito: isIncognito
                     };

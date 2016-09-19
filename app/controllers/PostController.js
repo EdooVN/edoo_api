@@ -522,6 +522,7 @@ module.exports.postVoteCmt = {
         // let content = _.get(post, 'content', '');
         service.post.postVoteCmt(1, comment_id, user_id, function (err, res) {
             if (!err) {
+                res.comment_id = comment_id;
                 return rep(ResponseJSON('Success', res));
             } else {
                 return rep(Boom.badData('Something went wrong!'));

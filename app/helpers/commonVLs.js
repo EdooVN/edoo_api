@@ -1,10 +1,11 @@
-// module.exports.timeExtension = 172800000;
+// 2 ngày
+module.exports.timeExtension = 172800000;
 
 /**
  * test 8h hết hạn token
  * @type {number}
  */
-module.exports.timeExtension = 28800000;
+// module.exports.timeExtension = 28800000;
 
 /**
  * 2 phut

@@ -640,6 +640,7 @@ module.exports.postVoteCmt = function (content, comment_id, user_id, cb) {
                     if (!err) {
                         result = result.toJSON();
                         result.vote_count = vote_count;
+                        result.comment_id = comment_id;
 
                         return cb(false, result);
                     } else {
@@ -673,6 +674,7 @@ module.exports.postVoteCmt = function (content, comment_id, user_id, cb) {
                         if (!err) {
                             result = result.toJSON();
                             result.vote_count = vote_count;
+                            result.comment_id = comment_id;
 
                             return cb(false, result);
                         } else {
@@ -702,6 +704,7 @@ module.exports.postVoteCmt = function (content, comment_id, user_id, cb) {
                     if (!err) {
                         result = result.toJSON();
                         result.vote_count = vote_count;
+                        result.comment_id = comment_id;
 
                         return cb(false, result);
                     } else {

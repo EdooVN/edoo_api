@@ -748,7 +748,7 @@ function countVoteCmt(comment_id, cb) {
 }
 
 module.exports.updatePost = function (user_id, post_id, title, content, is_incognito, type, cb) {
-    if (!isValidateTypePost(type)){
+    if (!isValidTypePost(type)){
         return cb(true, 'Type post is invalided');
     }
 
@@ -783,7 +783,7 @@ module.exports.updatePost = function (user_id, post_id, title, content, is_incog
         });
 };
 
-function isValidateTypePost(typePost) {
+function isValidTypePost(typePost) {
     for (let type of TYPE_POST_ARR){
         if (typePost == type){
             return true;

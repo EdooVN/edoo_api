@@ -14,6 +14,8 @@ const config = helpers.config;
 const API_FIREBASE_KEY = config('API_FIREBASE_KEY', '');
 const SERVER_KEY = config('SERVER_KEY', 'server_key');
 
+const TYPE_POST_ARR = helpers.commons.TYPE_POST_ARRAY;
+
 module.exports.getPostInPage = function (pageNumber, pageSize, class_id, user_id, cb) {
     new Models.Post()
         .query(function (qb) {
@@ -745,3 +747,48 @@ function countVoteCmt(comment_id, cb) {
     })
 }
 
+module.exports.updatePost = function (user_id, post_id, title, content, is_incognito, type, cb) {
+    if (!isValidateTypePost(type)){
+        return cb(true, 'Type post is invalided');
+    }
+
+    new Models.Post({
+        id: post_id
+    }).fetch({withRelated: 'user'})
+        .then(function (postResult) {
+            if (_.isEmpty(postResult)) {
+                return cb(true, 'Post id is not existed');
+            }
+
+            postResult = postResult.toJSON();
+
+            if (user_id != postResult.user.id){
+                return cb(true, 'You are not the author');
+            }
+
+            new Models.Post({
+                id: post_id
+            }).save({
+                title: title,
+                content: content,
+                is_incognito: is_incognito,
+                type: type
+            }, {method: 'update', patch: true})
+                .then(function (postUpdateSql) {
+                    return cb(false, postUpdateSql);
+                });
+        })
+        .catch(function () {
+            return cb(true, 'Something went wrong');
+        });
+};
+
+function isValidateTypePost(typePost) {
+    for (let type of TYPE_POST_ARR){
+        if (typePost == type){
+            return true;
+        }
+    }
+
+    return false;
+}

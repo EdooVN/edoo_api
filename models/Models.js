@@ -113,6 +113,9 @@ var Post = module.exports.Post = bookshelf.Model.extend({
     user: function () {
         return this.belongsTo(User);
     },
+    class: function () {
+        return this.belongsTo(Class);
+    },
     votes: function () {
         return this.hasMany(Vote);
     },

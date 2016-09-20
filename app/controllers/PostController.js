@@ -176,6 +176,44 @@ module.exports.postPost = {
     tags: ['api', 'post']
 };
 
+module.exports.updatePost = {
+    handler : function (req, rep) {
+        let user_data = req.auth.credentials;
+        let post = req.payload;
+        let user_id = _.get(user_data, 'id', '');
+
+        let post_id = _.get(post, 'post_id', 0);
+        let title = _.get(post, 'title', '');
+        let content = _.get(post, 'content', '');
+        let is_incognito = _.get(post, 'is_incognito', false);
+        let type = _.get(post, 'type', '');
+
+        service.post.updatePost(user_id, post_id, title, content, is_incognito, type, function (err, res) {
+           if (!err){
+               return rep(ResponseJSON('Success', res));
+           } else {
+               return rep(Boom.badData(res));
+           }
+        });
+    },
+    auth: {
+        mode: 'required',
+        strategies: ['jwt']
+    },
+    validate: {
+        payload: {
+            post_id : Joi.number().integer().required(),
+            title: Joi.string().required(),
+            content: Joi.string().required(),
+            is_incognito: Joi.boolean().required(),
+            type: Joi.string().required()
+        }
+    },
+    description: 'update post',
+    notes: 'update post',
+    tags: ['api', 'post']
+};
+
 /**
  * get a detail post (with cmt)
  */
@@ -190,6 +228,7 @@ module.exports.postDetail = {
             id: post_id
         }).fetch({
             withRelated: [
+                'class',
                 'votes.user',
                 'comments.user',
                 'user',

@@ -105,6 +105,11 @@ module.exports.register = (server, options, next) => {
             config: controller.post.postPost
         },
         {
+            method: ['POST'],
+            path: '/updatepost',
+            config: controller.post.updatePost
+        },
+        {
             method: ['GET'],
             path: '/post/{post_id?}',
             config: controller.post.postDetail

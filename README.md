@@ -37,6 +37,8 @@ https://docs.google.com/spreadsheets/d/1HvkoSS6OSoEWc6cfFKgmyFgaEji7WcQchsxgEdgE
 Nếu cài bcrypt bị lỗi thì xem link này nhé:
 https://github.com/nodejs/node-gyp
 
+- Set timzone cho server về UTC
+
 # Start server:
 
 ```

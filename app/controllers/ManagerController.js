@@ -20,6 +20,7 @@ module.exports.addUser = {
         let pass = _.get(post, 'password', '');
         let name = _.get(post, 'name', '');
         let birth = _.get(post, 'birthday', '');
+        let regular_class = _.get(post, 'regular_class', '');
 
 
         // kiem tra capability
@@ -58,7 +59,8 @@ module.exports.addUser = {
                         name: name,
                         birthday: birth,
                         password: hash,
-                        capability: capability
+                        capability: capability,
+                        regular_class: regular_class
                     }).save(null, {method: 'insert'}).then(function (user) {
                         if (_.isEmpty(user)) {
                             return reply(Boom.serverUnavailable('Service Unavailable'));
@@ -80,7 +82,8 @@ module.exports.addUser = {
             username: Joi.string().token().optional(),
             password: Joi.string().optional(),
             birthday: Joi.string().optional(),
-            name: Joi.string().optional()
+            name: Joi.string().optional(),
+            regular_class: Joi.string().optional()
         }
     },
     auth: false,

@@ -52,6 +52,11 @@ module.exports.register = (server, options, next) => {
             path: '/changepass',
             config: controller.user.changePassword
         },
+        // {
+        //     method: ['POST'],
+        //     path: '/sendpass',
+        //     config: controller.user.sendPass
+        // },
 
         /**
          * Manager
@@ -178,8 +183,7 @@ module.exports.register = (server, options, next) => {
             method : ['POST'],
             path: '/img',
             config: controller.post.uploadImage
-        }
-        ,
+        },
         {
             method : ['POST'],
             path: '/avatar',

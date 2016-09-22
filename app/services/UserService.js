@@ -118,6 +118,7 @@ function saveNewToken(userData, cb) {
 
         getTokenUser(userData, function (tokenUser) {
             delete userData.password;
+            delete userData.token_id;
 
             return cb(false, {token: tokenUser, user: userData});
         });
@@ -233,7 +234,7 @@ module.exports.resetPass = function (email_user, code_user, cb) {
                     if (!err){
                         emailService.sendRefreshPass(userRes.user, userRes.token, function (err) {
                             if (!err){
-                                return cb(false, userRes);
+                                return cb(false, userRes.user);
                             } else {
                                 return cb(true, 'Something went wrong!');
                             }

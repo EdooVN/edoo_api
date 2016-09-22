@@ -52,11 +52,11 @@ module.exports.register = (server, options, next) => {
             path: '/changepass',
             config: controller.user.changePassword
         },
-        // {
-        //     method: ['POST'],
-        //     path: '/sendpass',
-        //     config: controller.user.sendPass
-        // },
+        {
+            method: ['POST'],
+            path: '/resetpass',
+            config: controller.user.resetPass
+        },
 
         /**
          * Manager

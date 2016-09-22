@@ -7,6 +7,7 @@ const Models = global.Models;
 const commons = global.helpers.commons;
 const jwt = require('jsonwebtoken');
 const postService = require('./PostService');
+const emailService = require('./EmailService');
 
 let config = global.helpers.config;
 const SERVER_KEY = config('SERVER_KEY', '');
@@ -121,7 +122,8 @@ function saveNewToken(userData, cb) {
             return cb(false, {token: tokenUser, user: userData});
         });
 
-    }).catch(function () {
+    }).catch(function (err) {
+        console.log(err);
         return cb(true);
     });
 }
@@ -203,7 +205,7 @@ module.exports.changePassword = function (user_id, old_password, new_password, c
                                         }
                                     });
                                 } else {
-                                    throw new Error();
+                                    return cb(true, 'Something went wrong!');
                                 }
                             });
                         })
@@ -216,4 +218,36 @@ module.exports.changePassword = function (user_id, old_password, new_password, c
             });
         });
     });
+};
+
+module.exports.resetPass = function (email_user, code_user, cb) {
+    new Models.User({
+        email: email_user,
+        code: code_user
+    }).fetch()
+        .then(function (userSql) {
+            console.log(userSql.toJSON());
+
+            if (!_.isEmpty(userSql)) {
+                saveNewToken(userSql.toJSON(), function (err, userRes) {
+                    if (!err){
+                        emailService.sendRefreshPass(userRes.user, userRes.token, function (err) {
+                            if (!err){
+                                return cb(false, userRes);
+                            } else {
+                                return cb(true, 'Something went wrong!');
+                            }
+                        });
+
+                    } else {
+                        return cb(true, 'Something went wrong!');
+                    }
+                });
+            } else {
+                return cb(true, 'User is not exist');
+            }
+        })
+        .catch(function (err) {
+            return cb(true, 'Something went wrong');
+        });
 };

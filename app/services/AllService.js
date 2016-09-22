@@ -2,5 +2,6 @@
 
 module.exports ={
     user : require('./UserService'),
-    post : require('./PostService')
+    post : require('./PostService'),
+    email : require('./EmailService')
 };

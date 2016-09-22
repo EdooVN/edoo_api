@@ -282,7 +282,31 @@ module.exports.changePassword = {
     tags: ['api', 'get solve vote']
 };
 
+module.exports.resetPass = {
+    handler : function (req, rep) {
+        let payload = req.payload;
+        let email = _.get(payload, 'email', '');
+        let code = _.get(payload, 'code', '');
 
+        service.user.resetPass(email, code, function (err, resData) {
+            if (!err){
+                rep(ResponseJSON('Send success', resData));
+            } else {
+                rep(Boom.badData(resData));
+            }
+        });
+    },
+    auth: false,
+    validate: {
+        payload : {
+            email: Joi.string().email().required(),
+            code : Joi.string().required()
+        }
+    },
+    description: 'reset password',
+    notes: 'reset pass',
+    tags: ['api', 'reset password']
+};
 
 
 

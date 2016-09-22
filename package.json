@@ -4,11 +4,11 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "prestart" : "npm i",
+    "prestart": "npm i",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "pm2 start index.js",
     "ki": "npm i -g knex",
-    "restart" : "pm2 restart 10"
+    "restart": "pm2 restart 10"
   },
   "author": "",
   "license": "ISC",
@@ -34,6 +34,7 @@
     "node-schedule": "^1.1.1",
     "randomstring": "^1.1.5",
     "request": "^2.74.0",
+    "sendgrid": "^4.3.0",
     "vision": "^4.1.0"
   }
 }

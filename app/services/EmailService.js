@@ -16,16 +16,16 @@ module.exports.sendRefreshPass = function (userDetail, token, cb) {
         + '<p>' + '<a href="' + urlResetPass + '">' + 'Khôi phục mật khẩu' + '</a>' + '</p>'
         + '<p>' + 'Nếu bạn không muốn khôi phục mật khẩu, hãy bỏ qua email này.' + '</p>'
         + '<p>' + 'Hỗ trợ Edoo' + '</p>';
-    sendEmail(userDetail.email, title, content_html, cb);
+    sendEmail(userDetail.email, userDetail.name, title, content_html, cb);
 };
 
-function sendEmail(email_user, title, content_html, callback) {
+function sendEmail(email_user, name_user, title, content_html, callback) {
     let from = 'fries.uet@gmail.com';
     let to = email_user;
 
     var helper = require('sendgrid').mail;
-    var from_email = new helper.Email(from);
-    var to_email = new helper.Email(to);
+    var from_email = new helper.Email(from, 'Fries');
+    var to_email = new helper.Email(to, name_user);
     var subject = title;
     var content = new helper.Content('text/html', content_html);
     var mail = new helper.Mail(from_email, subject, to_email, content);

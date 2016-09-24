@@ -182,58 +182,71 @@ module.exports.changePassword = function (user_id, old_password, new_password, c
                 return cb(true, 'Invalid password!');
             }
 
-            // hash password
-            bcrypt.hash(new_password, 10, function (err, hashPassword) {
-                if (!err) {
-                    // change password to db
-                    new Models.User({
-                        id: user_id
-                    }).save(
-                        {password: hashPassword},
-                        {method: 'update', patch: true})
-                        .then(function () {
-                            userSql.password = hashPassword;
-
-                            // delete all user token & firebase token
-                            deleteAllUserToken(user_id, function (err) {
-                                if (!err) {
-                                    // save token
-                                    saveNewToken(userSql, function (err, responseData) {
-                                        if (!err) {
-                                            return cb(false, responseData);
-                                        } else {
-                                            return cb(true, 'Something went wrong!');
-                                        }
-                                    });
-                                } else {
-                                    return cb(true, 'Something went wrong!');
-                                }
-                            });
-                        })
-                        .catch(function () {
-                            return cb(true, 'Something went wrong!');
-                        });
-                } else {
-                    return cb(true, 'Something went wrong!');
-                }
-            });
+            resetNewPass(user_id, new_password, cb);
         });
     });
 };
 
-module.exports.resetPass = function (email_user, code_user, cb) {
+module.exports.resetNewPass = resetNewPass;
+
+function resetNewPass(user_id, new_password, cb) {
+    // hash password
+    bcrypt.hash(new_password, 10, function (err, hashPassword) {
+        if (!err) {
+            // change password to db
+            new Models.User({
+                id: user_id
+            }).save(
+                {password: hashPassword},
+                {method: 'update', patch: true})
+                .then(function () {
+
+                    new Models.User({
+                        id: user_id
+                    }).fetch().then(function (userSql) {
+                        userSql = userSql.toJSON();
+                        // delete all user token & firebase token
+                        deleteAllUserToken(user_id, function (err) {
+                            if (!err) {
+                                // save token
+                                saveNewToken(userSql, function (err, responseData) {
+                                    if (!err) {
+                                        return cb(false, responseData);
+                                    } else {
+                                        return cb(true, 'Something went wrong!');
+                                    }
+                                });
+                            } else {
+                                return cb(true, 'Something went wrong!');
+                            }
+                        });
+                    })
+                })
+                .catch(function () {
+                    return cb(true, 'Something went wrong!');
+                });
+        } else {
+            return cb(true, 'Something went wrong!');
+        }
+    });
+}
+
+module.exports.sendResetPass = function (email_user, code_user, cb) {
     new Models.User({
         email: email_user,
         code: code_user
     }).fetch()
         .then(function (userSql) {
-            console.log(userSql.toJSON());
 
             if (!_.isEmpty(userSql)) {
-                saveNewToken(userSql.toJSON(), function (err, userRes) {
-                    if (!err){
+                userSql = userSql.toJSON();
+                userSql.is_token_refresh_pass = true;
+                saveNewToken(userSql, function (err, userRes) {
+                    if (!err) {
                         emailService.sendRefreshPass(userRes.user, userRes.token, function (err) {
-                            if (!err){
+                            if (!err) {
+                                delete userRes.user.is_token_refresh_pass;
+
                                 return cb(false, userRes.user);
                             } else {
                                 return cb(true, 'Something went wrong!');

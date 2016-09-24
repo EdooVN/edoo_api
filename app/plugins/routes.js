@@ -54,6 +54,11 @@ module.exports.register = (server, options, next) => {
         },
         {
             method: ['POST'],
+            path: '/sendresetpass',
+            config: controller.user.sendResetPass
+        },
+        {
+            method: ['POST'],
             path: '/resetpass',
             config: controller.user.resetPass
         },

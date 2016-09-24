@@ -282,13 +282,13 @@ module.exports.changePassword = {
     tags: ['api', 'get solve vote']
 };
 
-module.exports.resetPass = {
+module.exports.sendResetPass = {
     handler : function (req, rep) {
         let payload = req.payload;
         let email = _.get(payload, 'email', '');
         let code = _.get(payload, 'code', '');
 
-        service.user.resetPass(email, code, function (err, resData) {
+        service.user.sendResetPass(email, code, function (err, resData) {
             if (!err){
                 rep(ResponseJSON('Send success', resData));
             } else {
@@ -308,7 +308,39 @@ module.exports.resetPass = {
     tags: ['api', 'reset password']
 };
 
+module.exports.resetPass = {
+    handler : function (req, rep) {
+        let user_data = req.auth.credentials;
+        let payload = req.payload;
+        let user_id = _.get(user_data, 'id', '');
+        let is_token_refresh_pass = _.get(user_data, 'is_token_refresh_pass', false);
+        let new_password = _.get(payload, 'new_password', '');
 
+        if (!is_token_refresh_pass){
+            return rep(Boom.badData('Token is invalid'));
+        }
+
+        service.user.resetNewPass(user_id, new_password, function (err, resData) {
+            if (!err){
+                rep(ResponseJSON('Reset password success', resData));
+            } else {
+                rep(Boom.badData(resData));
+            }
+        });
+    },
+    auth: {
+        mode: 'required',
+        strategies: ['jwt']
+    },
+    validate: {
+        payload: {
+            new_password: Joi.string().required()
+        }
+    },
+    description: 'reset pass',
+    notes: 'reset pass',
+    tags: ['api', 'reset pass']
+};
 
 
 

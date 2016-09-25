@@ -196,7 +196,7 @@ module.exports.register = (server, options, next) => {
         },
         {
             method : ['POST'],
-            path: '/support',
+            path: '/sendsupport',
             config: controller.post.postSupport
         }
 

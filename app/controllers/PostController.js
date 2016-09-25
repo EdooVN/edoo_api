@@ -1023,15 +1023,17 @@ module.exports.uploadAvatar = {
 
 module.exports.postSupport = {
     handler: function (req, rep) {
-        let user_data = req.auth.credentials;
+        // let user_data = req.auth.credentials;
         let post = req.payload;
-        let userId = _.get(user_data, 'id', '');
+        let email = _.get(post, 'email', '');
+        let type = _.get(post, 'type', '');
         let content = _.get(post, 'content', '');
 
         let now = new Date(Date.now());
 
         new Models.Support({
-            user_id: userId,
+            email: email,
+            type: type,
             content: content,
             created_at: now.toISOString()
         }).save().then((result)=> {
@@ -1040,12 +1042,11 @@ module.exports.postSupport = {
             rep(Boom.badData('Something went wrong!'));
         });
     },
-    auth: {
-        mode: 'required',
-        strategies: ['jwt']
-    },
+    auth: false,
     validate: {
         payload: {
+            email : Joi.string().optional(),
+            type: Joi.string().required(),
             content: Joi.string().required()
         }
     },

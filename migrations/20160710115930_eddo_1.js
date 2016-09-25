@@ -134,7 +134,8 @@ exports.up = function (knex, Promise) {
 
         knex.schema.createTable('supports', function (table) {
             table.increments('id').unsigned();
-            table.integer('user_id').unsigned();
+            table.varchar('email', 200);
+            table.text('type').notNullable();
             table.text('content').notNullable();
             table.timestamps();
         }),

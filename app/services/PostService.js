@@ -7,6 +7,7 @@ const request = require('request');
 const jwt = require('jsonwebtoken');
 const mkdirp = require('mkdirp');
 const fs = require('fs');
+const Entities = require('html-entities').AllHtmlEntities;
 const Models = global.Models;
 const helpers = global.helpers;
 const config = helpers.config;
@@ -766,10 +767,20 @@ module.exports.updatePost = function (user_id, post_id, title, content, is_incog
                 return cb(true, 'You are not the author');
             }
 
+            let regex = /(<([^>]+)>)/ig;
+
+            let entities = new Entities();
+            let desPost = entities.decode(content.replace('>', '> ')
+                .replace(regex, '')
+                .replace('  ', ' ')
+                .trim())
+                .substring(0, 180);
+
             new Models.Post({
                 id: post_id
             }).save({
                 title: title,
+                description: desPost,
                 content: content,
                 is_incognito: is_incognito,
                 type: type

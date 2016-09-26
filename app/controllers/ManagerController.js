@@ -6,12 +6,13 @@ const Models = global.Models;
 const bcrypt = require('bcrypt');
 const Joi = require('joi');
 const ResponseJSON = global.helpers.ResponseJSON;
+const service = require('../services/AllService');
 
 /**
  * Add user by Admin
  */
 module.exports.addUser = {
-    handler: function (request, reply) {
+    handler: function (request, rep) {
         const post = request.payload;
         let email = _.get(post, 'email', '');
         let username = _.get(post, 'username', '');
@@ -22,57 +23,15 @@ module.exports.addUser = {
         let birth = _.get(post, 'birthday', '');
         let regular_class = _.get(post, 'regular_class', '');
 
+        service.user.insertNewStudentToDatabase(email, code, name,
+            username, pass, capability, birth, regular_class, function (err, res) {
+            if (!err){
+                return rep(ResponseJSON('Add user success!', res));
+            } else {
+                return rep(Boom.badData(res));
+            }
+        })
 
-        // kiem tra capability
-        if (capability === 'student' || capability === 'teacher') {
-            // Tìm xem có thằng nào đăng ký email này chưa?
-            new Models.User({
-                email: email
-            }).fetch().then(function (users) {
-                if (!_.isEmpty(users)) {// Email này có rồi!
-                    return reply(Boom.conflict('Email already exists!'));
-                }
-
-                new Models.User({
-                    code: code
-                }).fetch().then(function (users) {
-                    if (!_.isEmpty(users)) {// code này có rồi!
-                        return reply(Boom.conflict('Code already exists!'));
-                    }
-                });
-
-                //Đăng ký thôi
-                if (_.isEmpty(pass)) {
-                    pass = code;
-                }
-
-                if (_.isEmpty(username)){
-                    let tempSplit = _.split(email, '@');
-                    username = tempSplit[0];
-                }
-
-                bcrypt.hash(pass, 10, function (err, hash) {
-                    new Models.User({
-                        email: email,
-                        username: username,
-                        code: code,
-                        name: name,
-                        birthday: birth,
-                        password: hash,
-                        capability: capability,
-                        regular_class: regular_class
-                    }).save(null, {method: 'insert'}).then(function (user) {
-                        if (_.isEmpty(user)) {
-                            return reply(Boom.serverUnavailable('Service Unavailable'));
-                        }
-
-                        return reply(ResponseJSON('Add user success!'));
-                    });
-                });
-            });
-        } else {
-            return reply(Boom.conflict('capability is not valid!'));
-        }
     },
     validate: {
         payload: {
@@ -108,10 +67,10 @@ module.exports.addAClass = {
 
         let id_class = code + semester;
         new Models.Class({
-            id : id_class,
-            name : name,
-            code : code,
-            type : type,
+            id: id_class,
+            name: name,
+            code: code,
+            type: type,
             semester: semester
         }).save(null, {method: 'insert'}).then(function (result) {
             rep(ResponseJSON('Add class success!', result));
@@ -120,13 +79,13 @@ module.exports.addAClass = {
             rep(Boom.badData('Something went wrong!'));
         });
     },
-    auth : false,
+    auth: false,
     validate: {
         payload: {
             name: Joi.string().required(),
             code: Joi.string().alphanum().required(),
-            type : Joi.string().required(),
-            semester : Joi.string().required()
+            type: Joi.string().required(),
+            semester: Joi.string().required()
         }
     },
     description: 'add class',

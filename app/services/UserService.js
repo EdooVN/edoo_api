@@ -265,3 +265,58 @@ module.exports.sendResetPass = function (email_user, code_user, cb) {
             return cb(true, 'Something went wrong');
         });
 };
+
+function insertNewStudentToDatabase(email, code, name, username, password, capability, birthday, regularClass, cb) {
+// kiem tra capability
+    if (capability === 'student' || capability === 'teacher') {
+        // Tìm xem có thằng nào đăng ký email này chưa?
+        new Models.User({
+            email: email
+        }).fetch().then(function (users) {
+            if (!_.isEmpty(users)) {// Email này có rồi!
+                return cb(true, 'Email already exists!');
+            }
+
+            new Models.User({
+                code: code
+            }).fetch().then(function (users) {
+                if (!_.isEmpty(users)) {// code này có rồi!
+                    return cb(true, 'Code already exists!');
+                }
+            });
+
+            //Đăng ký thôi
+            if (_.isEmpty(password)) {
+                password = code;
+            }
+
+            if (_.isEmpty(username)){
+                let tempSplit = _.split(email, '@');
+                username = tempSplit[0];
+            }
+
+            bcrypt.hash(password, 10, function (err, hash) {
+                new Models.User({
+                    email: email,
+                    username: username,
+                    code: code,
+                    name: name,
+                    birthday: birthday,
+                    password: hash,
+                    capability: capability,
+                    regular_class: regularClass
+                }).save(null, {method: 'insert'}).then(function (user) {
+                    if (_.isEmpty(user)) {
+                        return cb(true, 'Service Unavailable');
+                    }
+
+                    return cb(false, user.toJSON());
+                });
+            });
+        });
+    } else {
+        return cb(true, 'capability is not valid!');
+    }
+}
+
+module.exports.insertNewStudentToDatabase = insertNewStudentToDatabase;

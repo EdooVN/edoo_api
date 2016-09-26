@@ -35,6 +35,7 @@
     "randomstring": "^1.1.5",
     "request": "^2.74.0",
     "sendgrid": "^4.3.0",
-    "vision": "^4.1.0"
+    "vision": "^4.1.0",
+    "xlsx": "^0.8.0"
   }
 }

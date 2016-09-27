@@ -21,6 +21,9 @@ function pareAndInsertStudentToDatabase(filePath, cb) {
     let indexCollumBirthday = '';
     let indexCollumClass = '';
 
+    // id of this subject class
+    let classId = '';
+
     // count rows and find index for email, code, name, birthday, regular_class
     let startRow = 0;
     let rowCount = 0;
@@ -36,7 +39,7 @@ function pareAndInsertStudentToDatabase(filePath, cb) {
         let numbString = z.substring(1, z.length);
         let currRow = parseInt(numbString);
         if (currRow > rowCount) {
-            rowCount = ++currRow;
+            rowCount = currRow + 1;
         }
 
         if (value === 'email') {
@@ -55,6 +58,13 @@ function pareAndInsertStudentToDatabase(filePath, cb) {
         if (value === 'class') {
             indexCollumClass = z[0];
             startRow = ++currRow;
+        }
+
+        if (value === 'class_id') {
+            let indexCollumClassId = z[0];
+
+            let addressClassId = indexCollumClassId + (currRow + 1);
+            classId = DSLMH_worksheet[addressClassId].v.trim().toUpperCase();
         }
     }
 
@@ -82,9 +92,7 @@ function pareAndInsertStudentToDatabase(filePath, cb) {
             // console.log(name);
             // console.log(birthday);
             // console.log(regularClass);
-            console.log(birthday);
             birthday = helpers.time_validate.validateTime(birthday);
-            console.log(birthday);
 
             if (!_.isEmpty(email)) {
                 userService.insertNewStudentToDatabase(email, code, name, '', '',
@@ -93,6 +101,10 @@ function pareAndInsertStudentToDatabase(filePath, cb) {
                         if (!err) {
                             insertStudentSuccess++;
                             // console.log('success');
+
+                            userService.userJoinClass(code, classId, function (err, res) {
+
+                            });
                         }
                         count++;
 

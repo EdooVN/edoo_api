@@ -102,36 +102,12 @@ module.exports.joinclass = {
         let userCode = _.get(post, 'user_code', '');
         let classId = _.get(post, 'class_id', '');
 
-        new Models.User({
-            code: userCode
-        }).fetch().then(function (user) {
-            if (_.isEmpty(user)) {
-                return rep(Boom.conflict('Student code is invalid!'));
+        service.user.userJoinClass(userCode, classId, function (err, res) {
+            if (!err){
+                rep(ResponseJSON(res));
+            } else {
+                rep(Boom.badData(res));
             }
-            let userId = _.get(user, 'id', '');
-            new Models.User_Class({
-                user_id: userId,
-                class_id: classId
-            }).fetch().then(function (uc) {
-                if (_.isEmpty(uc)) {
-                    new Models.User_Class({
-                        user_id: userId,
-                        class_id: classId
-                    }).save(null, {method: 'insert'}).then(function (uc) {
-                        if (!_.isEmpty(uc)) {
-                            return rep(ResponseJSON('User join success!'));
-                        } else {
-                            return rep(Boom.conflict('Opps, unsuccess!'));
-                        }
-                    }).catch(function () {
-                        return rep(Boom.conflict('Opps, unsuccess!'));
-                    });
-                } else {
-                    rep(Boom.conflict('User has already joined!'));
-                }
-            });
-        }).catch(function () {
-            return rep(Boom.conflict('Opps, unsuccess!'));
         });
     },
     validate: {
@@ -173,6 +149,7 @@ module.exports.addUserFromFileExel = {
         strategies: ['jwt']
     },
     payload: {
+        // class_id: Joi.string().required(),
         output: 'stream',
         maxBytes: 20097152,
         allow: 'multipart/form-data',

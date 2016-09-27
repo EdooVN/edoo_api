@@ -347,3 +347,37 @@ module.exports.addUserFromFileExel = function (file, user_id, user_code, cb) {
         }
     })
 };
+
+module.exports.userJoinClass = function (userCode, classId, cb) {
+    new Models.User({
+        code: userCode
+    }).fetch().then(function (user) {
+        if (_.isEmpty(user)) {
+            return cb(true, 'Student code is invalid!');
+        }
+        let userId = _.get(user, 'id', '');
+        new Models.User_Class({
+            user_id: userId,
+            class_id: classId
+        }).fetch().then(function (uc) {
+            if (_.isEmpty(uc)) {
+                new Models.User_Class({
+                    user_id: userId,
+                    class_id: classId
+                }).save(null, {method: 'insert'}).then(function (uc) {
+                    if (!_.isEmpty(uc)) {
+                        return cb(false, 'User join success!');
+                    } else {
+                        return cb(true, 'Something went wrong');
+                    }
+                }).catch(function () {
+                    return cb(true, 'Something went wrong');
+                });
+            } else {
+                return cb(true, 'User has already joined!');
+            }
+        });
+    }).catch(function () {
+        return cb(true, 'Something went wrong');
+    });
+};

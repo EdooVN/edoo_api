@@ -3,6 +3,7 @@
 const _ = require('lodash');
 const XLSX = require('xlsx');
 const userService = require('./UserService');
+const helpers = global.helpers;
 
 // for test
 const FILE_PATH = '/Users/TooNies1810/Desktop/int2204(4).xlsx';
@@ -70,17 +71,20 @@ function pareAndInsertStudentToDatabase(filePath, cb) {
             let addressBirthday = indexCollumBirthday + i;
             let addressClass = indexCollumClass + i;
 
-            let name = JSON.stringify(DSLMH_worksheet[addressName].v).trim();
-            let email = JSON.stringify(DSLMH_worksheet[addressEmail].v).trim().toLowerCase();
+            let name = DSLMH_worksheet[addressName].v.trim();
+            let email = DSLMH_worksheet[addressEmail].v.trim().toLowerCase();
             let code = JSON.stringify(DSLMH_worksheet[addressCode].v).trim().toLowerCase();
-            let birthday = JSON.stringify(DSLMH_worksheet[addressBirthday].v).trim().toLowerCase();
-            let regularClass = JSON.stringify(DSLMH_worksheet[addressClass].v).trim();
+            let birthday = DSLMH_worksheet[addressBirthday].v.trim().toLowerCase();
+            let regularClass = DSLMH_worksheet[addressClass].v.trim();
 
             // console.log(email);
             // console.log(code);
             // console.log(name);
             // console.log(birthday);
             // console.log(regularClass);
+            console.log(birthday);
+            birthday = helpers.time_validate.validateTime(birthday);
+            console.log(birthday);
 
             if (!_.isEmpty(email)) {
                 userService.insertNewStudentToDatabase(email, code, name, '', '',

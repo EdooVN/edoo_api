@@ -6,5 +6,7 @@
 module.exports = {
     ResponseJSON: require('./response'),
     config: require('./config'),
-    commons: require('./commonVLs')
+    commons: require('./commonVLs'),
+    time_validate: require('./TimeValidate'),
+    utils: require('./utils')
 };

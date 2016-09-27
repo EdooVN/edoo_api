@@ -8,6 +8,8 @@ const commons = global.helpers.commons;
 const jwt = require('jsonwebtoken');
 const postService = require('./PostService');
 const emailService = require('./EmailService');
+const fileService = require('./FileService');
+const studentInfoService = require('./StudentInfoService');
 
 let config = global.helpers.config;
 const SERVER_KEY = config('SERVER_KEY', '');
@@ -283,6 +285,8 @@ function insertNewStudentToDatabase(email, code, name, username, password, capab
                 if (!_.isEmpty(users)) {// code này có rồi!
                     return cb(true, 'Code already exists!');
                 }
+            }).catch(function () {
+                return cb(true, 'UserService, Something went wrong');
             });
 
             //Đăng ký thôi
@@ -290,7 +294,7 @@ function insertNewStudentToDatabase(email, code, name, username, password, capab
                 password = code;
             }
 
-            if (_.isEmpty(username)){
+            if (_.isEmpty(username)) {
                 let tempSplit = _.split(email, '@');
                 username = tempSplit[0];
             }
@@ -310,13 +314,36 @@ function insertNewStudentToDatabase(email, code, name, username, password, capab
                         return cb(true, 'Service Unavailable');
                     }
 
+                    // console.log('insert ok');
                     return cb(false, user.toJSON());
+                }).catch(function () {
+                    return cb(true, 'UserService, Something went wrong');
                 });
             });
-        });
+        })
+            .catch(function () {
+                return cb(true, 'UserService, Something went wrong');
+            });
     } else {
         return cb(true, 'capability is not valid!');
     }
 }
 
 module.exports.insertNewStudentToDatabase = insertNewStudentToDatabase;
+
+module.exports.addUserFromFileExel = function (file, user_id, user_code, cb) {
+    fileService.saveFileAndGetStaticURL(file, user_code, function (err, res, savePath) {
+        if (!err) {
+            // save to db
+            new Models.AttackFile({
+                user_id: user_id,
+                type: 'file/xlsx',
+                url: res.url
+            }).save();
+
+            studentInfoService.pareAndInsertStudentToDatabase(savePath, cb);
+        } else {
+            return cb(true, 'UserService, Something went wrong!');
+        }
+    })
+};

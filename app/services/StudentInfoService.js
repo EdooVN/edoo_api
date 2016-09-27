@@ -1,10 +1,13 @@
 'use strict';
 
+const _ = require('lodash');
 const XLSX = require('xlsx');
+const userService = require('./UserService');
 
+// for test
 const FILE_PATH = '/Users/TooNies1810/Desktop/int2204(4).xlsx';
 
-function pareAndInsertStudentToDatabase(filePath) {
+function pareAndInsertStudentToDatabase(filePath, cb) {
     let workbook = XLSX.readFile(filePath);
 
     let sheet_name_list = workbook.SheetNames;
@@ -17,7 +20,7 @@ function pareAndInsertStudentToDatabase(filePath) {
     let indexCollumBirthday = '';
     let indexCollumClass = '';
 
-// count rows and find index for email, code, name, birthday, regular_class
+    // count rows and find index for email, code, name, birthday, regular_class
     let startRow = 0;
     let rowCount = 0;
 
@@ -27,7 +30,7 @@ function pareAndInsertStudentToDatabase(filePath) {
 
         let value = DSLMH_worksheet[z].v;
         // let value = JSON.stringify(worksheet[z].v);
-        console.log(z + "=" + value);
+        // console.log(z + "=" + value);
 
         let numbString = z.substring(1, z.length);
         let currRow = parseInt(numbString);
@@ -35,30 +38,32 @@ function pareAndInsertStudentToDatabase(filePath) {
             rowCount = ++currRow;
         }
 
-        if (value === 'email'){
+        if (value === 'email') {
             indexCollumEmail = z[0];
         }
 
-        if (value === 'code'){
+        if (value === 'code') {
             indexCollumCode = z[0];
         }
-        if (value === 'name'){
+        if (value === 'name') {
             indexCollumName = z[0];
         }
-        if (value === 'birthday'){
+        if (value === 'birthday') {
             indexCollumBirthday = z[0];
         }
-        if (value === 'class'){
+        if (value === 'class') {
             indexCollumClass = z[0];
-            startRow = currRow;
+            startRow = ++currRow;
         }
     }
 
-// parse thong tin sinh vien
+    // parse thong tin sinh vien
     let countStudent = 0;
-    for (let i=startRow; i<rowCount; i++){
+    let insertStudentSuccess = 0;
+    let count = 0;
+    for (let i = startRow; i < rowCount; i++) {
         // select each row for person
-        try{
+        try {
             let addressName = indexCollumName + i;
             let addressEmail = indexCollumEmail + i;
             let addressCode = indexCollumCode + i;
@@ -71,19 +76,33 @@ function pareAndInsertStudentToDatabase(filePath) {
             let birthday = JSON.stringify(DSLMH_worksheet[addressBirthday].v).trim().toLowerCase();
             let regularClass = JSON.stringify(DSLMH_worksheet[addressClass].v).trim();
 
-            console.log(email);
-            console.log(code);
-            console.log(name);
-            console.log(birthday);
-            console.log(regularClass);
+            // console.log(email);
+            // console.log(code);
+            // console.log(name);
+            // console.log(birthday);
+            // console.log(regularClass);
+
+            if (!_.isEmpty(email)) {
+                userService.insertNewStudentToDatabase(email, code, name, '', '',
+                    'student', birthday, regularClass,
+                    function (err, res) {
+                        if (!err) {
+                            insertStudentSuccess++;
+                            // console.log('success');
+                        }
+                        count++;
+
+                        if (count == countStudent) {
+                            cb(false, {'insert_success': insertStudentSuccess, 'student_count': countStudent});
+                        }
+                    });
+            }
             countStudent++;
-            console.log('---------------');
-        } catch (err){
-            // console.log(err);
+            // console.log('---------------');
+        } catch (err) {
             continue;
         }
     }
-
-    console.log(countStudent);
 }
 
+module.exports.pareAndInsertStudentToDatabase = pareAndInsertStudentToDatabase;

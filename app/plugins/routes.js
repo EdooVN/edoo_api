@@ -81,6 +81,11 @@ module.exports.register = (server, options, next) => {
             path: '/joinclass',
             config: controller.manager.joinclass
         },
+        {
+            method: ['POST'],
+            path: '/importexcel',
+            config: controller.manager.addUserFromFileExel
+        },
 
         /**
          * class

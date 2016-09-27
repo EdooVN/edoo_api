@@ -565,7 +565,7 @@ function pushFirebaseNoti(apiKey, deviceToken, data) {
 }
 
 module.exports.saveImgAndGetStaticURL = function (file, user_code, cb) {
-    let name = file.hapi.filename;
+    let name = filje.hapi.filename;
     var savePath = config('PATH_IMG_UPLOAD', '/');
     let serverName = config('SERVER_STATIC_FILES', 'http://media.uetf.me');
     let timeNow = new Date(Date.now());

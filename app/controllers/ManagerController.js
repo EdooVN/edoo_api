@@ -25,12 +25,12 @@ module.exports.addUser = {
 
         service.user.insertNewStudentToDatabase(email, code, name,
             username, pass, capability, birth, regular_class, function (err, res) {
-            if (!err){
-                return rep(ResponseJSON('Add user success!', res));
-            } else {
-                return rep(Boom.badData(res));
-            }
-        })
+                if (!err) {
+                    return rep(ResponseJSON('Add user success!', res));
+                } else {
+                    return rep(Boom.badData(res));
+                }
+            })
 
     },
     validate: {
@@ -143,4 +143,43 @@ module.exports.joinclass = {
     description: 'join class',
     notes: 'For manager, join class',
     tags: ['api', 'joinclass']
+};
+
+module.exports.addUserFromFileExel = {
+    handler: function (req, rep) {
+        let user_data = req.auth.credentials;
+        let user_id = _.get(user_data, 'id', '');
+        let user_code = _.get(user_data, 'code', '');
+        let data = req.payload;
+
+        if (data.file) {
+            let file = data.file;
+            // check mime type ?= image
+            // let headers = file.hapi.headers;
+
+            service.user.addUserFromFileExel(file, user_id, user_code, function (err, res) {
+                if (!err) {
+                    return rep(ResponseJSON('Import user success!', res));
+                } else {
+                    return rep(Boom.badData('Something went wrong!'));
+                }
+            });
+        } else {
+            return rep(Boom.badData('Data is wrong!'));
+        }
+    },
+    auth: {
+        mode: 'required',
+        strategies: ['jwt']
+    },
+    payload: {
+        output: 'stream',
+        maxBytes: 20097152,
+        allow: 'multipart/form-data',
+        parse: true
+    },
+    description: 'post file',
+    notes: 'post file',
+    tags: ['api', 'file']
+
 };

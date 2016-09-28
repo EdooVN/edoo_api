@@ -104,6 +104,7 @@ module.exports.postPost = {
         let class_id = _.get(post, 'class_id', '');
         let title = _.get(post, 'title', '');
         let content = _.get(post, 'content', '');
+        let event_end = _.get(post, 'event_end', '');
         let type = _.get(post, 'type', '');
         let tag = _.get(post, 'tag', '');
         let is_incognito = _.get(post, 'is_incognito', false);
@@ -134,33 +135,65 @@ module.exports.postPost = {
             is_solve: false,
             created_at: now.toISOString()
         }).save().then(function (result) {
-            rep(ResponseJSON('Post success', result));
+            result = result.toJSON();
 
-            if (is_post_teacher == true && is_incognito == false) {
-                new Models.Class({
-                    id: class_id
-                }).fetch().then(function (classSql) {
-                    let dataPush = {
-                        type: 'teacher_post',
-                        title: title,
-                        content: content,
-                        teacher_name: user_name,
-                        class_id: class_id,
-                        class_name: classSql.toJSON().name
-                    };
-                    service.post.pushNotiToStudent(class_id, dataPush);
-                    // console.log(dataPush);
+            if (type == 'event') {
+                new Models.EventExtend({
+                    post_id: result.id,
+                    time_end: event_end,
+                    created_at: now.toISOString()
+                }).save().then(function (postExtend) {
+                    console.log(postExtend.toJSON());
+                }).then(function (event) {
+                    result.time_end = event_end;
+                    rep(ResponseJSON('Post success', result));
+                    if (is_post_teacher == true && is_incognito == false) {
+                        new Models.Class({
+                            id: class_id
+                        }).fetch().then(function (classSql) {
+                            let dataPush = {
+                                type: 'teacher_post',
+                                title: title,
+                                content: content,
+                                teacher_name: user_name,
+                                class_id: class_id,
+                                class_name: classSql.toJSON().name
+                            };
+                            service.post.pushNotiToStudent(class_id, dataPush);
+                            // console.log(dataPush);
+                        });
+                    }
+                }).catch(function (err) {
+                    return rep(Boom.badData('Something went wrong!'));
                 });
+            } else {
+                rep(ResponseJSON('Post success', result));
+                if (is_post_teacher == true && is_incognito == false) {
+                    new Models.Class({
+                        id: class_id
+                    }).fetch().then(function (classSql) {
+                        let dataPush = {
+                            type: 'teacher_post',
+                            title: title,
+                            content: content,
+                            teacher_name: user_name,
+                            class_id: class_id,
+                            class_name: classSql.toJSON().name
+                        };
+                        service.post.pushNotiToStudent(class_id, dataPush);
+                        // console.log(dataPush);
+                    });
+                }
             }
 
         }).catch(function () {
             return rep(Boom.badData('Something went wrong!'));
         });
     },
-    auth: {
-        mode: 'required',
-        strategies: ['jwt']
-    },
+    // auth: {
+    //     mode: 'required',
+    //     strategies: ['jwt']
+    // },
     validate: {
         payload: {
             class_id: Joi.string().required(),
@@ -168,7 +201,8 @@ module.exports.postPost = {
             content: Joi.string().required(),
             type: Joi.string().required(),
             tag: Joi.string().optional(),
-            is_incognito: Joi.boolean().optional()
+            is_incognito: Joi.boolean().optional(),
+            event_end: Joi.string().optional()
         }
     },
     description: 'post a post to class',
@@ -177,7 +211,7 @@ module.exports.postPost = {
 };
 
 module.exports.updatePost = {
-    handler : function (req, rep) {
+    handler: function (req, rep) {
         let user_data = req.auth.credentials;
         let post = req.payload;
         let user_id = _.get(user_data, 'id', '');
@@ -189,11 +223,11 @@ module.exports.updatePost = {
         let type = _.get(post, 'type', '');
 
         service.post.updatePost(user_id, post_id, title, content, is_incognito, type, function (err, res) {
-           if (!err){
-               return rep(ResponseJSON('Success', res));
-           } else {
-               return rep(Boom.badData(res));
-           }
+            if (!err) {
+                return rep(ResponseJSON('Success', res));
+            } else {
+                return rep(Boom.badData(res));
+            }
         });
     },
     auth: {
@@ -202,7 +236,7 @@ module.exports.updatePost = {
     },
     validate: {
         payload: {
-            post_id : Joi.number().integer().required(),
+            post_id: Joi.number().integer().required(),
             title: Joi.string().required(),
             content: Joi.string().required(),
             is_incognito: Joi.boolean().required(),
@@ -407,13 +441,13 @@ module.exports.postCmt = {
                         is_incognito: isIncognito
                     };
 
-                    if (isIncognito){
+                    if (isIncognito) {
                         delete dataPush.name;
                     }
 
                     let ownerPost_id = cmtSql.post.user.id;
 
-                    if (user_id != ownerPost_id){
+                    if (user_id != ownerPost_id) {
                         service.post.pushNotiToPostOwner(post_id, dataPush);
                     }
                 });
@@ -944,7 +978,7 @@ module.exports.uploadImage = {
         if (data.file) {
             let file = data.file;
 
-            service.post.saveImgAndGetStaticURL(file, user_code, function (err, res) {
+            service.file.saveFileAndGetStaticURL(file, user_code, function (err, res) {
                 if (!err) {
                     rep(ResponseJSON('Upload success!', res));
 
@@ -977,50 +1011,6 @@ module.exports.uploadImage = {
     tags: ['api', 'post']
 };
 
-module.exports.uploadAvatar = {
-    handler: function (req, rep) {
-        let user_data = req.auth.credentials;
-        let user_id = _.get(user_data, 'id', '');
-        let user_code = _.get(user_data, 'code', '');
-        let data = req.payload;
-
-        if (data.file) {
-            let file = data.file;
-            // check mime type ?= image
-            // let headers = file.hapi.headers;
-
-            service.post.saveImgAndGetStaticURL(file, user_code, function (err, res) {
-                if (!err) {
-                    rep(ResponseJSON('Upload success!', res));
-
-                    // save to db
-                    new Models.User({
-                        id: user_id
-                    }).save({avatar: res.url}, {method: 'update', patch: true});
-                } else {
-                    rep(Boom.badData('Something went wrong!'));
-                }
-            });
-        } else {
-            rep(Boom.badData('Data is wrong!'));
-        }
-    },
-    auth: {
-        mode: 'required',
-        strategies: ['jwt']
-    },
-    payload: {
-        output: 'stream',
-        maxBytes: 2097152,
-        allow: 'multipart/form-data',
-        parse: true
-    },
-    description: 'post avatar',
-    notes: 'post avatar',
-    tags: ['api', 'post']
-};
-
-
 module.exports.postSupport = {
     handler: function (req, rep) {
         // let user_data = req.auth.credentials;
@@ -1045,7 +1035,7 @@ module.exports.postSupport = {
     auth: false,
     validate: {
         payload: {
-            email : Joi.string().optional(),
+            email: Joi.string().optional(),
             type: Joi.string().required(),
             content: Joi.string().required()
         }
@@ -1053,4 +1043,48 @@ module.exports.postSupport = {
     description: 'post report',
     notes: 'post report',
     tags: ['api', 'post', 'post report']
+};
+
+module.exports.upFileToEvent = {
+    handler: function (req, rep) {
+        let user_data = req.auth.credentials;
+        let user_id = _.get(user_data, 'id', '');
+        let user_code = _.get(user_data, 'code', '');
+        let post_id = encodeURIComponent(req.params.post_id);
+        let data = req.payload;
+
+        if (data.file) {
+            let file = data.file;
+
+            service.file.saveFileEventAndGetStaticURL(file, post_id, user_code, function (err, res) {
+                if (!err) {
+                    rep(ResponseJSON('Upload success!', res));
+
+                    // save to db
+                    new Models.AttackFile({
+                        user_id: user_id,
+                        type: _.get(res.headers, 'content-type', 'file'),
+                        url: res.url
+                    }).save();
+                } else {
+                    rep(Boom.badData('Something went wrong!'));
+                }
+            });
+        } else {
+            rep(Boom.badData('Data is wrong!'));
+        }
+    },
+    auth: {
+        mode: 'required',
+        strategies: ['jwt']
+    },
+    payload: {
+        output: 'stream',
+        maxBytes: 20097152,
+        allow: 'multipart/form-data',
+        parse: true
+    },
+    description: 'posadft event',
+    notes: 'post a',
+    tags: ['api', 'adfadf']
 };

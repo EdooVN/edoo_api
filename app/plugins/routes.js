@@ -62,6 +62,11 @@ module.exports.register = (server, options, next) => {
             path: '/resetpass',
             config: controller.user.resetPass
         },
+        {
+            method : ['POST'],
+            path: '/avatar',
+            config: controller.user.uploadAvatar
+        },
 
         /**
          * Manager
@@ -196,13 +201,13 @@ module.exports.register = (server, options, next) => {
         },
         {
             method : ['POST'],
-            path: '/avatar',
-            config: controller.post.uploadAvatar
+            path: '/sendsupport',
+            config: controller.post.postSupport
         },
         {
             method : ['POST'],
-            path: '/sendsupport',
-            config: controller.post.postSupport
+            path: '/upfileevent/{post_id}',
+            config: controller.post.upFileToEvent
         }
 
     ]);

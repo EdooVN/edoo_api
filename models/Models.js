@@ -124,6 +124,26 @@ var Post = module.exports.Post = bookshelf.Model.extend({
     },
     seens: function () {
         return this.hasMany(Seen);
+    },
+    event_extend: function () {
+        return this.hasOne(EventExtend)
+    },
+    event_files: function () {
+        return this.hasMany(EventFile)
+    }
+});
+
+var EventExtend = module.exports.EventExtend = bookshelf.Model.extend({
+    tableName: 'event_extend',
+    post: function () {
+        return this.belongsTo(Post);
+    }
+});
+
+var EventFile = module.exports.EventFile = bookshelf.Model.extend({
+    tableName: 'event_file',
+    post: function () {
+        return this.belongsTo(Post);
     }
 });
 

@@ -83,7 +83,7 @@ exports.up = function (knex, Promise) {
         knex.schema.createTable('posts', function (table) {
             table.increments('id').unsigned();
             table.integer('user_id').unsigned();
-            table.varchar('class_id',200);
+            table.varchar('class_id', 200);
             table.varchar('title', 500);
             table.text('content');
             table.text('description');
@@ -140,16 +140,36 @@ exports.up = function (knex, Promise) {
             table.timestamps();
         }),
 
+        // Table extend infomation
+
+        // Ver1: nop bai tap
+        knex.schema.createTable('event_extend', function (table) {
+            table.integer('post_id').unsigned();
+
+            table.timestamp('time_end');
+            table.timestamp('created_at').defaultTo(knex.fn.now());
+
+            table.index('post_id');
+        }),
+
         // Table: relationship
 
         knex.schema.createTable('users_classes', function (table) {
             table.integer('user_id').unsigned();
-            // table.integer('class_id').unsigned();
-            table.varchar('class_id',200);
+            table.varchar('class_id', 200);
 
             table.index('user_id');
             table.index('class_id');
         })
+
+        // knex.schema.createTable('event_file', function (table) {
+        //     table.integer('post_id').unsigned();
+        //     table.integer('user_id').unsigned();
+        //     table.text('url').notNullable();
+        //
+        //     table.index('post_id');
+        //     table.index('user_id');
+        // })
     ])
 };
 

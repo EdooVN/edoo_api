@@ -1109,10 +1109,28 @@ module.exports.checkEvent = {
         let post_id = encodeURIComponent(req.params.post_id);
 
         new Models.Post({
-            id : post_id
-        }).fetch({withRelated: ['event_extend', 'attack_files.user']}).then(function (post) {
+            id: post_id
+        }).fetch({withRelated: ['event_extend', 'attack_files.user', 'class']})
+            .then(function (post) {
+                post = post.toJSON();
 
-        })
+                let attack_files = post.attack_files;
+
+                for (let attack_file of attack_files){
+                    attack_file.author = attack_file.user;
+                    delete attack_file.user;
+                    delete attack_file.author.password;
+                }
+
+                post.student_count = post.class.student_count;
+                delete post.class;
+
+                post.time_end = post.event_extend.time_end;
+                delete post.event_extend;
+            })
+            .catch(function (err) {
+                rep(Boom.badData('Something went wrong!'));
+            });
 
     },
     auth: {

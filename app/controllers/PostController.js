@@ -1114,6 +1114,10 @@ module.exports.checkEvent = {
             .then(function (post) {
                 post = post.toJSON();
 
+                if (post.type != 'event'){
+                    return rep(Boom.badData('Type post is must be event'));
+                }
+
                 let attack_files = post.attack_files;
 
                 for (let attack_file of attack_files){
@@ -1127,6 +1131,8 @@ module.exports.checkEvent = {
 
                 post.time_end = post.event_extend.time_end;
                 delete post.event_extend;
+
+                rep(ResponseJSON('Success', post));
             })
             .catch(function (err) {
                 rep(Boom.badData('Something went wrong!'));

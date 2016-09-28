@@ -148,7 +148,7 @@ exports.up = function (knex, Promise) {
         knex.schema.createTable('event_extend', function (table) {
             table.integer('post_id').unsigned();
 
-            table.timestamp('time_end');
+            table.varchar('time_end', 200);
             table.timestamp('created_at').defaultTo(knex.fn.now());
 
             table.index('post_id');

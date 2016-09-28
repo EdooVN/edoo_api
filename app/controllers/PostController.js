@@ -142,11 +142,10 @@ module.exports.postPost = {
                     post_id: result.id,
                     time_end: event_end,
                     created_at: now.toISOString()
-                }).save().then(function (postExtend) {
-                    console.log(postExtend.toJSON());
-                }).then(function (event) {
+                }).save().then(function (event) {
                     result.time_end = event_end;
                     rep(ResponseJSON('Post success', result));
+
                     if (is_post_teacher == true && is_incognito == false) {
                         new Models.Class({
                             id: class_id
@@ -190,10 +189,10 @@ module.exports.postPost = {
             return rep(Boom.badData('Something went wrong!'));
         });
     },
-    // auth: {
-    //     mode: 'required',
-    //     strategies: ['jwt']
-    // },
+    auth: {
+        mode: 'required',
+        strategies: ['jwt']
+    },
     validate: {
         payload: {
             class_id: Joi.string().required(),
@@ -267,7 +266,9 @@ module.exports.postDetail = {
                 'comments.user',
                 'user',
                 'comments.votes.user',
-                'comments.repComments.user'
+                'comments.repComments.user',
+                'event_extend',
+                'attack_files'
             ]
         })
             .then(function (post) {
@@ -337,6 +338,15 @@ module.exports.postDetail = {
 
                 post.vote_count = vote_count;
                 post.comment_count = cmts.length;
+
+                // if event -> reformat
+                if (post.type == 'event') {
+                    post.time_end = post.event_extend.time_end;
+                    post.attack_file_count = post.attack_files.length;
+                }
+                delete post.event_extend;
+
+                delete post.attack_files;
 
                 rep(ResponseJSON('', post));
 

@@ -26,7 +26,7 @@ module.exports.getPostInPage = function (pageNumber, pageSize, class_id, user_id
         .fetchPage({
             page: pageNumber,
             pageSize: pageSize,
-            withRelated: ['user', 'comments', 'votes']
+            withRelated: ['user', 'comments', 'votes', 'event_extend']
         })
         .then(function (result) {
             let pagination = _.get(result, 'pagination', '');
@@ -70,6 +70,12 @@ module.exports.getPostInPage = function (pageNumber, pageSize, class_id, user_id
                 if (post.is_incognito == true && post.user_id != user_id) {
                     delete post.author;
                 }
+
+                // if event -> reformat
+                if (post.type == 'event') {
+                    post.time_end = post.event_extend.time_end;
+                }
+                delete post.event_extend;
             }
 
             checkUserSeen(result, user_id, function (posts) {
@@ -109,7 +115,7 @@ module.exports.getPostInPageFilterTeacher = function (pageNumber, pageSize, clas
         .fetchPage({
             page: pageNumber,
             pageSize: pageSize,
-            withRelated: ['user', 'comments', 'votes']
+            withRelated: ['user', 'comments', 'votes', 'event_extend']
         })
         .then(function (result) {
             let pagination = _.get(result, 'pagination', '');
@@ -153,6 +159,12 @@ module.exports.getPostInPageFilterTeacher = function (pageNumber, pageSize, clas
                 if (post.is_incognito == true && post.user_id != user_id) {
                     delete post.author;
                 }
+
+                // if event -> reformat
+                if (post.type == 'event') {
+                    post.time_end = post.event_extend.time_end;
+                }
+                delete post.event_extend;
             }
 
             checkUserSeen(result, user_id, function (posts) {
@@ -274,7 +286,7 @@ module.exports.getPostInPageFilterNotSeen = function (pageNumber, pageSize, clas
         .fetchPage({
             page: pageNumber,
             pageSize: pageSize,
-            withRelated: ['user', 'comments', 'votes']
+            withRelated: ['user', 'comments', 'votes', 'event_extend']
         })
         .then(function (result) {
             let pagination = _.get(result, 'pagination', '');
@@ -318,6 +330,12 @@ module.exports.getPostInPageFilterNotSeen = function (pageNumber, pageSize, clas
                 if (post.is_incognito == true && post.user_id != user_id) {
                     delete post.author;
                 }
+
+                // if event -> reformat
+                if (post.type == 'event') {
+                    post.time_end = post.event_extend.time_end;
+                }
+                delete post.event_extend;
             }
 
             checkUserSeen(result, user_id, function (posts) {
@@ -749,7 +767,7 @@ function countVoteCmt(comment_id, cb) {
 }
 
 module.exports.updatePost = function (user_id, post_id, title, content, is_incognito, type, cb) {
-    if (!isValidTypePost(type)){
+    if (!isValidTypePost(type)) {
         return cb(true, 'Type post is invalided');
     }
 
@@ -763,7 +781,7 @@ module.exports.updatePost = function (user_id, post_id, title, content, is_incog
 
             postResult = postResult.toJSON();
 
-            if (user_id != postResult.user.id){
+            if (user_id != postResult.user.id) {
                 return cb(true, 'You are not the author');
             }
 
@@ -795,8 +813,8 @@ module.exports.updatePost = function (user_id, post_id, title, content, is_incog
 };
 
 function isValidTypePost(typePost) {
-    for (let type of TYPE_POST_ARR){
-        if (typePost == type){
+    for (let type of TYPE_POST_ARR) {
+        if (typePost == type) {
             return true;
         }
     }

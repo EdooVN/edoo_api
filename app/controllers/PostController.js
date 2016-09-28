@@ -342,7 +342,7 @@ module.exports.postDetail = {
                 // if event -> reformat
                 if (post.type == 'event') {
                     post.time_end = post.event_extend.time_end;
-                    post.attack_file_count = post.attack_files.length;
+                    post.attach_file_count = post.attack_files.length;
                 }
                 delete post.event_extend;
 
@@ -1098,4 +1098,28 @@ module.exports.upFileToEvent = {
     description: 'posadft event',
     notes: 'post a',
     tags: ['api', 'adfadf']
+};
+
+module.exports.checkEvent = {
+    handler: function (req, rep) {
+        let user_data = req.auth.credentials;
+        let user_id = _.get(user_data, 'id', '');
+        // let capability = _.get(user_data, 'capability', '');
+        // let is_teacher = (capability == 'teacher');
+        let post_id = encodeURIComponent(req.params.post_id);
+
+        new Models.Post({
+            id : post_id
+        }).fetch({withRelated: ['event_extend', 'attack_files.user']}).then(function (post) {
+
+        })
+
+    },
+    auth: {
+        mode: 'required',
+        strategies: ['jwt']
+    },
+    description: 'post report',
+    notes: 'post report',
+    tags: ['api', 'post', 'post report']
 };

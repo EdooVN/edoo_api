@@ -213,6 +213,11 @@ module.exports.register = (server, options, next) => {
             method : ['GET'],
             path: '/checkevent/{post_id}',
             config: controller.post.checkEvent
+        },
+        {
+            method : ['GET'],
+            path: '/geteventfiles/{post_id}',
+            config: controller.post.getUrlFileEvent
         }
 
     ]);

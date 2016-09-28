@@ -1116,13 +1116,13 @@ module.exports.checkEvent = {
             .then(function (post) {
                 post = post.toJSON();
 
-                if (post.type != 'event'){
+                if (post.type != 'event') {
                     return rep(Boom.badData('Type post is must be event'));
                 }
 
                 let attack_files = post.attack_files;
 
-                for (let attack_file of attack_files){
+                for (let attack_file of attack_files) {
                     attack_file.author = attack_file.user;
                     delete attack_file.user;
                     delete attack_file.author.password;
@@ -1139,6 +1139,29 @@ module.exports.checkEvent = {
             .catch(function (err) {
                 rep(Boom.badData('Something went wrong!'));
             });
+    },
+    auth: {
+        mode: 'required',
+        strategies: ['jwt']
+    },
+    description: 'post report',
+    notes: 'post report',
+    tags: ['api', 'post', 'post report']
+};
+
+module.exports.getUrlFileEvent = {
+    handler: function (req, rep) {
+        let user_data = req.auth.credentials;
+        let user_id = _.get(user_data, 'id', '');
+        let post_id = encodeURIComponent(req.params.post_id);
+
+        service.file.zipFileEvent(post_id, function (err, res) {
+            if (!err) {
+                return rep(ResponseJSON('Success', res));
+            } else {
+                return rep(Boom.badData('Something went wrong!'));
+            }
+        });
     },
     auth: {
         mode: 'required',

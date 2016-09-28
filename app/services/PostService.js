@@ -810,10 +810,13 @@ module.exports.updatePost = function (user_id, post_id, title, content, is_incog
                             .update({
                                 event_end: event_end
                             }).then(function () {
+
                             return cb(false, postUpdateSql);
                         }).catch(function () {
                             return cb(true, 'Something went wrong');
                         });
+                    } else {
+                        return cb(false, postUpdateSql);
                     }
                 });
         })

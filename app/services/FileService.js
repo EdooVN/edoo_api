@@ -49,7 +49,7 @@ module.exports.saveFileEventAndGetStaticURL = function (file, post_id, user_code
     let PATH_FILE_UPLOAD = config('PATH_EVENT_UPLOAD');
     let SERVER_STATIC_FILES = config('SERVER_STATIC_FILES', 'http://media.uetf.me');
 
-    let zenPath = '/' + user_code + '/' + timeNow.toDateString();
+    let zenPath = '/' + user_code + '/' + timeNow.getTime();
     var saveFilePathServer = PATH_STATIC_FILE + PATH_FILE_UPLOAD + zenPath + '/' + name;
 
     mkdirp(PATH_STATIC_FILE + PATH_FILE_UPLOAD + zenPath, function (err) {

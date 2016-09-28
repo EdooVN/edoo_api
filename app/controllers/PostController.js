@@ -220,8 +220,9 @@ module.exports.updatePost = {
         let content = _.get(post, 'content', '');
         let is_incognito = _.get(post, 'is_incognito', false);
         let type = _.get(post, 'type', '');
+        let event_end = _.get(post, 'event_end', '');
 
-        service.post.updatePost(user_id, post_id, title, content, is_incognito, type, function (err, res) {
+        service.post.updatePost(user_id, post_id, title, content, is_incognito, type, event_end, function (err, res) {
             if (!err) {
                 return rep(ResponseJSON('Success', res));
             } else {
@@ -239,7 +240,8 @@ module.exports.updatePost = {
             title: Joi.string().required(),
             content: Joi.string().required(),
             is_incognito: Joi.boolean().required(),
-            type: Joi.string().required()
+            type: Joi.string().required(),
+            event_end: Joi.string().optional()
         }
     },
     description: 'update post',
@@ -1137,7 +1139,6 @@ module.exports.checkEvent = {
             .catch(function (err) {
                 rep(Boom.badData('Something went wrong!'));
             });
-
     },
     auth: {
         mode: 'required',

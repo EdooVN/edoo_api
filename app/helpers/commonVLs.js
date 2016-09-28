@@ -15,4 +15,4 @@ module.exports.timeExtension = 172800000;
 
 module.exports.page_size = 8;
 
-module.exports.TYPE_POST_ARRAY = ['question', 'notification', 'note', 'poll'];
+module.exports.TYPE_POST_ARRAY = ['question', 'notification', 'note', 'poll', 'event'];

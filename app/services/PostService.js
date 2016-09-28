@@ -766,7 +766,7 @@ function countVoteCmt(comment_id, cb) {
     })
 }
 
-module.exports.updatePost = function (user_id, post_id, title, content, is_incognito, type, cb) {
+module.exports.updatePost = function (user_id, post_id, title, content, is_incognito, type, event_end, cb) {
     if (!isValidTypePost(type)) {
         return cb(true, 'Type post is invalided');
     }
@@ -804,7 +804,17 @@ module.exports.updatePost = function (user_id, post_id, title, content, is_incog
                 type: type
             }, {method: 'update', patch: true})
                 .then(function (postUpdateSql) {
-                    return cb(false, postUpdateSql);
+                    if (type == 'event') {
+                        knex('event_extend')
+                            .where('post_id', '=', post_id)
+                            .update({
+                                event_end: event_end
+                            }).then(function () {
+                            return cb(false, postUpdateSql);
+                        }).catch(function () {
+                            return cb(true, 'Something went wrong');
+                        });
+                    }
                 });
         })
         .catch(function () {

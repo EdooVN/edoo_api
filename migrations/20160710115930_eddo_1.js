@@ -43,10 +43,12 @@ exports.up = function (knex, Promise) {
 
         knex.schema.createTable('attack_files', function (table) {
             table.increments('id').unsigned();
+            table.integer('post_id').unsigned();
             table.integer('user_id').unsigned();
             table.varchar('type', 200).notNullable();
             table.varchar('url', 256).notNullable();
 
+            table.index('post_id');
             table.index('user_id');
         }),
 

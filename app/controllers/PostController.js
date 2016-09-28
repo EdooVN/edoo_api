@@ -1062,6 +1062,7 @@ module.exports.upFileToEvent = {
 
                     // save to db
                     new Models.AttackFile({
+                        post_id: post_id,
                         user_id: user_id,
                         type: _.get(res.headers, 'content-type', 'file'),
                         url: res.url

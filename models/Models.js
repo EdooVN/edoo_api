@@ -128,20 +128,13 @@ var Post = module.exports.Post = bookshelf.Model.extend({
     event_extend: function () {
         return this.hasOne(EventExtend)
     },
-    event_files: function () {
-        return this.hasMany(EventFile)
+    attack_files: function () {
+        return this.hasMany(AttackFile)
     }
 });
 
 var EventExtend = module.exports.EventExtend = bookshelf.Model.extend({
     tableName: 'event_extend',
-    post: function () {
-        return this.belongsTo(Post);
-    }
-});
-
-var EventFile = module.exports.EventFile = bookshelf.Model.extend({
-    tableName: 'event_file',
     post: function () {
         return this.belongsTo(Post);
     }

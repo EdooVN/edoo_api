@@ -47,6 +47,7 @@ exports.up = function (knex, Promise) {
             table.integer('user_id').unsigned();
             table.varchar('type', 200).notNullable();
             table.varchar('url', 256).notNullable();
+            table.timestamp('created_at').defaultTo(knex.fn.now());
 
             table.index('post_id');
             table.index('user_id');

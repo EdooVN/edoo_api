@@ -808,11 +808,11 @@ module.exports.updatePost = function (user_id, post_id, title, content, is_incog
                         knex('event_extend')
                             .where('post_id', '=', post_id)
                             .update({
-                                event_end: event_end
+                                time_end: event_end
                             }).then(function () {
 
                             return cb(false, postUpdateSql);
-                        }).catch(function () {
+                        }).catch(function (err) {
                             return cb(true, 'Something went wrong');
                         });
                     } else {

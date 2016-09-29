@@ -350,11 +350,11 @@ module.exports.postDetail = {
                 }
                 delete post.event_extend;
 
-                if (!is_teacher){
+                if (!is_teacher) {
                     post.is_send_file = false;
                     let attachFiles = post.attack_files;
-                    for (let attachFile of attachFiles){
-                        if (attachFile.user_id == user_id){
+                    for (let attachFile of attachFiles) {
+                        if (attachFile.user_id == user_id) {
                             post.is_send_file = true;
                         }
                     }
@@ -1083,12 +1083,15 @@ module.exports.upFileToEvent = {
                 if (!err) {
                     rep(ResponseJSON('Upload success!', res));
 
+                    let now = new Date(Date.now());
+
                     // save to db
                     new Models.AttackFile({
                         post_id: post_id,
                         user_id: user_id,
                         type: _.get(res.headers, 'content-type', 'file'),
-                        url: res.url
+                        url: res.url,
+                        created_at: now.toISOString()
                     }).save();
                 } else {
                     rep(Boom.badData('Something went wrong!'));

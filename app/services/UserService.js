@@ -395,9 +395,10 @@ function getClassRank(class_id, cb) {
 
             async.each(classInfo.users,
                 function (user, next) {
+                    delete user.password;
                     // get user infor rank here
                     getUserInfoRank(class_id, user.id, function (err, res) {
-                        if (!err){
+                        if (!err) {
                             // console.log(res);
                             user.post_count = res.post_count;
                             user.vote_count = res.vote_count;
@@ -409,7 +410,7 @@ function getClassRank(class_id, cb) {
                     });
                 },
                 function (err) {
-                    if (!err){
+                    if (!err) {
                         console.log(classInfo);
                         cb(false, classInfo);
                     } else {
@@ -487,10 +488,10 @@ function getUserInfoRank(class_id, user_id, cb) {
                             point_count = (solve_count * POINT_SOLVE_PER_COMMENT) + (vote_count * POINT_VOTE_PER_POST);
 
                             let res = {
-                                post_count : post_count,
-                                vote_count : vote_count,
-                                solve_count : solve_count,
-                                point_count : point_count
+                                post_count: post_count,
+                                vote_count: vote_count,
+                                solve_count: solve_count,
+                                point_count: point_count
                             };
                             cb(false, res);
                         })

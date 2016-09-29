@@ -506,8 +506,13 @@ function getUserInfoRank(class_id, user_id, cb) {
                     // get solve_count
                     new Models.Comment()
                         .query(function (qb) {
+                            let subPostQuery = knex('posts')
+                                .where('class_id', '=', class_id)
+                                .select('id');
+
                             qb.where('user_id', '=', user_id)
-                                .andWhere('is_solve', '=', '1');
+                                .andWhere('is_solve', '=', '1')
+                                .andWhere('post_id', 'in', subPostQuery);
                         })
                         .fetchAll()
                         .then(function (cmts) {

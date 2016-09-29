@@ -486,12 +486,20 @@ function getUserInfoRank(class_id, user_id, cb) {
                     qb.where(function () {
                         this.where('votes.comment_id', 'in', subCmtQuery)
                             .orWhere('votes.post_id', 'in', subPostUserQuery)
-                    }).andWhere('votes.up', '=', '1');
+                    });
+                        // .andWhere('votes.up', '=', '1');
                 })
                 .fetchAll()
                 .then(function (votes) {
                     votes = votes.toJSON();
-                    vote_count = votes.length;
+                    // vote_count = votes.length;
+                    for (let vote of votes){
+                        if (vote.up == true){
+                            vote_count++;
+                        } else {
+                            vote_count--;
+                        }
+                    }
 
                     // console.log('vote_count: ' + vote_count);
 

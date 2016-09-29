@@ -411,7 +411,16 @@ function getClassRank(class_id, cb) {
                 },
                 function (err) {
                     if (!err) {
-                        console.log(classInfo);
+                        // sort and delete teacher
+                        let users = classInfo.users;
+                        for (let i = 0; i < users.length; i++) {
+                            let user = users[i];
+                            if (user.capability == 'teacher'){
+                                delete users[i];
+                            }
+                        }
+
+
                         cb(false, classInfo);
                     } else {
                         cb(true, 'Something went wrong');

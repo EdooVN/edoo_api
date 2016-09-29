@@ -421,7 +421,7 @@ function getClassRank(class_id, cb) {
                         }
 
                         users.sort(function (user1, user2) {
-                            return user2.point_count - user1.point_count;
+                            return user1.point_count - user2.point_count;
                         });
 
                         cb(false, classInfo);

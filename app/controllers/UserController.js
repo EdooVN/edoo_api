@@ -385,7 +385,28 @@ module.exports.uploadAvatar = {
     tags: ['api', 'post']
 };
 
+module.exports.getClassRank = {
+    handler: function (req, rep) {
+        let user_data = req.auth.credentials;
+        let user_id = _.get(user_data, 'id', '');
+        let class_id = encodeURIComponent(req.params.class_id);
 
+        service.user.getClassRank(class_id, function (err, res) {
+            if (!err){
+                return rep(ResponseJSON('Success', res));
+            } else {
+                return rep(Boom.badData(res));
+            }
+        })
+    },
+    auth: {
+        mode: 'required',
+        strategies: ['jwt']
+    },
+    description: 'post avatar',
+    notes: 'post avatar',
+    tags: ['api', 'post']
+};
 
 
 

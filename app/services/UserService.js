@@ -2,6 +2,7 @@
 
 const _ = require('lodash');
 const bcrypt = require('bcrypt');
+const async = require('async');
 const knex = require('../../config/bookshelft').knex;
 const Models = global.Models;
 const commons = global.helpers.commons;
@@ -13,6 +14,8 @@ const studentInfoService = require('./StudentInfoService');
 
 let config = global.helpers.config;
 const SERVER_KEY = config('SERVER_KEY', '');
+const POINT_SOLVE_PER_COMMENT = commons.POINT_SOLVE_PER_COMMENT;
+const POINT_VOTE_PER_POST = commons.POINT_VOTE_PER_POST;
 
 module.exports.getUserInfo = function (user_id, cb) {
     new Models.User({
@@ -27,7 +30,7 @@ module.exports.getUserInfo = function (user_id, cb) {
                 let solve_count = solveVoteInfo.solve_count;
                 let vote_count = solveVoteInfo.vote_count;
 
-                let pointCount = (solve_count * 40) + (vote_count * 5);
+                let pointCount = (solve_count * POINT_SOLVE_PER_COMMENT) + (vote_count * POINT_VOTE_PER_POST);
 
                 userDetail.point_count = pointCount;
                 cb(userDetail);
@@ -381,3 +384,130 @@ module.exports.userJoinClass = function (userCode, classId, cb) {
         return cb(true, 'Something went wrong');
     });
 };
+
+function getClassRank(class_id, cb) {
+    new Models.Class({
+        id: class_id
+    }).fetch({withRelated: 'users'})
+        .then(function (classInfo) {
+            classInfo = classInfo.toJSON();
+            // console.log(classInfo);
+
+            async.each(classInfo.users,
+                function (user, next) {
+                    // get user infor rank here
+                    getUserInfoRank(class_id, user.id, function (err, res) {
+                        if (!err){
+                            // console.log(res);
+                            user.post_count = res.post_count;
+                            user.vote_count = res.vote_count;
+                            user.solve_count = res.solve_count;
+                            user.point_count = res.point_count;
+                        }
+
+                        next();
+                    });
+                },
+                function (err) {
+                    if (!err){
+                        console.log(classInfo);
+                        cb(false, classInfo);
+                    } else {
+                        cb(true, 'Something went wrong');
+                    }
+                }
+            )
+        })
+        .catch(function (err) {
+            // console.log(err);
+            cb(true, 'Something went wrong');
+        });
+}
+
+function getUserInfoRank(class_id, user_id, cb) {
+    let post_count = 0;
+    let vote_count = 0;
+    let solve_count = 0;
+    let point_count = 0;
+    // get post_count, vote_count, solve_count, point_count
+    new Models.Post()
+        .query(function (qb) {
+            qb.where('class_id', '=', class_id)
+                .andWhere('user_id', '=', user_id)
+
+        })
+        .fetchAll()
+        .then(function (posts) {
+            posts = posts.toJSON();
+            post_count = posts.length;
+            // console.log('post_count: ' + post_count);
+
+            // get vote_count
+            new Models.Vote()
+                .query(function (qb) {
+                    let subPostUserQuery = knex('posts')
+                        .where('class_id', '=', class_id)
+                        .andWhere('user_id', '=', user_id)
+                        .select('id');
+
+                    let subPostQuery = knex('posts')
+                        .where('class_id', '=', class_id)
+                        .select('id');
+
+                    let subCmtQuery = knex('comments')
+                        .where('post_id', 'in', subPostQuery)
+                        .andWhere('user_id', '=', user_id)
+                        .select('id');
+
+                    qb.where(function () {
+                        this.where('votes.comment_id', 'in', subCmtQuery)
+                            .orWhere('votes.post_id', 'in', subPostUserQuery)
+                    }).andWhere('votes.up', '=', '1');
+                })
+                .fetchAll()
+                .then(function (votes) {
+                    votes = votes.toJSON();
+                    vote_count = votes.length;
+
+                    // console.log('vote_count: ' + vote_count);
+
+                    // get solve_count
+                    new Models.Comment()
+                        .query(function (qb) {
+                            qb.where('user_id', '=', user_id)
+                                .andWhere('is_solve', '=', '1');
+                        })
+                        .fetchAll()
+                        .then(function (cmts) {
+                            cmts = cmts.toJSON();
+                            solve_count = cmts.length;
+
+                            // console.log('solve_count: ' + solve_count);
+
+                            point_count = (solve_count * POINT_SOLVE_PER_COMMENT) + (vote_count * POINT_VOTE_PER_POST);
+
+                            let res = {
+                                post_count : post_count,
+                                vote_count : vote_count,
+                                solve_count : solve_count,
+                                point_count : point_count
+                            };
+                            cb(false, res);
+                        })
+                        .catch(function (err) {
+                            // console.log(err);
+                            cb(true, 'Something went wrong');
+                        })
+                })
+                .catch(function (err) {
+                    // console.log(err);
+                    cb(true, 'Something went wrong');
+                })
+        })
+        .catch(function (err) {
+            // console.log(err);
+            cb(true, 'Something went wrong');
+        })
+}
+
+module.exports.getClassRank = getClassRank;

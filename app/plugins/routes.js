@@ -67,6 +67,11 @@ module.exports.register = (server, options, next) => {
             path: '/avatar',
             config: controller.user.uploadAvatar
         },
+        {
+            method : ['GET'],
+            path: '/classrank/{class_id}',
+            config: controller.user.getClassRank
+        },
 
         /**
          * Manager

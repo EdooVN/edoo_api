@@ -16,3 +16,5 @@ module.exports.timeExtension = 172800000;
 module.exports.page_size = 8;
 
 module.exports.TYPE_POST_ARRAY = ['question', 'notification', 'note', 'poll', 'event'];
+module.exports.POINT_SOLVE_PER_COMMENT = 40;
+module.exports.POINT_VOTE_PER_POST = 5;

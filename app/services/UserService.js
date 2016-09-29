@@ -415,11 +415,14 @@ function getClassRank(class_id, cb) {
                         let users = classInfo.users;
                         for (let i = 0; i < users.length; i++) {
                             let user = users[i];
-                            if (user.capability == 'teacher'){
+                            if (user.capability == 'teacher') {
                                 delete users[i];
                             }
                         }
 
+                        users.sort(function (user1, user2) {
+                            return user1.point_count - user2.point_count
+                        });
 
                         cb(false, classInfo);
                     } else {

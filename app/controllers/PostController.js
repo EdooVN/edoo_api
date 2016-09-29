@@ -257,6 +257,8 @@ module.exports.postDetail = {
     handler: function (req, rep) {
         let user_data = req.auth.credentials;
         let user_id = _.get(user_data, 'id', '');
+        let capability = _.get(user_data, 'capability', '');
+        let is_teacher = (capability == 'teacher');
         let post_id = encodeURIComponent(req.params.post_id);
 
         new Models.Post({
@@ -348,6 +350,15 @@ module.exports.postDetail = {
                 }
                 delete post.event_extend;
 
+                if (!is_teacher){
+                    post.is_send_file = false;
+                    let attachFiles = post.attack_files;
+                    for (let attachFile of attachFiles){
+                        if (attachFile.user_id == user_id){
+                            post.is_send_file = true;
+                        }
+                    }
+                }
                 delete post.attack_files;
 
                 rep(ResponseJSON('', post));

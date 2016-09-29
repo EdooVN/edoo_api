@@ -413,16 +413,27 @@ function getClassRank(class_id, cb) {
                     if (!err) {
                         // sort and delete teacher
                         let users = classInfo.users;
-                        for (let i = 0; i < users.length; i++) {
-                            let user = users[i];
-                            if (user.capability == 'teacher') {
-                                delete users[i];
-                            }
-                        }
+                        // for (let i = 0; i < users.length; i++) {
+                        //     let user = users[i];
+                        //     if (user.capability == 'teacher') {
+                        //         delete users[i];
+                        //     }
+                        // }
 
                         users.sort(function (user1, user2) {
                             return user2.point_count - user1.point_count;
                         });
+
+                        // new array delete null user
+                        let users2 = [];
+                        for (let i = 0; i < users.length; i++) {
+                            let user = users[i];
+                            if (user.capability == 'student') {
+                                users2.push(user);
+                            }
+                        }
+
+                        classInfo.users = users2;
 
                         cb(false, classInfo);
                     } else {

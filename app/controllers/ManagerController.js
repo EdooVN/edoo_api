@@ -153,10 +153,7 @@ module.exports.addUserFromFileExel = {
             return rep(Boom.badData('Data is wrong!'));
         }
     },
-    auth: {
-        mode: 'required',
-        strategies: ['jwt']
-    },
+    auth: false,
     payload: {
         // class_id: Joi.string().required(),
         output: 'stream',

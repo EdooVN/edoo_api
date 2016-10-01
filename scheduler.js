@@ -4,7 +4,6 @@ const _ = require('lodash');
 const Models = global.Models;
 const schedule = require('node-schedule');
 
-
 function tokenScheduler() {
     console.log('schedule');
     new Models.Token().fetchAll({withRelated: 'firebase_token'}).then(function (tokens) {

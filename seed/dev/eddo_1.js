@@ -46,18 +46,18 @@ exports.seed = function (knex, Promise) {
                         avatar: 'https://scontent-hkg3-1.xx.fbcdn.net/v/t1.0-9/12096202_898864656850723_4092586705994255622_n.jpg?oh=aae1d9601bedcadad09c217b38225fce&oe=5852665B'
                     }),
 
-                    knex('users').insert({
-                        id: 4,
-                        name: 'Tô Văn Khánh',
-                        code: '12312412',
-                        birthday: '1989-11-07',
-                        username: 'khanhtv',
-                        password: '$2a$10$dtaAZp55vPJgE4C759fkFOd.ISEcU2AvdL49yXGgBWSmiEuWfHfQi',
-                        email: 'khanhtv@vnu.edu.vn',
-                        capability: 'teacher',
-                        regular_class: '',
-                        avatar: 'https://scontent-hkg3-1.xx.fbcdn.net/v/t1.0-9/11214292_10203838883452144_3980940379632774496_n.jpg?oh=a202b01995304b4bdf25070c8976a2c0&oe=583F246C'
-                    }),
+                    // knex('users').insert({
+                    //     id: 4,
+                    //     name: 'Tô Văn Khánh',
+                    //     code: '12312412',
+                    //     birthday: '1989-11-07',
+                    //     username: 'khanhtv',
+                    //     password: '$2a$10$dtaAZp55vPJgE4C759fkFOd.ISEcU2AvdL49yXGgBWSmiEuWfHfQi',
+                    //     email: 'khanhtv@vnu.edu.vn',
+                    //     capability: 'teacher',
+                    //     regular_class: '',
+                    //     avatar: 'https://scontent-hkg3-1.xx.fbcdn.net/v/t1.0-9/11214292_10203838883452144_3980940379632774496_n.jpg?oh=a202b01995304b4bdf25070c8976a2c0&oe=583F246C'
+                    // }),
 
                     knex('users').insert({
                         id: 5,
@@ -634,38 +634,38 @@ exports.seed = function (knex, Promise) {
 
 
                     // Thầy Khánh
-                    knex('users_classes').insert({
-                        user_id: 4,
-                        class_id: 'POL100111-2016-2017'
-                    }),
-                    knex('users_classes').insert({
-                        user_id: 4,
-                        class_id: 'MAT110031-2016-2017'
-                    }),
-                    knex('users_classes').insert({
-                        user_id: 4,
-                        class_id: 'INT220731-2016-2017'
-                    }),
-                    knex('users_classes').insert({
-                        user_id: 4,
-                        class_id: 'ELT203541-2016-2017'
-                    }),
-                    knex('users_classes').insert({
-                        user_id: 4,
-                        class_id: 'MAT110141-2016-2017'
-                    }),
-                    knex('users_classes').insert({
-                        user_id: 4,
-                        class_id: 'INT311521-2016-2017'
-                    }),
-                    knex('users_classes').insert({
-                        user_id: 4,
-                        class_id: 'INT204421-2016-2017'
-                    }),
-                    knex('users_classes').insert({
-                        user_id: 4,
-                        class_id: 'PES102541-2016-2017'
-                    }),
+                    // knex('users_classes').insert({
+                    //     user_id: 4,
+                    //     class_id: 'POL100111-2016-2017'
+                    // }),
+                    // knex('users_classes').insert({
+                    //     user_id: 4,
+                    //     class_id: 'MAT110031-2016-2017'
+                    // }),
+                    // knex('users_classes').insert({
+                    //     user_id: 4,
+                    //     class_id: 'INT220731-2016-2017'
+                    // }),
+                    // knex('users_classes').insert({
+                    //     user_id: 4,
+                    //     class_id: 'ELT203541-2016-2017'
+                    // }),
+                    // knex('users_classes').insert({
+                    //     user_id: 4,
+                    //     class_id: 'MAT110141-2016-2017'
+                    // }),
+                    // knex('users_classes').insert({
+                    //     user_id: 4,
+                    //     class_id: 'INT311521-2016-2017'
+                    // }),
+                    // knex('users_classes').insert({
+                    //     user_id: 4,
+                    //     class_id: 'INT204421-2016-2017'
+                    // }),
+                    // knex('users_classes').insert({
+                    //     user_id: 4,
+                    //     class_id: 'PES102541-2016-2017'
+                    // }),
 
 
                     // Cô Thuận

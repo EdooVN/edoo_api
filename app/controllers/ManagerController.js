@@ -64,6 +64,9 @@ module.exports.addAClass = {
         let code = _.get(post, 'code', '');
         let type = _.get(post, 'type', '');
         let semester = _.get(post, 'semester', '');
+        let credit_count = _.get(post, 'credit_count', '');
+        let student_count = _.get(post, 'student_count', '');
+        let teacher_name = _.get(post, 'teacher_name', '');
 
         let id_class = code + semester;
         new Models.Class({
@@ -71,7 +74,10 @@ module.exports.addAClass = {
             name: name,
             code: code,
             type: type,
-            semester: semester
+            semester: semester,
+            credit_count: credit_count,
+            student_count: student_count,
+            teacher_name: teacher_name
         }).save(null, {method: 'insert'}).then(function (result) {
             rep(ResponseJSON('Add class success!', result));
         }).catch(function (err) {
@@ -85,7 +91,10 @@ module.exports.addAClass = {
             name: Joi.string().required(),
             code: Joi.string().alphanum().required(),
             type: Joi.string().required(),
-            semester: Joi.string().required()
+            semester: Joi.string().required(),
+            credit_count: Joi.number().integer().required(),
+            student_count: Joi.number().integer().required(),
+            teacher_name: Joi.string().required()
         }
     },
     description: 'add class',

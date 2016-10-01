@@ -1038,7 +1038,7 @@ module.exports.postSupport = {
     handler: function (req, rep) {
         // let user_data = req.auth.credentials;
         let post = req.payload;
-        let email = _.get(post, 'email', '');
+        let email = _.get(post, 'email', 'none@fries.edoo');
         let type = _.get(post, 'type', '');
         let content = _.get(post, 'content', '');
 
@@ -1049,9 +1049,12 @@ module.exports.postSupport = {
             type: type,
             content: content,
             created_at: now.toISOString()
-        }).save().then((result)=> {
-            rep(ResponseJSON('Post support msg success!', result));
-        }).catch(()=> {
+        }).save()
+            .then((result)=> {
+                rep(ResponseJSON('Post support msg success!', result));
+
+                service.email.sendSupportEmailToAdmin(email,type,content);
+            }).catch(()=> {
             rep(Boom.badData('Something went wrong!'));
         });
     },

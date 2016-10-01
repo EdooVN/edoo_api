@@ -16,17 +16,22 @@ module.exports.sendRefreshPass = function (userDetail, token, cb) {
         + '<p>' + '<a href="' + urlResetPass + '">' + 'Khôi phục mật khẩu' + '</a>' + '</p>'
         + '<p>' + 'Nếu bạn không muốn khôi phục mật khẩu, hãy bỏ qua email này.' + '</p>'
         + '<p>' + 'Hỗ trợ Edoo' + '</p>';
-    sendEmail(userDetail.email, userDetail.name, title, content_html, cb);
+    sendEmail('fries.uet@gmail.com', 'Fries', userDetail.email, userDetail.name, title, content_html, cb);
 };
 
-function sendEmail(email_user, name_user, title, content_html, callback) {
-    let from = 'fries.uet@gmail.com';
-    let to = email_user;
+module.exports.sendSupportEmailToAdmin = function (userEmail, typeSupport, content, cb) {
+    let content_html = '<p>' + content + '</p>';
+    sendEmail(userEmail, '', 'fries.uet@gmail.com', 'Fries', typeSupport, content_html, cb);
+};
+
+function sendEmail(from, fromName, to, toName, title, content_html, callback) {
+    // let from = 'fries.uet@gmail.com';
+    // let to = email_user;
 
     var helper = require('sendgrid').mail;
-    var from_email = new helper.Email(from, 'Fries');
-    // var to_email = new helper.Email(to, name_user);
-    var to_email = new helper.Email(to);
+    var from_email = new helper.Email(from, fromName);
+    var to_email = new helper.Email(to, toName);
+    // var to_email = new helper.Email(to);
     var subject = title;
     var content = new helper.Content('text/html', content_html);
     var mail = new helper.Mail(from_email, subject, to_email, content);

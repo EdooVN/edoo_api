@@ -65,6 +65,9 @@ var UserDetail = module.exports.UserDetail = bookshelf.Model.extend({
 
 var Token = module.exports.Token = bookshelf.Model.extend({
     tableName: 'tokens',
+    firebase_token: function () {
+        return this.hasOne(FirebaseToken)
+    },
     user: function () {
         return this.belongsTo(User);
     }
@@ -74,6 +77,9 @@ var FirebaseToken = module.exports.FirebaseToken = bookshelf.Model.extend({
     tableName: 'firebase_tokens',
     user: function () {
         return this.belongsTo(User);
+    },
+    token : function () {
+        return this.belongsTo(Token)
     }
 });
 

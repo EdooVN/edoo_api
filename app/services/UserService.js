@@ -425,15 +425,14 @@ function getClassRank(class_id, cb) {
                         });
 
                         // new array delete null user
-                        let users2 = [];
-                        for (let i = 0; i < users.length; i++) {
-                            let user = users[i];
-                            if (user.capability == 'student') {
-                                users2.push(user);
-                            }
-                        }
+                        // for (let i = 0; i < users.length; i++) {
+                        //     let user = users[i];
+                        //     if (user.capability == 'student') {
+                        //         users2.push(user);
+                        //     }
+                        // }
 
-                        classInfo.users = users2;
+                        classInfo.users = users.filter((user) => user.capability === 'student');
 
                         cb(false, classInfo);
                     } else {
@@ -487,14 +486,14 @@ function getUserInfoRank(class_id, user_id, cb) {
                         this.where('votes.comment_id', 'in', subCmtQuery)
                             .orWhere('votes.post_id', 'in', subPostUserQuery)
                     });
-                        // .andWhere('votes.up', '=', '1');
+                    // .andWhere('votes.up', '=', '1');
                 })
                 .fetchAll()
                 .then(function (votes) {
                     votes = votes.toJSON();
                     // vote_count = votes.length;
-                    for (let vote of votes){
-                        if (vote.up == true){
+                    for (let vote of votes) {
+                        if (vote.up == true) {
                             vote_count++;
                         } else {
                             vote_count--;

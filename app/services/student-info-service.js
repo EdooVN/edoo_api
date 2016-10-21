@@ -2,7 +2,7 @@
 
 const _ = require('lodash');
 const XLSX = require('xlsx');
-const userService = require('./UserService');
+const userService = require('./user-service');
 const helpers = global.helpers;
 
 // for test

@@ -6,7 +6,7 @@ const Models = global.Models;
 const bcrypt = require('bcrypt');
 const Joi = require('joi');
 const ResponseJSON = global.helpers.ResponseJSON;
-const service = require('../services/AllService');
+const service = require('../services/all-service');
 
 module.exports.getclass = {
     handler: function (req, rep) {

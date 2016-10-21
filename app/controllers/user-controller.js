@@ -7,7 +7,7 @@ const bcrypt = require('bcrypt');
 const Joi = require('joi');
 const ResponseJSON = global.helpers.ResponseJSON;
 const commons = global.helpers.commons;
-const service = require('../services/AllService');
+const service = require('../services/all-service');
 
 /***
  * Login POST

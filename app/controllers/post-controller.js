@@ -11,7 +11,7 @@ const mkdirp = require('mkdirp');
 const ResponseJSON = global.helpers.ResponseJSON;
 const helpers = global.helpers;
 const config = helpers.config;
-const service = require('../services/AllService');
+const service = require('../services/all-service');
 
 const page_size = helpers.commons.page_size;
 

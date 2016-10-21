@@ -19,4 +19,3 @@ require('./app/main');
  * Schedule: delete token expired
  */
 require('./scheduler');
-// test

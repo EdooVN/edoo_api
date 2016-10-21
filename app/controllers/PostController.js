@@ -1,4 +1,5 @@
 'use strict';
+
 const _ = require('lodash');
 const fs = require('fs');
 const Entities = require('html-entities').AllHtmlEntities;

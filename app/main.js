@@ -17,7 +17,6 @@ server.connection({
 /**
  * set header for each reply
  */
-
 server.ext('onPreResponse', function (request, reply) {
     if (!request.response.isBoom) {
         request.response.header('Access-Control-Allow-Origin', '*');
@@ -40,7 +39,8 @@ server.start((err) => {
         console.error(err);
     }
 
-    server_started();
+    // after server started
+    _register_route_plugin();
 
     console.log('Server running at:', server.info.uri);
 });
@@ -67,7 +67,7 @@ function _register_plugins() {
 /**
  * Server started.
  */
-function server_started() {
+function _register_route_plugin() {
     let route = require('./plugins/routes');
 
     server.register([route], (err) => {

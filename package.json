@@ -1,8 +1,7 @@
 {
-  "name": "Happi",
+  "name": "edoo-api",
   "version": "1.0.0",
-  "description": "",
-  "main": "app.js",
+  "description": "Server-api for edoo",
   "scripts": {
     "prestart": "npm i",
     "start": "node index.js",
@@ -10,6 +9,9 @@
   },
   "author": "",
   "license": "ISC",
+  "repository": {
+    "private": true
+  },
   "dependencies": {
     "archiver": "^1.1.0",
     "async": "^2.0.1",

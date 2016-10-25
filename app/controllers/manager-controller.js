@@ -45,11 +45,7 @@ module.exports.addUser = {
             regular_class: Joi.string().optional()
         }
     },
-    auth: false,
-    description: 'Add user',
-    notes: 'For manager, ' +
-    'By default, password is equal code',
-    tags: ['api', 'add_user']
+    auth: false
 };
 
 /**
@@ -96,10 +92,7 @@ module.exports.addAClass = {
             student_count: Joi.number().integer().required(),
             teacher_name: Joi.string().required()
         }
-    },
-    description: 'add class',
-    notes: 'For manager, add class',
-    tags: ['api', 'add class']
+    }
 };
 
 /**
@@ -124,10 +117,7 @@ module.exports.joinclass = {
             user_code: Joi.string().alphanum().required(),
             class_id: Joi.string().required()
         }
-    },
-    description: 'join class',
-    notes: 'For manager, join class',
-    tags: ['api', 'joinclass']
+    }
 };
 
 module.exports.addUserFromFileExel = {
@@ -139,8 +129,6 @@ module.exports.addUserFromFileExel = {
 
         if (data.file) {
             let file = data.file;
-            // check mime type ?= image
-            // let headers = file.hapi.headers;
 
             service.user.addUserFromFileExel(file, user_id, user_code, function (err, res) {
                 if (!err) {
@@ -155,14 +143,9 @@ module.exports.addUserFromFileExel = {
     },
     auth: false,
     payload: {
-        // class_id: Joi.string().required(),
         output: 'stream',
         maxBytes: 20097152,
         allow: 'multipart/form-data',
         parse: true
-    },
-    description: 'post file',
-    notes: 'post file',
-    tags: ['api', 'file']
-
+    }
 };

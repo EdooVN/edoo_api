@@ -30,10 +30,7 @@ module.exports.getclass = {
     auth: {
         mode: 'required',
         strategies: ['jwt']
-    },
-    description: 'getclass',
-    notes: 'get all user\'s classes ',
-    tags: ['api', 'get class']
+    }
 };
 
 module.exports.getTimetable = {
@@ -58,8 +55,5 @@ module.exports.getTimetable = {
     auth: {
         mode: 'required',
         strategies: ['jwt']
-    },
-    description: 'get timetable',
-    notes: 'get all user\'s lessions ',
-    tags: ['api', 'get timetable']
+    }
 };

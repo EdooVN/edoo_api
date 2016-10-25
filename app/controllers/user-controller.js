@@ -48,58 +48,8 @@ module.exports.loginPost = {
             password: Joi.string().required()
         }
     },
-    auth: false,
-    description: 'Login',
-    notes: 'Returns a token\'s user, client should save it carefully',
-    tags: ['api', 'login']
+    auth: false
 };
-
-/**
- * Register POST
- */
-// module.exports.registerPost = {
-//     handler: function (request, reply) {
-//         const post = request.payload;
-//         let email = _.get(post, 'email', '');
-//         let password = _.get(post, 'password', '');
-//         //mssv
-//         let code = _.get(post, 'code', '');
-//
-//         // Tìm xem có thằng nào đăng ký email này chưa?
-//         new Models.User({
-//             email: email
-//         }).fetch().then(function (user) {
-//             if (!_.isEmpty(user)) {// Email này có rồi!
-//                 return reply(Boom.conflict('Email already exists!'));
-//             }
-//
-//             //Đăng ký thôi
-//             bcrypt.hash(password, 10, function (err, hash) {
-//                 new Models.User({
-//                     email: email,
-//                     password: hash,
-//                     code: code
-//                 }).save().then(function (user) {
-//                     if (_.isEmpty(user)) {
-//                         return reply(Boom.serverUnavailable('Service Unavailable'));
-//                     }
-//
-//                     return reply(ResponseJSON('Register success!'));
-//                 });
-//             });
-//         });
-//     },
-//     validate: {
-//         payload: {
-//             email: Joi.string().email().min(5).required(),
-//             password: Joi.string().min(6).required()
-//         }
-//     },
-//     auth: false,
-//     description: 'Register',
-//     notes: 'Post register',
-//     tags: ['api', 'register']
-// };
 
 /**
  * Logout
@@ -125,10 +75,7 @@ module.exports.logout = {
     auth: {
         mode: 'required',
         strategies: ['jwt']
-    },
-    description: 'Logout',
-    notes: 'Logout',
-    tags: ['api', 'logout']
+    }
 };
 
 /**
@@ -166,10 +113,7 @@ module.exports.registerFirebaseToken = {
             type: Joi.string().required(),
             token: Joi.string().required()
         }
-    },
-    description: 'register firebase token',
-    notes: 'type: android/ios/web',
-    tags: ['api', 'register firebase token']
+    }
 };
 
 module.exports.getSolveVote = {
@@ -185,10 +129,7 @@ module.exports.getSolveVote = {
     auth: {
         mode: 'required',
         strategies: ['jwt']
-    },
-    description: 'get solve vote',
-    notes: 'get solve vote of user',
-    tags: ['api', 'get solve vote']
+    }
 };
 
 
@@ -214,10 +155,7 @@ module.exports.getProfile = {
     auth: {
         mode: 'required',
         strategies: ['jwt']
-    },
-    description: 'get solve vote',
-    notes: 'get solve vote of user',
-    tags: ['api', 'get solve vote']
+    }
 };
 
 
@@ -243,10 +181,7 @@ module.exports.updateProfile = {
             description: Joi.string().optional(),
             favorite: Joi.string().optional()
         }
-    },
-    description: 'get solve vote',
-    notes: 'get solve vote of user',
-    tags: ['api', 'get solve vote']
+    }
 };
 
 
@@ -276,10 +211,7 @@ module.exports.changePassword = {
             old_password: Joi.string().required(),
             new_password: Joi.string().required()
         }
-    },
-    description: 'get solve vote',
-    notes: 'get solve vote of user',
-    tags: ['api', 'get solve vote']
+    }
 };
 
 module.exports.sendResetPass = {
@@ -302,10 +234,7 @@ module.exports.sendResetPass = {
             email: Joi.string().email().required(),
             code : Joi.string().required()
         }
-    },
-    description: 'reset password',
-    notes: 'reset pass',
-    tags: ['api', 'reset password']
+    }
 };
 
 module.exports.resetPass = {
@@ -336,10 +265,7 @@ module.exports.resetPass = {
         payload: {
             new_password: Joi.string().required()
         }
-    },
-    description: 'reset pass',
-    notes: 'reset pass',
-    tags: ['api', 'reset pass']
+    }
 };
 
 module.exports.uploadAvatar = {
@@ -379,10 +305,7 @@ module.exports.uploadAvatar = {
         maxBytes: 2097152,
         allow: 'multipart/form-data',
         parse: true
-    },
-    description: 'post avatar',
-    notes: 'post avatar',
-    tags: ['api', 'post']
+    }
 };
 
 module.exports.getClassRank = {
@@ -402,10 +325,7 @@ module.exports.getClassRank = {
     auth: {
         mode: 'required',
         strategies: ['jwt']
-    },
-    description: 'post avatar',
-    notes: 'post avatar',
-    tags: ['api', 'post']
+    }
 };
 
 

@@ -32,10 +32,7 @@ module.exports.getpost = {
     auth: {
         mode: 'required',
         strategies: ['jwt']
-    },
-    description: 'get posts',
-    notes: 'get posts of class',
-    tags: ['api', 'post']
+    }
 };
 
 module.exports.getPostsInPage = {
@@ -88,10 +85,7 @@ module.exports.getPostsInPage = {
     auth: {
         mode: 'required',
         strategies: ['jwt']
-    },
-    description: 'get posts with page',
-    notes: 'get posts of class',
-    tags: ['api', 'post']
+    }
 };
 
 module.exports.postPost = {
@@ -120,8 +114,6 @@ module.exports.postPost = {
             .replace('  ', ' ')
             .trim())
             .substring(0, 180);
-
-        // console.log(user_data);
 
         new Models.Post({
             user_id: user_id,
@@ -204,10 +196,7 @@ module.exports.postPost = {
             is_incognito: Joi.boolean().optional(),
             event_end: Joi.string().optional()
         }
-    },
-    description: 'post a post to class',
-    notes: 'post a post to class',
-    tags: ['api', 'post']
+    }
 };
 
 module.exports.updatePost = {
@@ -244,10 +233,7 @@ module.exports.updatePost = {
             type: Joi.string().required(),
             event_end: Joi.string().optional()
         }
-    },
-    description: 'update post',
-    notes: 'update post',
-    tags: ['api', 'post']
+    }
 };
 
 /**
@@ -373,10 +359,7 @@ module.exports.postDetail = {
     auth: {
         mode: 'required',
         strategies: ['jwt']
-    },
-    description: 'get post detail',
-    notes: 'post detail',
-    tags: ['api', 'post']
+    }
 };
 
 /**
@@ -407,10 +390,7 @@ module.exports.postSeen = {
         payload: {
             post_id: Joi.number().integer().required()
         }
-    },
-    description: 'post seen',
-    notes: 'post seen',
-    tags: ['api', 'post']
+    }
 };
 
 /**
@@ -491,10 +471,7 @@ module.exports.postCmt = {
             content: Joi.string().required(),
             is_incognito: Joi.boolean().optional()
         }
-    },
-    description: 'post cmt',
-    notes: 'post cmt',
-    tags: ['api', 'post']
+    }
 };
 
 /**
@@ -599,10 +576,7 @@ module.exports.postVote = {
             post_id: Joi.number().integer().required(),
             content: Joi.number().integer().required()
         }
-    },
-    description: 'post vote',
-    notes: 'post vote',
-    tags: ['api', 'post', 'vote']
+    }
 };
 
 /**
@@ -634,10 +608,7 @@ module.exports.postVoteCmt = {
             comment_id: Joi.number().integer().required()
             // content: Joi.number().integer().required()
         }
-    },
-    description: 'post vote cmt',
-    notes: 'post vote cmt',
-    tags: ['api', 'post', 'vote']
+    }
 };
 
 module.exports.postDeVoteCmt = {
@@ -665,10 +636,7 @@ module.exports.postDeVoteCmt = {
             comment_id: Joi.number().integer().required()
             // content: Joi.number().integer().required()
         }
-    },
-    description: 'post vote cmt',
-    notes: 'post vote cmt',
-    tags: ['api', 'post', 'vote']
+    }
 };
 
 module.exports.postUnVoteCmt = {
@@ -696,10 +664,7 @@ module.exports.postUnVoteCmt = {
             comment_id: Joi.number().integer().required()
             // content: Joi.number().integer().required()
         }
-    },
-    description: 'post vote cmt',
-    notes: 'post vote cmt',
-    tags: ['api', 'post', 'vote']
+    }
 };
 
 /**
@@ -771,10 +736,7 @@ module.exports.postSolve = {
         payload: {
             comment_id: Joi.number().integer().required()
         }
-    },
-    description: 'post solve',
-    notes: 'post solve',
-    tags: ['api', 'post', 'solve']
+    }
 };
 
 
@@ -820,10 +782,7 @@ module.exports.postUnSolve = {
         payload: {
             comment_id: Joi.number().integer().required()
         }
-    },
-    description: 'post unsolve',
-    notes: 'post unsolve',
-    tags: ['api', 'post', 'unsolve']
+    }
 };
 
 /**
@@ -859,10 +818,7 @@ module.exports.getRepComments = {
     auth: {
         mode: 'required',
         strategies: ['jwt']
-    },
-    description: 'get rep comments',
-    notes: 'get rep comments',
-    tags: ['api', 'post', 'rep cmt']
+    }
 };
 
 /**
@@ -901,10 +857,7 @@ module.exports.postRepCmt = {
             content: Joi.string().required(),
             is_incognito: Joi.boolean().optional()
         }
-    },
-    description: 'post rep comments',
-    notes: 'post rep comments',
-    tags: ['api', 'post', 'post cmt']
+    }
 };
 
 module.exports.deleteCmt = {
@@ -940,10 +893,7 @@ module.exports.deleteCmt = {
         payload: {
             comment_id: Joi.number().integer().required()
         }
-    },
-    description: 'post rep comments',
-    notes: 'post rep comments',
-    tags: ['api', 'post', 'post cmt']
+    }
 };
 
 module.exports.deletePost = {
@@ -981,10 +931,7 @@ module.exports.deletePost = {
         payload: {
             post_id: Joi.number().integer().required()
         }
-    },
-    description: 'delete post',
-    notes: 'delete post',
-    tags: ['api', 'post', 'delete post']
+    }
 };
 
 /**
@@ -1029,10 +976,7 @@ module.exports.uploadImage = {
         maxBytes: 2097152,
         allow: 'multipart/form-data',
         parse: true
-    },
-    description: 'post a image',
-    notes: 'post a image',
-    tags: ['api', 'post']
+    }
 };
 
 module.exports.postSupport = {
@@ -1066,10 +1010,7 @@ module.exports.postSupport = {
             type: Joi.string().required(),
             content: Joi.string().required()
         }
-    },
-    description: 'post report',
-    notes: 'post report',
-    tags: ['api', 'post', 'post report']
+    }
 };
 
 module.exports.upFileToEvent = {
@@ -1114,10 +1055,7 @@ module.exports.upFileToEvent = {
         maxBytes: 20097152,
         allow: 'multipart/form-data',
         parse: true
-    },
-    description: 'posadft event',
-    notes: 'post a',
-    tags: ['api', 'adfadf']
+    }
 };
 
 module.exports.checkEvent = {
@@ -1161,10 +1099,7 @@ module.exports.checkEvent = {
     auth: {
         mode: 'required',
         strategies: ['jwt']
-    },
-    description: 'post report',
-    notes: 'post report',
-    tags: ['api', 'post', 'post report']
+    }
 };
 
 module.exports.getUrlFileEvent = {
@@ -1184,8 +1119,5 @@ module.exports.getUrlFileEvent = {
     auth: {
         mode: 'required',
         strategies: ['jwt']
-    },
-    description: 'post report',
-    notes: 'post report',
-    tags: ['api', 'post', 'post report']
+    }
 };

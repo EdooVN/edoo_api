@@ -97,7 +97,7 @@ module.exports.registerFirebaseToken = {
         }
 
         service.user.saveFcmToken(user_id, type, token_id, device_token, function (err, res) {
-            if (!err){
+            if (!err) {
                 return rep(ResponseJSON('Resgister FCM success', res));
             } else {
                 return rep(Boom.badData('Something went wrong!'));
@@ -193,6 +193,15 @@ module.exports.changePassword = {
         let old_password = _.get(payload, 'old_password', '');
         let new_password = _.get(payload, 'new_password', '');
 
+        let passwordReg = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+
+        // validate password with regex:
+        // 1. length >= 8
+        // 2. must contain at least 1 number
+        if (!passwordReg.test(new_password)) {
+            return rep(Boom.badData('Mật khẩu bao gồm ít nhất 8 các kí tự chữ cái và số, không chứa các kí tự đặc biệt'));
+        }
+
         service.user.changePassword(user_id, old_password, new_password, function (err, res) {
             if (!err) {
                 return rep(ResponseJSON('Success', res));
@@ -215,13 +224,13 @@ module.exports.changePassword = {
 };
 
 module.exports.sendResetPass = {
-    handler : function (req, rep) {
+    handler: function (req, rep) {
         let payload = req.payload;
         let email = _.get(payload, 'email', '');
         let code = _.get(payload, 'code', '');
 
         service.user.sendResetPass(email, code, function (err, resData) {
-            if (!err){
+            if (!err) {
                 rep(ResponseJSON('Send success', resData));
             } else {
                 rep(Boom.badData(resData));
@@ -230,27 +239,27 @@ module.exports.sendResetPass = {
     },
     auth: false,
     validate: {
-        payload : {
+        payload: {
             email: Joi.string().email().required(),
-            code : Joi.string().required()
+            code: Joi.string().required()
         }
     }
 };
 
 module.exports.resetPass = {
-    handler : function (req, rep) {
+    handler: function (req, rep) {
         let user_data = req.auth.credentials;
         let payload = req.payload;
         let user_id = _.get(user_data, 'id', '');
         let is_token_refresh_pass = _.get(user_data, 'is_token_refresh_pass', false);
         let new_password = _.get(payload, 'new_password', '');
 
-        if (!is_token_refresh_pass){
+        if (!is_token_refresh_pass) {
             return rep(Boom.badData('Token is invalid'));
         }
 
         service.user.resetNewPass(user_id, new_password, function (err, resData) {
-            if (!err){
+            if (!err) {
                 rep(ResponseJSON('Reset password success', resData));
             } else {
                 rep(Boom.badData(resData));
@@ -315,7 +324,7 @@ module.exports.getClassRank = {
         let class_id = encodeURIComponent(req.params.class_id);
 
         service.user.getClassRank(class_id, function (err, res) {
-            if (!err){
+            if (!err) {
                 return rep(ResponseJSON('Success', res));
             } else {
                 return rep(Boom.badData(res));

@@ -26,9 +26,9 @@ PATH_ZIP_TEMP = /zip-temp
 
 SERVER_STATIC_FILES = localhost
 
-API_FIREBASE_KEY = AIzaSyCkpctiyDpnGZkkBp1cTj8KhvI7pQbW0lg
+API_FIREBASE_KEY = bla
 
-API_KEY_SENDGRID = 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
+API_KEY_SENDGRID = blabla
 ```
 
 # Init database

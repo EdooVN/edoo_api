@@ -1,7 +1,6 @@
 # API for Edoo Social
-[![Known Vulnerabilities](https://snyk.io/test/github/tutv95/hapi/badge.svg)](https://snyk.io/test/github/tutv95/hapi)
 
-# Config
+## Config
 
 Tạo file .env ở thư mục gốc.
 Tạo database "Edoo"
@@ -31,7 +30,7 @@ API_FIREBASE_KEY = bla
 API_KEY_SENDGRID = blabla
 ```
 
-# Init database
+## Init database
 
 Chạy knex:
 ```
@@ -39,7 +38,7 @@ knex migrate:latest
 knex seed:run
 ```
 
-# Documentation API
+## Documentation API
 
 https://docs.google.com/spreadsheets/d/1HvkoSS6OSoEWc6cfFKgmyFgaEji7WcQchsxgEdgELSI/edit?usp=sharing
 
@@ -47,7 +46,7 @@ https://docs.google.com/spreadsheets/d/1HvkoSS6OSoEWc6cfFKgmyFgaEji7WcQchsxgEdgE
 
 - Set timzone cho server về UTC
 
-# Start server:
+## Start server:
 
 ```
 npm start

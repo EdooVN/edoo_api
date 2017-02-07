@@ -17,7 +17,7 @@ exports.seed = function (knex, Promise) {
                         email: 'quytm_58@vnu.edu.vn',
                         capability: 'student',
                         regular_class: 'QH/ICQ-K58-CLC',
-                        avatar: 'https://scontent-hkg3-1.xx.fbcdn.net/v/t1.0-9/12961735_475101389349107_8771290773156913489_n.jpg?oh=4a63a9b60b72022cb0cc69106995cbb7&oe=581750D8'
+                        avatar: 'http://www.iconsfind.com/wp-content/uploads/2015/10/20151012_561baed03a54e.png'
                     }),
 
                     knex('users').insert({
@@ -30,20 +30,20 @@ exports.seed = function (knex, Promise) {
                         email: 'tutv_58@vnu.edu.vn',
                         capability: 'student',
                         regular_class: 'QH/ICQ-K58-CLC',
-                        avatar: 'https://scontent-hkg3-1.xx.fbcdn.net/v/t1.0-9/10417504_1711708798969972_9139827122448317726_n.jpg?oh=450fec405fe442e30f8393e11009afe4&oe=5850E38C'
+                        avatar: 'http://www.iconsfind.com/wp-content/uploads/2015/10/20151012_561baed03a54e.png'
                     }),
 
                     knex('users').insert({
                         id: 3,
                         name: 'Nguyễn Tiến Minh',
                         code: '13020285',
-                        birthday: '1995-18-10',
+                        birthday: '1995-10-10',
                         username: 'minhnt',
                         password: '$2a$10$dtaAZp55vPJgE4C759fkFOd.ISEcU2AvdL49yXGgBWSmiEuWfHfQi',
                         email: 'minhnt_58@vnu.edu.vn',
                         capability: 'student',
                         regular_class: 'QH/ICQ-K58-CLC',
-                        avatar: 'https://scontent-hkg3-1.xx.fbcdn.net/v/t1.0-9/12096202_898864656850723_4092586705994255622_n.jpg?oh=aae1d9601bedcadad09c217b38225fce&oe=5852665B'
+                        avatar: 'http://www.iconsfind.com/wp-content/uploads/2015/10/20151012_561baed03a54e.png'
                     }),
 
                     // knex('users').insert({

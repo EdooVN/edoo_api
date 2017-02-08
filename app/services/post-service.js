@@ -523,6 +523,10 @@ module.exports.pushNotiToStudent = function (classId, data) {
                     let firebaseToken = firebaseTokens[j];
                     if (firebaseToken.type == 'android') {
                         pushFirebaseNoti(API_FIREBASE_KEY, firebaseToken.token, data);
+                        console.log(API_FIREBASE_KEY);
+                        console.log(firebaseToken.token);
+                        console.log(data);
+
                     }
                 }
             }

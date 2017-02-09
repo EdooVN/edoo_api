@@ -152,9 +152,39 @@ module.exports.addUserFromFileExel = {
 
 module.exports.updateStudentCode = {
     handler: function (req, rep) {
-        rep(req.payload);
 
+        let userId;
 
+        new Models.User({
+            code: req.payload.mssv
+        }).fetch().then((user) => {
+            if (_.isEmpty(user)) {
+                return Promise.reject('Mssv sai');
+            }
+
+            if (user.get('email')){
+                return Promise.reject('Người dùng này đã đăng kí email rồi, bạn vui lòng liên lạc với đội phát triển nếu có thắc mắc!');
+            }
+
+            userId = user.get('id');
+
+            return new Models.User({
+                email: req.payload.email
+            }).fetch();
+        }).then(function (user) {
+            if (!_.isEmpty(user)) {
+                return Promise.reject('Email này đã có người đăng kí!');
+            }
+
+            return new Models.User({
+                id: userId
+            }).save({email: req.payload.email, avatar: req.payload.avatar}, {method: 'update', patch: true});
+        }).then((user) => {
+            rep(user);
+        }).catch(function (err) {
+            console.log(err);
+            return rep(err);
+        })
     },
     auth: false,
     validate: {

@@ -33,18 +33,18 @@ exports.seed = function (knex, Promise) {
                         avatar: ''
                     }),
 
-                    // knex('users').insert({
-                    //     id: 3,
-                    //     name: 'Nguyễn Tiến Minh',
-                    //     code: '13020285',
-                    //     birthday: '1995-10-10',
-                    //     username: 'minhnt',
-                    //     password: '$2a$10$dtaAZp55vPJgE4C759fkFOd.ISEcU2AvdL49yXGgBWSmiEuWfHfQi',
-                    //     email: 'minhnt_58@vnu.edu.vn',
-                    //     capability: 'student',
-                    //     regular_class: 'QH/ICQ-K58-CLC',
-                    //     avatar: 'http://www.iconsfind.com/wp-content/uploads/2015/10/20151012_561baed03a54e.png'
-                    // }),
+                    knex('users').insert({
+                        id: 3,
+                        name: 'Nguyễn Tiến Minh',
+                        code: '13020285',
+                        birthday: '1995-10-10',
+                        username: 'minhnt',
+                        password: '$2a$10$dtaAZp55vPJgE4C759fkFOd.ISEcU2AvdL49yXGgBWSmiEuWfHfQi',
+                        // email: 'minhnt_58@vnu.edu.vn',
+                        capability: 'student',
+                        regular_class: 'QH/ICQ-K58-CLC',
+                        avatar: 'http://www.iconsfind.com/wp-content/uploads/2015/10/20151012_561baed03a54e.png'
+                    }),
 
                     // knex('users').insert({
                     //     id: 4,

@@ -3,9 +3,9 @@ exports.up = function (knex, Promise) {
         knex.schema.createTable('users', function (table) {
             table.increments('id').unsigned();
             table.varchar('name', 200);
-            table.varchar('email', 200).notNullable().unique();
+            table.varchar('email', 200).unique();
             table.varchar('code', 100).notNullable().unique();
-            table.varchar('username', 200).notNullable();
+            table.varchar('username', 200);
             table.varchar('password', 200).notNullable();
             table.date('birthday');
             table.varchar('capability', 10);

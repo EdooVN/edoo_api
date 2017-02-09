@@ -182,7 +182,6 @@ module.exports.updateStudentCode = {
         }).then((user) => {
             rep(user);
         }).catch(function (err) {
-            console.log(err);
             return rep(err);
         })
     },

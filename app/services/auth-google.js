@@ -40,7 +40,7 @@ function createOAuthClient(cb) {
 
         let clientSecret = credentials.installed.client_secret;
         let clientId = credentials.installed.client_id;
-        let redirectUrl = config('SERVER_NAME') + '/oauthcallback';
+        let redirectUrl = credentials.installed.redirect_uris[0];
         let auth = new googleAuth();
         let oauth2Client = new auth.OAuth2(clientId, clientSecret, redirectUrl);
 

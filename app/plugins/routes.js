@@ -225,6 +225,19 @@ module.exports.register = (server, options, next) => {
             config: controller.post.getUrlFileEvent
         }
 
+
+        // oauth2 with GG
+        ,{
+            method : ['GET'],
+            path: '/auth/google',
+            config: controller.authGoogle.auth
+        },
+        {
+            method : ['GET'],
+            path: '/oauthcallback',
+            config: controller.authGoogle.getAuthCode
+        }
+
     ]);
 };
 

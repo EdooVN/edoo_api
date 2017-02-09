@@ -173,12 +173,12 @@ exports.seed = function (knex, Promise) {
 
                     knex('users').insert({
                         id: 13,
-                        name: 'Vũ Minh Tuấn',
-                        code: '14020521',
+                        name: 'Vũ Minh Tấn',
+                        code: '11020521',
                         birthday: '1996-10-09',
                         username: 'tuanvm',
                         password: '$2a$10$dtaAZp55vPJgE4C759fkFOd.ISEcU2AvdL49yXGgBWSmiEuWfHfQi',
-                        email: '14020521@vnu.edu.vn',
+                        email: '11020521@vnu.edu.vn',
                         capability: 'student',
                         regular_class: 'QH/ICQ-K59-CLC',
                         avatar: ''
@@ -186,12 +186,12 @@ exports.seed = function (knex, Promise) {
 
                     knex('users').insert({
                         id: 14,
-                        name: 'Nguyễn Đức Khanh',
-                        code: '14020522',
+                        name: 'Nguyễn Đức Chiu',
+                        code: '11020522',
                         birthday: '1996-10-09',
                         username: 'khanhnd',
                         password: '$2a$10$dtaAZp55vPJgE4C759fkFOd.ISEcU2AvdL49yXGgBWSmiEuWfHfQi',
-                        email: '14020522@vnu.edu.vn',
+                        email: '11020522@vnu.edu.vn',
                         capability: 'student',
                         regular_class: 'QH/ICQ-K59-CLC',
                         avatar: ''

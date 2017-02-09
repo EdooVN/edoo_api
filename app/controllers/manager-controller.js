@@ -180,9 +180,9 @@ module.exports.updateStudentCode = {
                 id: userId
             }).save({email: req.payload.email, avatar: req.payload.avatar}, {method: 'update', patch: true});
         }).then((user) => {
-            rep(user);
+            rep(ResponseJSON('Cập nhật tài khoản thành công!'));
         }).catch(function (err) {
-            return rep(err);
+            return rep(Boom.badData(err));
         })
     },
     auth: false,

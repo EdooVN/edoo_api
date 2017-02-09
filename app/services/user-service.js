@@ -332,7 +332,67 @@ function insertNewStudentToDatabase(email, code, name, username, password, capab
     }
 }
 
+function insertNewStudentToDatabase2(email, code, name, username, password, capability, birthday, regularClass, cb) {
+// kiem tra capability
+    if (capability === 'student' || capability === 'teacher') {
+        // Tìm xem có thằng nào đăng ký email này chưa?
+        new Models.User({
+            email: email
+        }).fetch().then(function (users) {
+            // if (!_.isEmpty(users)) {// Email này có rồi!
+            //     return cb(true, 'Email already exists!');
+            // }
+
+            new Models.User({
+                code: code
+            }).fetch().then(function (users) {
+                if (!_.isEmpty(users)) {// code này có rồi!
+                    return cb(true, 'Code already exists!');
+                }
+            }).catch(function (err) {
+                return cb(true, err);
+            });
+
+            //Đăng ký thôi
+            if (_.isEmpty(password)) {
+                password = code;
+            }
+
+            if (_.isEmpty(username)) {
+                let tempSplit = _.split(email, '@');
+                username = tempSplit[0];
+            }
+
+            bcrypt.hash(password, 10, function (err, hash) {
+                new Models.User({
+                    code: code,
+                    name: name,
+                    birthday: birthday,
+                    password: hash,
+                    capability: capability,
+                    regular_class: regularClass
+                }).save(null, {method: 'insert'}).then(function (user) {
+                    if (_.isEmpty(user)) {
+                        return cb(true, 'Service Unavailable');
+                    }
+
+                    // console.log('insert ok');
+                    return cb(false, user.toJSON());
+                }).catch(function (err) {
+                    return cb(true, err);
+                });
+            });
+        })
+            .catch(function () {
+                return cb(true, 'UserService, Something went wrong');
+            });
+    } else {
+        return cb(true, 'capability is not valid!');
+    }
+}
+
 module.exports.insertNewStudentToDatabase = insertNewStudentToDatabase;
+module.exports.insertNewStudentToDatabase2 = insertNewStudentToDatabase2;
 
 module.exports.addUserFromFileExel = function (file, user_id, user_code, cb) {
     fileService.saveFileAndGetStaticURL(file, user_code, function (err, res, savePath) {

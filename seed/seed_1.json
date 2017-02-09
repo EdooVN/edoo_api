@@ -1,0 +1,467 @@
+{
+  "students": [
+    {
+      "code": "13020752",
+      "regular_class": "QH-2013-I/CQ-C-A-C",
+      "birthday": "2/5/1995",
+      "name": "Đỗ Việt Anh"
+    },
+    {
+      "code": "14020648",
+      "regular_class": "QH-2014-I/CQ-C-D",
+      "birthday": "13/6/1996",
+      "name": "Hồ Đức Anh"
+    },
+    {
+      "code": "14020012",
+      "regular_class": "QH-2014-I/CQ-C-C",
+      "birthday": "7/4/1996",
+      "name": "Tạ Việt Anh"
+    },
+    {
+      "code": "14020619",
+      "regular_class": "QH-2014-I/CQ-C-D",
+      "birthday": "29/2/1996",
+      "name": "Trần Tuấn Anh"
+    },
+    {
+      "code": "14020018",
+      "regular_class": "QH-2014-I/CQ-C-C",
+      "birthday": "20/8/1996",
+      "name": "Lê Đức Bằng"
+    },
+    {
+      "code": "14020653",
+      "regular_class": "QH-2014-I/CQ-C-B",
+      "birthday": "9/7/1996",
+      "name": "Ngô Đăng Chắc"
+    },
+    {
+      "code": "14020040",
+      "regular_class": "QH-2014-I/CQ-C-C",
+      "birthday": "2/11/1996",
+      "name": "Nguyễn Chiến Công"
+    },
+    {
+      "code": "14020044",
+      "regular_class": "QH-2014-I/CQ-C-C",
+      "birthday": "19/7/1996",
+      "name": "Phạm Chí Công"
+    },
+    {
+      "code": "14020048",
+      "regular_class": "QH-2014-I/CQ-C-C",
+      "birthday": "14/3/1996",
+      "name": "Nguyễn Sĩ Cường"
+    },
+    {
+      "code": "14020071",
+      "regular_class": "QH-2014-I/CQ-C-D",
+      "birthday": "25/7/1996",
+      "name": "Lê Đình Dũng"
+    },
+    {
+      "code": "14020065",
+      "regular_class": "QH-2014-I/CQ-C-C",
+      "birthday": "10/10/1996",
+      "name": "Nguyễn Ngọc Duy"
+    },
+    {
+      "code": "13020583",
+      "regular_class": "QH-2013-I/CQ-C-C",
+      "birthday": "28/4/1995",
+      "name": "Trần Vũ Duy"
+    },
+    {
+      "code": "12020078",
+      "regular_class": "QH-2012-I/CQ-C-C",
+      "birthday": "24/6/1994",
+      "name": "Nguyễn Văn Đạo"
+    },
+    {
+      "code": "15022844",
+      "regular_class": "QH-2015-I/CQ-C-C",
+      "birthday": "21/7/1997",
+      "name": "Nguyễn Anh Đạt"
+    },
+    {
+      "code": "13020531",
+      "regular_class": "QH-2013-I/CQ-C-B",
+      "birthday": "13/9/1995",
+      "name": "Thái Hữu Đồng"
+    },
+    {
+      "code": "14020117",
+      "regular_class": "QH-2014-I/CQ-C-D",
+      "birthday": "23/11/1988",
+      "name": "Vũ Đình Đúng"
+    },
+    {
+      "code": "14020143",
+      "regular_class": "QH-2014-I/CQ-C-C",
+      "birthday": "8/7/1994",
+      "name": "Nguyễn Hoàng Hải"
+    },
+    {
+      "code": "14020156",
+      "regular_class": "QH-2014-I/CQ-C-D",
+      "birthday": "10/7/1995",
+      "name": "Nguyễn Thị Hằng"
+    },
+    {
+      "code": "14020162",
+      "regular_class": "QH-2014-I/CQ-C-C",
+      "birthday": "13/9/1996",
+      "name": "Vũ Đăng Hiển"
+    },
+    {
+      "code": "14020178",
+      "regular_class": "QH-2014-I/CQ-C-C",
+      "birthday": "12/2/1996",
+      "name": "Dương Đình Hiệp"
+    },
+    {
+      "code": "14020826",
+      "regular_class": "QH-2014-I/CQ-C-B",
+      "birthday": "25/10/1995",
+      "name": "Nguyễn Vũ Hiếu"
+    },
+    {
+      "code": "14020188",
+      "regular_class": "QH-2014-I/CQ-C-C",
+      "birthday": "11/11/1996",
+      "name": "Hoàng Văn Hoàn"
+    },
+    {
+      "code": "10020461",
+      "regular_class": "QH-2010-I/CQ-C-C",
+      "birthday": "10/12/1992",
+      "name": "Nguyễn  Việt  Hoàng"
+    },
+    {
+      "code": "14020202",
+      "regular_class": "QH-2014-I/CQ-C-C",
+      "birthday": "25/1/1995",
+      "name": "Tống Hữu Hợp"
+    },
+    {
+      "code": "14020204",
+      "regular_class": "QH-2014-I/CQ-C-C",
+      "birthday": "8/4/1996",
+      "name": "Nguyễn Thị Huệ"
+    },
+    {
+      "code": "14020219",
+      "regular_class": "QH-2014-I/CQ-C-D",
+      "birthday": "30/4/1996",
+      "name": "Nguyễn Văn Hùng"
+    },
+    {
+      "code": "14020229",
+      "regular_class": "QH-2014-I/CQ-C-C",
+      "birthday": "15/2/1996",
+      "name": "Phạm Thị Thu Hường"
+    },
+    {
+      "code": "14020816",
+      "regular_class": "QH-2014-I/CQ-C-C",
+      "birthday": "24/12/1995",
+      "name": "Lương Ỏn Khăm"
+    },
+    {
+      "code": "14020246",
+      "regular_class": "QH-2014-I/CQ-C-D",
+      "birthday": "13/7/1996",
+      "name": "Trần Trung Kiên"
+    },
+    {
+      "code": "14020248",
+      "regular_class": "QH-2014-I/CQ-C-D",
+      "birthday": "11/4/1996",
+      "name": "Vũ Văn Kiệt"
+    },
+    {
+      "code": "14020251",
+      "regular_class": "QH-2014-I/CQ-C-C",
+      "birthday": "26/2/1996",
+      "name": "Hồ Hoàng Lâm"
+    },
+    {
+      "code": "14020253",
+      "regular_class": "QH-2014-I/CQ-C-D",
+      "birthday": "21/11/1996",
+      "name": "Đinh Văn Linh"
+    },
+    {
+      "code": "14020255",
+      "regular_class": "QH-2014-I/CQ-C-B",
+      "birthday": "9/10/1996",
+      "name": "Nguyễn Đức Linh"
+    },
+    {
+      "code": "14020628",
+      "regular_class": "QH-2014-I/CQ-C-C",
+      "birthday": "8/8/1996",
+      "name": "Vũ Hoàng Linh"
+    },
+    {
+      "code": "14020267",
+      "regular_class": "QH-2014-I/CQ-C-D",
+      "birthday": "15/3/1996",
+      "name": "Trần Thanh Long"
+    },
+    {
+      "code": "14020269",
+      "regular_class": "QH-2014-I/CQ-C-C",
+      "birthday": "22/5/1996",
+      "name": "Ngô Gia Lộc"
+    },
+    {
+      "code": "14020276",
+      "regular_class": "QH-2014-I/CQ-C-C",
+      "birthday": "1/6/1996",
+      "name": "Trần Văn Lương"
+    },
+    {
+      "code": "14020278",
+      "regular_class": "QH-2014-I/CQ-C-C",
+      "birthday": "26/7/1996",
+      "name": "Nguyễn Khánh Lượng"
+    },
+    {
+      "code": "14020279",
+      "regular_class": "QH-2014-I/CQ-C-C",
+      "birthday": "14/8/1996",
+      "name": "Phạm Văn Lượng"
+    },
+    {
+      "code": "13020275",
+      "regular_class": "QH-2013-I/CQ-C-B",
+      "birthday": "18/8/1995",
+      "name": "Nguyễn Thị Ly"
+    },
+    {
+      "code": "14020288",
+      "regular_class": "QH-2014-I/CQ-C-C",
+      "birthday": "16/11/1996",
+      "name": "Tống Thanh Mai"
+    },
+    {
+      "code": "14020820",
+      "regular_class": "QH-2014-I/CQ-C-C",
+      "birthday": "14/10/1995",
+      "name": "Lý Văn Mạnh"
+    },
+    {
+      "code": "14020292",
+      "regular_class": "QH-2014-I/CQ-C-C",
+      "birthday": "29/8/1996",
+      "name": "Nguyễn Duy Mạnh"
+    },
+    {
+      "code": "14020698",
+      "regular_class": "QH-2014-I/CQ-C-C",
+      "birthday": "17/6/1996",
+      "name": "Trần Tuấn Mạnh"
+    },
+    {
+      "code": "14020304",
+      "regular_class": "QH-2014-I/CQ-C-D",
+      "birthday": "25/10/1996",
+      "name": "Phạm Công Minh"
+    },
+    {
+      "code": "14020318",
+      "regular_class": "QH-2014-I/CQ-C-C",
+      "birthday": "30/12/1996",
+      "name": "Nguyễn Văn Nam"
+    },
+    {
+      "code": "14020317",
+      "regular_class": "QH-2014-I/CQ-C-C",
+      "birthday": "15/10/1996",
+      "name": "Nguyễn Văn Nam"
+    },
+    {
+      "code": "14020330",
+      "regular_class": "QH-2014-I/CQ-C-C",
+      "birthday": "15/1/1996",
+      "name": "Trần Đức Nguyên"
+    },
+    {
+      "code": "14020332",
+      "regular_class": "QH-2014-I/CQ-C-D",
+      "birthday": "6/3/1996",
+      "name": "Đào Thị Minh Nguyệt"
+    },
+    {
+      "code": "13020327",
+      "regular_class": "QH-2013-I/CQ-C-B",
+      "birthday": "18/3/1993",
+      "name": "Lê Văn Phú"
+    },
+    {
+      "code": "14020347",
+      "regular_class": "QH-2014-I/CQ-C-C",
+      "birthday": "28/12/1995",
+      "name": "Nguyễn Minh Phú"
+    },
+    {
+      "code": "13020553",
+      "regular_class": "QH-2013-I/CQ-C-C",
+      "birthday": "31/1/1995",
+      "name": "Đặng Danh Phương"
+    },
+    {
+      "code": "14020375",
+      "regular_class": "QH-2014-I/CQ-C-C",
+      "birthday": "27/7/1996",
+      "name": "Nguyễn Hồng Quân"
+    },
+    {
+      "code": "14020377",
+      "regular_class": "QH-2014-I/CQ-C-C",
+      "birthday": "22/12/1996",
+      "name": "Trịnh Hải Quân"
+    },
+    {
+      "code": "14020396",
+      "regular_class": "QH-2014-I/CQ-C-C",
+      "birthday": "15/12/1996",
+      "name": "Phạm Văn Sơn"
+    },
+    {
+      "code": "14020398",
+      "regular_class": "QH-2014-I/CQ-C-D",
+      "birthday": "7/1/1996",
+      "name": "Trần Ngọc Sơn"
+    },
+    {
+      "code": "14020400",
+      "regular_class": "QH-2014-I/CQ-C-D",
+      "birthday": "13/11/1996",
+      "name": "Phạm Tiến Sỹ"
+    },
+    {
+      "code": "14020403",
+      "regular_class": "QH-2014-I/CQ-C-C",
+      "birthday": "7/3/1996",
+      "name": "Nguyễn Đức Tài"
+    },
+    {
+      "code": "14020429",
+      "regular_class": "QH-2014-I/CQ-C-C",
+      "birthday": "17/3/1996",
+      "name": "Hoàng Ngọc Thái"
+    },
+    {
+      "code": "14020418",
+      "regular_class": "QH-2014-I/CQ-C-C",
+      "birthday": "4/1/1996",
+      "name": "Nguyễn Văn Thành"
+    },
+    {
+      "code": "14020425",
+      "regular_class": "QH-2014-I/CQ-C-D",
+      "birthday": "27/2/1996",
+      "name": "Dương Trung Thảo"
+    },
+    {
+      "code": "14020437",
+      "regular_class": "QH-2014-I/CQ-C-D",
+      "birthday": "22/12/1996",
+      "name": "Trịnh Văn Thắng"
+    },
+    {
+      "code": "14020442",
+      "regular_class": "QH-2014-I/CQ-C-B",
+      "birthday": "5/8/1996",
+      "name": "Đỗ Văn Thiện"
+    },
+    {
+      "code": "13020412",
+      "regular_class": "QH-2013-I/CQ-C-D",
+      "birthday": "16/11/1995",
+      "name": "Bùi Đức Thịnh"
+    },
+    {
+      "code": "13020425",
+      "regular_class": "QH-2013-I/CQ-C-B",
+      "birthday": "25/9/1995",
+      "name": "Nguyễn Văn Thu"
+    },
+    {
+      "code": "14020451",
+      "regular_class": "QH-2014-I/CQ-C-C",
+      "birthday": "24/5/1996",
+      "name": "Vũ Thị Thu"
+    },
+    {
+      "code": "14020462",
+      "regular_class": "QH-2014-I/CQ-C-D",
+      "birthday": "23/4/1996",
+      "name": "Lâm Văn Thư"
+    },
+    {
+      "code": "14020465",
+      "regular_class": "QH-2014-I/CQ-C-D",
+      "birthday": "6/2/1996",
+      "name": "Vi Văn Thức"
+    },
+    {
+      "code": "13020570",
+      "regular_class": "QH-2013-I/CQ-C-D",
+      "birthday": "29/3/1995",
+      "name": "Nguyễn Khắc Tiệp"
+    },
+    {
+      "code": "14020474",
+      "regular_class": "QH-2014-I/CQ-C-C",
+      "birthday": "26/11/1996",
+      "name": "Đỗ Đôn Toàn"
+    },
+    {
+      "code": "14020488",
+      "regular_class": "QH-2014-I/CQ-C-D",
+      "birthday": "7/8/1996",
+      "name": "Cao Sỹ Trung"
+    },
+    {
+      "code": "14020494",
+      "regular_class": "QH-2014-I/CQ-C-D",
+      "birthday": "11/6/1996",
+      "name": "Trần Thành Trung"
+    },
+    {
+      "code": "14020642",
+      "regular_class": "QH-2014-I/CQ-C-C",
+      "birthday": "30/9/1996",
+      "name": "Vũ Ngọc Tuấn"
+    },
+    {
+      "code": "14020524",
+      "regular_class": "QH-2014-I/CQ-C-C",
+      "birthday": "2/2/1996",
+      "name": "Hoàng Thị Tuyết"
+    },
+    {
+      "code": "14020544",
+      "regular_class": "QH-2014-I/CQ-C-C",
+      "birthday": "14/9/1996",
+      "name": "Trương Văn Tý"
+    },
+    {
+      "code": "14020553",
+      "regular_class": "QH-2014-I/CQ-C-A-C",
+      "birthday": "5/8/1996",
+      "name": "Nguyễn Tiến Việt"
+    },
+    {
+      "code": "14020563",
+      "regular_class": "QH-2014-I/CQ-C-C",
+      "birthday": "9/7/1994",
+      "name": "Lưu Tuấn Vũ"
+    }
+  ],
+  "class_id": "INT311022-2016-2017"
+}

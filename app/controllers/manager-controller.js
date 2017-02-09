@@ -162,7 +162,7 @@ module.exports.updateStudentCode = {
                 return Promise.reject('Mssv sai');
             }
 
-            if (user.get('email')){
+            if (user.get('email')) {
                 return Promise.reject('Người dùng này đã đăng kí email rồi, bạn vui lòng liên lạc với đội phát triển nếu có thắc mắc!');
             }
 
@@ -176,11 +176,19 @@ module.exports.updateStudentCode = {
                 return Promise.reject('Email này đã có người đăng kí!');
             }
 
-            return new Models.User({
-                id: userId
-            }).save({email: req.payload.email, avatar: req.payload.avatar}, {method: 'update', patch: true});
-        }).then((user) => {
-            rep(ResponseJSON('Cập nhật tài khoản thành công!'));
+            bcrypt.hash(req.payload.password, 10, function (err, hash) {
+                new Models.User({
+                    id: userId
+                }).save({email: req.payload.email, avatar: req.payload.avatar, password: hash}, {
+                    method: 'update',
+                    patch: true
+                }).then((user) => {
+                    rep(ResponseJSON('Cập nhật tài khoản thành công!'));
+                }).catch(function (err) {
+                    rep(Boom.badData(err));
+                });
+            });
+
         }).catch(function (err) {
             return rep(Boom.badData(err));
         })

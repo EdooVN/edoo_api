@@ -1,5 +1,12 @@
 'use strict';
 
+// const async = require('async');
+
+// let SEED_CLASSES = [
+//     require('../seed_1.json'),
+//     require('../seed_2.json')
+// ];
+
 exports.seed = function (knex, Promise) {
     let now = new Date(Date.now());
     // Deletes ALL existing entries
@@ -46,18 +53,18 @@ exports.seed = function (knex, Promise) {
                         avatar: ''
                     }),
 
-                    // knex('users').insert({
-                    //     id: 4,
-                    //     name: 'Tô Văn Khánh',
-                    //     code: '12312412',
-                    //     birthday: '1989-11-07',
-                    //     username: 'khanhtv',
-                    //     password: '$2a$10$dtaAZp55vPJgE4C759fkFOd.ISEcU2AvdL49yXGgBWSmiEuWfHfQi',
-                    //     email: 'khanhtv@vnu.edu.vn',
-                    //     capability: 'teacher',
-                    //     regular_class: '',
-                    //     avatar: 'https://scontent-hkg3-1.xx.fbcdn.net/v/t1.0-9/11214292_10203838883452144_3980940379632774496_n.jpg?oh=a202b01995304b4bdf25070c8976a2c0&oe=583F246C'
-                    // }),
+                    knex('users').insert({
+                        id: 4,
+                        name: 'Tô Văn Khánh',
+                        code: '12312412',
+                        birthday: '1989-11-07',
+                        username: 'khanhtv',
+                        password: '$2a$10$dtaAZp55vPJgE4C759fkFOd.ISEcU2AvdL49yXGgBWSmiEuWfHfQi',
+                        email: 'tovankhanh@gmail.com',
+                        capability: 'teacher',
+                        regular_class: '',
+                        avatar: ''
+                    }),
 
                     knex('users').insert({
                         id: 5,
@@ -189,6 +196,13 @@ exports.seed = function (knex, Promise) {
                         regular_class: 'QH/ICQ-K59-CLC',
                         avatar: ''
                     })
+                    // , new Promise(function (resolve, reject) {
+                    //     for (let subject_class of SEED_CLASSES){
+                    //         console.log(subject_class);
+                    //         console.log('ok men');
+                    //     }
+                    //     resolve();
+                    // })
                 ]);
             }),
         knex('classes').del()
@@ -280,6 +294,31 @@ exports.seed = function (knex, Promise) {
                         credit_count: 1,
                         student_count: 45,
                         teacher_name: "TT GDTC"
+                    }),
+
+                    // lớp thầy Khánh demo kì 2
+
+                    knex('classes').insert({
+                        id : 'INT311022-2016-2017',
+                        code: 'INT3110 2',
+                        name: 'Phân tích và thiết kế hướng đối tượng',
+                        type: 'subject',
+                        semester: '2-2016-2017',
+                        credit_count: 3,
+                        student_count: 77,
+                        teacher_name: "TS. Tô Văn Khánh"
+                    }),
+
+
+                    knex('classes').insert({
+                        id : 'INT311032-2016-2017',
+                        code: 'INT3110 3',
+                        name: 'Phân tích và thiết kế hướng đối tượng',
+                        type: 'subject',
+                        semester: '2-2016-2017',
+                        credit_count: 3,
+                        student_count: 82,
+                        teacher_name: "TS. Tô Văn Khánh"
                     })
                 ])
             }),
@@ -333,7 +372,7 @@ exports.seed = function (knex, Promise) {
                         period : "2-3"
                     }),
                     knex('lessions').insert({
-                        id : 9,
+                        id : 900,
                         code: 'INT2207 3',
                         name: 'Cơ sở dữ liệu',
                         type: 'subject',
@@ -420,6 +459,39 @@ exports.seed = function (knex, Promise) {
                         address : "Sân bãi",
                         day_of_week : 3,
                         period : "8-9"
+                    }),
+
+                    // lớp thầy Khánh demo kì 2
+
+                    knex('lessions').insert({
+                        id : 9,
+                        code: 'INT3110 2',
+                        name: 'Phân tích và thiết kế hướng đối tượng',
+                        type: 'subject',
+                        semester: '2-2016-2017',
+                        credit_count: 3,
+                        student_count: 77,
+                        teacher_name: "TS. Tô Văn Khánh",
+                        class_id : 'INT311022-2016-2017',
+                        address : "308-G2",
+                        day_of_week : 6,
+                        period : "3-5"
+                    }),
+
+
+                    knex('lessions').insert({
+                        id : 10,
+                        code: 'INT3110 3',
+                        name: 'Phân tích và thiết kế hướng đối tượng',
+                        type: 'subject',
+                        semester: '2-2016-2017',
+                        credit_count: 3,
+                        student_count: 82,
+                        teacher_name: "TS. Tô Văn Khánh",
+                        class_id : 'INT311032-2016-2017',
+                        address : "309 GD2",
+                        day_of_week : 3,
+                        period : "6-8"
                     })
                 ])
             }),
@@ -634,14 +706,14 @@ exports.seed = function (knex, Promise) {
 
 
                     // Thầy Khánh
-                    // knex('users_classes').insert({
-                    //     user_id: 4,
-                    //     class_id: 'POL100111-2016-2017'
-                    // }),
-                    // knex('users_classes').insert({
-                    //     user_id: 4,
-                    //     class_id: 'MAT110031-2016-2017'
-                    // }),
+                    knex('users_classes').insert({
+                        user_id: 4,
+                        class_id: 'INT311022-2016-2017'
+                    }),
+                    knex('users_classes').insert({
+                        user_id: 4,
+                        class_id: 'INT311032-2016-2017'
+                    }),
                     // knex('users_classes').insert({
                     //     user_id: 4,
                     //     class_id: 'INT220731-2016-2017'

@@ -23,6 +23,11 @@ module.exports.auth = {
 module.exports.getAuthCode = {
     handler: function (req, rep) {
         let code = req.query.code;
+
+        if (!code){
+            return rep('Some thing went wrong');
+        }
+
         service.authGoogle.getUserInfo(code, function (err, userInfo) {
             if (err) {
                 return rep('Some thing went wrong');

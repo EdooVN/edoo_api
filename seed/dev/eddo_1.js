@@ -27,7 +27,7 @@ exports.seed = function (knex, Promise) {
                         birthday: '1995-11-07',
                         username: 'tutv95',
                         password: '$2a$10$dtaAZp55vPJgE4C759fkFOd.ISEcU2AvdL49yXGgBWSmiEuWfHfQi',
-                        email: 'tutv_58@vnu.edu.vn',
+                        email: '',
                         capability: 'student',
                         regular_class: 'QH/ICQ-K58-CLC',
                         avatar: ''
@@ -43,7 +43,7 @@ exports.seed = function (knex, Promise) {
                         // email: 'minhnt_58@vnu.edu.vn',
                         capability: 'student',
                         regular_class: 'QH/ICQ-K58-CLC',
-                        avatar: 'http://www.iconsfind.com/wp-content/uploads/2015/10/20151012_561baed03a54e.png'
+                        avatar: ''
                     }),
 
                     // knex('users').insert({

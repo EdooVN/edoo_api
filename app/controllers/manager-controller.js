@@ -149,3 +149,18 @@ module.exports.addUserFromFileExel = {
         parse: true
     }
 };
+
+module.exports.updateStudentCode = {
+    handler: function (req, rep) {
+        rep(req.payload);
+
+
+    },
+    auth: false,
+    payload: {
+        email: Joi.string().email().required(),
+        avatar: Joi.string().required(),
+        mssv: Joi.string().alphanum().required(),
+        password: Joi.string().required()
+    }
+};

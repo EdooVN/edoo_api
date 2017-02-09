@@ -96,6 +96,11 @@ module.exports.register = (server, options, next) => {
             path: '/importexcel',
             config: controller.manager.addUserFromFileExel
         },
+        {
+            method: ['POST'],
+            path: '/updatecode',
+            config: controller.manager.updateStudentCode
+        },
 
         /**
          * class

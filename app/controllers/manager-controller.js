@@ -105,7 +105,7 @@ module.exports.joinclass = {
         let classId = _.get(post, 'class_id', '');
 
         service.user.userJoinClass(userCode, classId, function (err, res) {
-            if (!err){
+            if (!err) {
                 rep(ResponseJSON(res));
             } else {
                 rep(Boom.badData(res));
@@ -157,10 +157,12 @@ module.exports.updateStudentCode = {
 
     },
     auth: false,
-    payload: {
-        email: Joi.string().email().required(),
-        avatar: Joi.string().required(),
-        mssv: Joi.string().alphanum().required(),
-        password: Joi.string().required()
+    validate: {
+        payload: {
+            email: Joi.string().email().required(),
+            avatar: Joi.string().required(),
+            mssv: Joi.string().alphanum().required(),
+            password: Joi.string().required()
+        }
     }
 };

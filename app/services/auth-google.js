@@ -7,8 +7,9 @@ let googleAuth = require('google-auth-library');
 let config = global.helpers.config;
 
 let SCOPES = [
-    'https://www.googleapis.com/auth/userinfo.profile',
+    'https://www.googleapis.com/auth/plus.login',
     'https://www.googleapis.com/auth/plus.me',
+    'https://www.googleapis.com/auth/userinfo.profile',
     'https://www.googleapis.com/auth/userinfo.email'];
 
 module.exports.getRedirectOAuthUrl = function (cb) {
